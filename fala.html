@@ -235,6 +235,7 @@ nav.tabs button[aria-selected="true"]{color:var(--accent)}
     <div class="tipbox"><b>1. Não traduza.</b> Pensar em português e traduzir é o que deixa a fala lenta. Guarde frases inteiras e use do jeito que estão.</div>
     <div class="tipbox"><b>2. Frase curta ganha.</b> Duas frases simples soam melhor que uma frase longa e travada. <i>I work with taxes. I love my job.</i></div>
     <div class="tipbox"><b>3. Use pontes para pensar.</b> Nativo também para para pensar, mas ele enche o silêncio com uma frase-ponte. Decore as de baixo.</div>
+    <div class="tipbox"><b>🎙️ Para o app te entender melhor:</b> fale perto do celular (um palmo), em lugar sem barulho e sem TV ligada. Toque no microfone, <b>espere ficar vermelho</b> e fale a frase inteira, sem pausa longa no meio. Quando terminar, toque no ■. Se o app errar uma palavra que você falou certo, use o botão <i>“Eu falei certo”</i>.</div>
     <div class="tipbox"><b>4. Pouco todo dia.</b> 10 minutos por dia falando em voz alta valem mais que 1 hora no sábado.</div>
     <div id="tips-groups"></div>
     <button type="button" class="reset" id="reset">Zerar meus resultados</button>
@@ -310,49 +311,85 @@ if (!SR){
   showWarn("<b>Abra o app em uma aba própria.</b> Dentro de outra página o microfone costuma ser bloqueado. Abra o endereço direto no Chrome.");
 }
 var active = null; /* reconhecimento em andamento */
+function normT(t){ return toks(t).join(" "); }
 function listen(opts){
-  /* opts: {continuous, onInterim(text), onFinal(alts[]), onError(code), onStart, onSpeech, onEnd, btn} */
+  /* Modo frase (padrão): escuta contínua, junta tudo e só avalia depois de ~2 s de silêncio
+     ou quando o usuário toca no ■. Modo livre (opts.continuous): devolve o texto em onEnd. */
   if (!SR){ toast("Microfone indisponível neste navegador. Use o Chrome."); return null; }
   stopAll();
   if (synth) try{ synth.cancel(); }catch(e){}
   var r = new SR();
-  r.lang = "en-US"; r.interimResults = true; r.maxAlternatives = 3; r.continuous = !!opts.continuous;
-  var finals = [], gotFinal = false;
-  r.onstart = function(){ if (opts.btn){ opts.btn.classList.add("rec"); opts.btn.innerHTML = STOP; } if (opts.onStart) opts.onStart(); };
+  r.lang = "en-US"; r.interimResults = true; r.maxAlternatives = 5; r.continuous = true;
+  var segs = [], interim = "", heardAny = false, silenceT = null, firstT = null, delivered = false;
+  var SIL = opts.silence || 2000;
+  function joined(){
+    /* junta os trechos finais sem repetir (o Chrome do Android às vezes devolve o texto acumulado) */
+    var acc = "";
+    segs.forEach(function(alts){
+      var t = (alts[0] || "").trim(); if (!t) return;
+      var na = normT(acc), nt = normT(t);
+      if (!acc) acc = t;
+      else if (nt.indexOf(na) === 0) acc = t;
+      else if (na.slice(-nt.length) === nt) return;
+      else acc = acc + " " + t;
+    });
+    return acc.trim();
+  }
+  function candidates(){
+    var main = joined(), out = [];
+    if (interim) main = (main + " " + interim).trim();
+    if (main) out.push(main);
+    if (segs.length === 1) segs[0].forEach(function(a){ if (a && out.indexOf(a) < 0) out.push(a); });
+    return out;
+  }
+  function armSilence(){
+    if (opts.continuous) return;
+    clearTimeout(silenceT);
+    silenceT = setTimeout(function(){ try{ r.stop(); }catch(e){} }, SIL);
+  }
+  r.onstart = function(){
+    if (opts.btn){ opts.btn.classList.add("rec"); opts.btn.innerHTML = STOP; }
+    if (opts.onStart) opts.onStart();
+    if (!opts.continuous) firstT = setTimeout(function(){ if (!heardAny) try{ r.stop(); }catch(e){} }, 9000);
+  };
   r.onspeechstart = function(){ if (opts.onSpeech) opts.onSpeech(); };
   r.onresult = function(ev){
-    var interim = "";
-    for (var i = ev.resultIndex; i < ev.results.length; i++){
+    segs = []; interim = "";
+    for (var i = 0; i < ev.results.length; i++){
       var res = ev.results[i];
-      if (res.isFinal){
-        var alts = []; for (var k = 0; k < res.length; k++) alts.push(res[k].transcript);
-        finals.push(alts); gotFinal = true;
-        if (!opts.continuous && opts.onFinal) opts.onFinal(alts);
-      } else interim += res[0].transcript;
+      if (res.isFinal){ var alts = []; for (var k = 0; k < res.length; k++) alts.push(res[k].transcript); segs.push(alts); }
+      else interim += res[0].transcript;
     }
-    if (opts.onInterim){
-      var sofar = finals.map(function(a){ return a[0]; }).join(" ");
-      opts.onInterim((sofar + " " + interim).trim());
-    }
+    interim = interim.trim();
+    if ((segs.length || interim) && !heardAny){ heardAny = true; if (opts.onSpeech) opts.onSpeech(); }
+    if (opts.onInterim) opts.onInterim((joined() + " " + interim).trim());
+    armSilence();
   };
   r.onerror = function(ev){ r._err = ev && ev.error; };
   r.onend = function(){
+    clearTimeout(silenceT); clearTimeout(firstT);
     if (opts.btn){ opts.btn.classList.remove("rec"); opts.btn.innerHTML = MIC; }
     if (active === r) active = null;
-    if (r._err && r._err !== "aborted" && !(opts.continuous && r._err === "no-speech")){
-      if (opts.onError) opts.onError(r._err);
-    } else if (!opts.continuous && !gotFinal && !r._aborted){
-      if (opts.onError) opts.onError("no-speech");
+    if (r._aborted) return;
+    var c = candidates();
+    if (opts.continuous){
+      if (r._err && r._err !== "no-speech" && r._err !== "aborted" && opts.onError) opts.onError(r._err);
+      if (opts.onEnd) opts.onEnd(c.length ? [[c[0]]] : [], r);
+      return;
     }
-    if (opts.onEnd) opts.onEnd(finals, r);
+    if (delivered) return; delivered = true;
+    if (c.length){ if (opts.onFinal) opts.onFinal(c); }
+    else if (opts.onError) opts.onError(r._err && r._err !== "aborted" ? r._err : "no-speech");
   };
   try{ r.start(); active = r; }catch(e){ if (opts.onError) opts.onError("start"); return null; }
   return r;
 }
-function stopAll(){ if (active){ try{ active._aborted = true; active.stop(); }catch(e){} active = null; } }
+/* abortar (troca de aba) x terminar de falar (toque no ■ avalia o que já foi dito) */
+function stopAll(){ if (active){ try{ active._aborted = true; active.abort ? active.abort() : active.stop(); }catch(e){} active = null; } }
+function finishListening(){ if (active){ try{ active.stop(); }catch(e){} } }
 function errMsg(code){
   if (code === "not-allowed" || code === "service-not-allowed") return "O microfone foi bloqueado. Toque no cadeado ao lado do endereço, libere o <b>Microfone</b> e recarregue a página.";
-  if (code === "no-speech") return "Não ouvi nada. Fale um pouco mais alto e perto do celular.";
+  if (code === "no-speech") return "Não ouvi nada. Toque no microfone, <b>espere ele ficar vermelho</b> e fale perto do celular, num lugar sem barulho.";
   if (code === "network") return "O reconhecimento de voz precisa de internet.";
   if (code === "audio-capture") return "Não encontrei microfone neste aparelho.";
   return "Não consegui ouvir. Tente de novo.";
@@ -380,14 +417,33 @@ function toks(t){
   });
   return out.map(function(w){ return w === "cannot" ? "can" : w; });
 }
+function lev(a, b){
+  if (a === b) return 0;
+  var m = a.length, n = b.length, d = [], i, j;
+  for (i = 0; i <= m; i++){ d[i] = [i]; }
+  for (j = 1; j <= n; j++) d[0][j] = j;
+  for (i = 1; i <= m; i++) for (j = 1; j <= n; j++)
+    d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+  return d[m][n];
+}
+function stem(w){ return w.replace(/(ing|ed|es|s)$/,""); }
+/* palavra "parecida" conta: sotaque e o reconhecimento trocam uma letra, um -s, um -ed */
+function same(a, b){
+  if (a === b) return true;
+  if (a.length >= 4 && b.length >= 4 && stem(a) === stem(b)) return true;
+  var L = Math.max(a.length, b.length);
+  if (L >= 4 && lev(a, b) <= 1) return true;
+  if (L >= 7 && lev(a, b) <= 2) return true;
+  return false;
+}
 function lcsMatch(T, G){
   var n = T.length, m = G.length, dp = [];
   for (var i = 0; i <= n; i++){ dp.push(new Array(m+1).fill(0)); }
   for (i = n-1; i >= 0; i--) for (var j = m-1; j >= 0; j--)
-    dp[i][j] = T[i] === G[j] ? dp[i+1][j+1] + 1 : Math.max(dp[i+1][j], dp[i][j+1]);
+    dp[i][j] = same(T[i], G[j]) ? dp[i+1][j+1] + 1 : Math.max(dp[i+1][j], dp[i][j+1]);
   var hit = new Array(n).fill(false); i = 0; j = 0;
   while (i < n && j < m){
-    if (T[i] === G[j]){ hit[i] = true; i++; j++; }
+    if (same(T[i], G[j]) && dp[i][j] === dp[i+1][j+1] + 1){ hit[i] = true; i++; j++; }
     else if (dp[i+1][j] >= dp[i][j+1]) i++; else j++;
   }
   return {hit:hit, score: n ? dp[0][0] / n : 0};
@@ -466,21 +522,23 @@ $("rep-listen").onclick = function(){ speak(repOrder[repI][0]); };
 $("rep-hide").onclick = function(){ repHidden = !repHidden; store.set("repHidden", repHidden); repRender(); };
 repHidden = store.get("repHidden", false);
 $("rep-mic").onclick = function(){
-  if (active){ stopAll(); return; }
+  if (active){ finishListening(); return; }
   var q = repOrder[repI], fb = $("rep-fb"); fb.hidden = true;
-  $("rep-hint").textContent = "Ouvindo… repita a frase";
+  $("rep-hint").textContent = "Ouvindo… fale a frase inteira. Quando terminar, toque no ■ (ou espere 2 segundos).";
   listen({btn:$("rep-mic"),
     onInterim:function(t){ $("rep-live").textContent = t; },
     onFinal:function(alts){
       stopAll();
-      var b = best(q[0], alts), sc = b.r.score, ok = sc >= 0.8;
+      var b = best(q[0], alts), sc = b.r.score, ok = sc >= 0.75;
       addScore("rep", ok);
       fb.className = "feedback " + (ok ? "ok" : sc >= 0.5 ? "mid" : "bad");
       fb.innerHTML = '<p class="verdict">' + (sc >= 0.95 ? "Perfeito! Soou natural." : ok ? "Muito bom! Deu para entender tudo." : sc >= 0.5 ? "Quase. Ouça de novo as palavras em vermelho." : "Vamos de novo, mais devagar.") + '</p>' +
         '<p>Eu entendi: <span class="heard">"' + esc(b.heard) + '"</span></p>' + wordsHTML(b.T, b.r.hit) +
         '<div class="row"><button type="button" class="icon-btn" id="rep-model">' + SPK + 'Ouvir o modelo</button>' +
-        '<button type="button" class="btn ghost" id="rep-retry">Repetir</button><button type="button" class="btn primary grow" id="rep-next">Próxima</button></div>';
+        '<button type="button" class="btn ghost" id="rep-retry">Repetir</button><button type="button" class="btn primary grow" id="rep-next">Próxima</button></div>' +
+        (ok ? '' : '<button type="button" class="reset" id="rep-fix">O app entendeu errado? Eu falei certo ✓</button>');
       fb.hidden = false;
+      if (!ok) $("rep-fix").onclick = function(){ scores.rep.ok++; store.set("scores", scores); paintScore("rep"); this.remove(); toast("Ok! Contei como certo."); };
       $("rep-model").onclick = function(){ speak(q[0]); };
       $("rep-retry").onclick = function(){ fb.hidden = true; $("rep-live").textContent = ""; $("rep-mic").click(); };
       $("rep-next").onclick = repNext;
@@ -539,9 +597,9 @@ function blkNext(){ blkI++; if (blkI >= blkOrder.length){ blkOrder = shuffle(BLK
 $("blk-chunk-say").onclick = function(){ speak(blkOrder[blkI].c.replace("…","")); };
 $("blk-peek").onclick = function(){ $("blk-peek-txt").hidden = false; speak(blkOrder[blkI].m[0]); };
 $("blk-mic").onclick = function(){
-  if (active){ stopAll(); return; }
+  if (active){ finishListening(); return; }
   var q = blkOrder[blkI], fb = $("blk-fb"); fb.hidden = true;
-  $("blk-hint").textContent = "Ouvindo…";
+  $("blk-hint").textContent = "Ouvindo… quando terminar, toque no ■ (ou espere 2 segundos).";
   listen({btn:$("blk-mic"),
     onInterim:function(t){ $("blk-live").textContent = t; },
     onFinal:function(alts){
@@ -550,7 +608,7 @@ $("blk-mic").onclick = function(){
       q.m.forEach(function(m){ var b = best(m, alts); if (!top || b.r.score > top.r.score){ top = b; top.model = m; } });
       var chunkT = toks(q.c.replace("…","")), heardT = toks(top.heard);
       var usedChunk = lcsMatch(chunkT, heardT).score >= 0.99;
-      var sc = top.r.score, ok = sc >= 0.75;
+      var sc = top.r.score, ok = sc >= 0.7;
       addScore("blk", ok);
       fb.className = "feedback " + (ok ? "ok" : sc >= 0.5 ? "mid" : "bad");
       fb.innerHTML = '<p class="verdict">' + (ok ? "Isso! Natural e simples." : sc >= 0.5 ? "Boa tentativa! Compare com o modelo." : "Vamos treinar esse bloco.") + '</p>' +
@@ -558,8 +616,10 @@ $("blk-mic").onclick = function(){
         (usedChunk ? '' : '<p>💡 Tente começar com o bloco <span class="chunk">' + esc(q.c) + '</span></p>') +
         '<p>Um jeito natural de dizer:</p><p class="model">' + esc(top.model) + '</p>' + wordsHTML(top.T, top.r.hit) +
         '<div class="row"><button type="button" class="icon-btn" id="blk-model">' + SPK + 'Ouvir</button>' +
-        '<button type="button" class="btn ghost" id="blk-retry">Repetir</button><button type="button" class="btn primary grow" id="blk-next">Próxima</button></div>';
+        '<button type="button" class="btn ghost" id="blk-retry">Repetir</button><button type="button" class="btn primary grow" id="blk-next">Próxima</button></div>' +
+        (ok ? '' : '<button type="button" class="reset" id="blk-fix">O app entendeu errado? Eu falei certo ✓</button>');
       fb.hidden = false;
+      if (!ok) $("blk-fix").onclick = function(){ scores.blk.ok++; store.set("scores", scores); paintScore("blk"); this.remove(); toast("Ok! Contei como certo."); };
       $("blk-model").onclick = function(){ speak(top.model); };
       $("blk-retry").onclick = function(){ fb.hidden = true; $("blk-live").textContent=""; $("blk-mic").click(); };
       $("blk-next").onclick = blkNext;
@@ -650,7 +710,7 @@ function ansListen(){
   });
 }
 $("ans-start").onclick = ansGo;
-$("ans-mic").onclick = function(){ if (active){ stopAll(); return; } if (ansState === "idle" || ansState === "done") ansGo(); else ansListen(); };
+$("ans-mic").onclick = function(){ if (active){ finishListening(); return; } if (ansState === "idle" || ansState === "done") ansGo(); else ansListen(); };
 $("ans-again").onclick = function(){ speak(ansOrder[ansI].q); };
 $("ans-show").onclick = function(){ var h = $("ans-q").classList.toggle("blur"); $("ans-qpt").hidden = h; $("ans-show").textContent = h ? "Ver pergunta" : "Esconder pergunta"; };
 ansReset();
@@ -709,7 +769,7 @@ function freeStart(){
 var FILLERS = ["well","so","actually","like","you know","i mean","let me think","hmm","um","uh"];
 function freeStop(finished){
   if (!freeRunning) return;
-  freeRunning = false; clearInterval(freeTimer); stopAll();
+  freeRunning = false; clearInterval(freeTimer); finishListening();
   $("free-mic").classList.remove("rec"); $("free-mic").innerHTML = MIC;
   setTimeout(function(){
     var spoken = freeSecs - Math.max(0, (freeEnd - Date.now())/1000);
