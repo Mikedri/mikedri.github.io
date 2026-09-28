@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fala Solta</title>
+<meta name="theme-color" content="#2A55CC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<style>
+:root{
+  --ground:#F4F5EF; --surface:#FFFFFF; --ink:#1C2640; --muted:#5B6479; --line:#DADDD2;
+  --accent:#2A55CC; --accent-ink:#FFFFFF; --accent-soft:#E4EAFB;
+  --mark:#FFE36A; --mark-ink:#3A3000;
+  --ok:#1E8455; --ok-soft:#DDF2E7; --bad:#C23B2A; --bad-soft:#FBE3DF; --warn-soft:#FFF4CC;
+  --shadow:0 1px 2px rgba(28,38,64,.06), 0 4px 14px rgba(28,38,64,.06);
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --nav-h:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#10151F; --surface:#18202E; --ink:#E6EBF4; --muted:#9AA4B8; --line:#2A3446;
+    --accent:#7C9DFF; --accent-ink:#0D1424; --accent-soft:#1F2A44;
+    --mark:#D9B93A; --mark-ink:#1A1600;
+    --ok:#4CC08A; --ok-soft:#153426; --bad:#FF7A66; --bad-soft:#3A1C18; --warn-soft:#3A3212;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10151F; --surface:#18202E; --ink:#E6EBF4; --muted:#9AA4B8; --line:#2A3446;
+  --accent:#7C9DFF; --accent-ink:#0D1424; --accent-soft:#1F2A44;
+  --mark:#D9B93A; --mark-ink:#1A1600;
+  --ok:#4CC08A; --ok-soft:#153426; --bad:#FF7A66; --bad-soft:#3A1C18; --warn-soft:#3A3212;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--ground); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5;
+  padding-inline:16px; padding-block:0 calc(var(--nav-h) + 24px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:560px; margin:0 auto}
+header.app{padding-block:18px 8px; display:flex; align-items:flex-end; justify-content:space-between; gap:12px}
+.brand{font-family:var(--display); font-weight:800; font-size:1.55rem; line-height:1.05; margin:0}
+.brand span{display:inline-block; background:var(--mark); color:var(--mark-ink); padding:0 .25em; border-radius:4px; transform:rotate(-1.5deg)}
+.tagline{margin:4px 0 0; color:var(--muted); font-size:.85rem}
+.speed{display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--surface)}
+.speed button{border:0; background:transparent; color:var(--muted); font:inherit; font-size:.78rem; font-weight:700; padding:7px 11px; cursor:pointer}
+.speed button[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink)}
+.speed-label{font-size:.7rem; color:var(--muted); text-align:right; margin-bottom:3px; letter-spacing:.04em; text-transform:uppercase}
+
+section.panel{display:flex; flex-direction:column; gap:14px; padding-top:6px}
+.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+.section-head h2{font-family:var(--display); font-weight:800; font-size:1.25rem; margin:0}
+.score{font-size:.8rem; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums}
+.score b{color:var(--ink)}
+.lead{margin:0; color:var(--muted); font-size:.92rem}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px; box-shadow:var(--shadow)}
+.eyebrow{font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); font-weight:700; margin:0 0 8px}
+.en{font-size:1.35rem; font-weight:700; line-height:1.35; margin:0}
+.pt{color:var(--muted); margin:6px 0 0}
+.chunk{display:inline-block; background:var(--mark); color:var(--mark-ink); border-radius:6px; padding:2px 8px; font-weight:700}
+.blur{filter:blur(7px); user-select:none}
+.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.btn{font:inherit; font-weight:700; border-radius:10px; padding:12px 18px; cursor:pointer; border:2px solid transparent; min-height:48px}
+.btn.primary{background:var(--accent); color:var(--accent-ink)}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line)}
+.btn.grow{flex:1}
+.icon-btn{display:inline-flex; align-items:center; gap:6px; font:inherit; font-size:.88rem; font-weight:700; color:var(--accent);
+  background:var(--accent-soft); border:0; border-radius:999px; padding:8px 13px; cursor:pointer; min-height:38px}
+.icon-btn svg{width:18px; height:18px}
+.modes{display:flex; gap:6px; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:4px}
+.modes button{flex:1; font:inherit; font-weight:700; font-size:.86rem; border:0; background:transparent; color:var(--muted); border-radius:999px; padding:10px 6px; cursor:pointer; min-height:44px}
+.modes button[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink)}
+
+.mic-wrap{display:flex; flex-direction:column; align-items:center; gap:8px; padding:6px 0}
+.mic{width:108px; height:108px; border-radius:50%; border:0; background:var(--accent); color:var(--accent-ink); cursor:pointer; display:grid; place-items:center; box-shadow:var(--shadow)}
+.mic svg{width:44px; height:44px}
+.mic.rec{background:var(--bad); animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)} 50%{transform:scale(1.07)}}
+.hint{color:var(--muted); font-size:.86rem; margin:0; text-align:center}
+.live{min-height:1.5em; font-weight:700; text-align:center; color:var(--accent); margin:0}
+
+.feedback{border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; gap:8px}
+.feedback.ok{background:var(--ok-soft)} .feedback.bad{background:var(--bad-soft)} .feedback.mid{background:var(--warn-soft)}
+.feedback p{margin:0}
+.verdict{font-weight:700}
+.feedback.ok .verdict{color:var(--ok)} .feedback.bad .verdict{color:var(--bad)}
+.words{display:flex; flex-wrap:wrap; gap:6px; margin:0; padding:0; list-style:none}
+.w{padding:3px 9px; border-radius:7px; font-weight:700}
+.w.ok{background:var(--ok-soft); color:var(--ok); border:1px solid var(--ok)}
+.w.bad{background:var(--bad-soft); color:var(--bad); border:1px solid var(--bad)}
+.heard{font-style:italic}
+.model{font-weight:700}
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
+.stat{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:10px; text-align:center}
+.stat b{display:block; font-family:var(--display); font-size:1.5rem; line-height:1.1}
+.stat span{font-size:.75rem; color:var(--muted)}
+.timer{font-family:var(--display); font-weight:800; font-size:2.4rem; text-align:center; font-variant-numeric:tabular-nums; margin:0}
+.warn{background:var(--mark); color:var(--mark-ink); border-radius:12px; padding:13px 15px; font-size:.9rem}
+.warn a{color:inherit; font-weight:700}
+.chips{display:flex; flex-wrap:wrap; gap:6px}
+.chipbtn{font:inherit; font-size:.85rem; font-weight:700; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:6px 12px; cursor:pointer}
+.chipbtn[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.tipbox{background:var(--accent-soft); border-radius:12px; padding:12px 14px; font-size:.9rem}
+.tipbox b{color:var(--accent)}
+.list{display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden}
+.li{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; padding:12px 14px; border-top:1px solid var(--line)}
+.li:first-child{border-top:0}
+.li .a{font-weight:700; margin:0} .li .b{color:var(--muted); font-size:.88rem; margin:1px 0 0}
+.group h3{font-family:var(--display); font-size:1.02rem; margin:4px 0 8px}
+.reset{font:inherit; font-size:.8rem; color:var(--muted); background:none; border:0; text-decoration:underline; cursor:pointer; padding:4px 0; align-self:flex-start}
+
+nav.tabs{position:fixed; left:0; right:0; bottom:0; background:var(--surface); border-top:1px solid var(--line); padding-bottom:env(safe-area-inset-bottom,0px); z-index:10}
+nav.tabs .inner{max-width:560px; margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); height:var(--nav-h)}
+nav.tabs button{font:inherit; border:0; background:transparent; color:var(--muted); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; cursor:pointer; font-size:.64rem; font-weight:700; padding:0 2px; line-height:1.1}
+nav.tabs button svg{width:20px; height:20px}
+nav.tabs button[aria-selected="true"]{color:var(--accent)}
+.toast{position:fixed; left:50%; bottom:calc(var(--nav-h) + 16px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--ground); padding:10px 16px; border-radius:10px; font-size:.88rem; max-width:calc(100% - 32px); z-index:20}
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="app">
+    <div>
+      <h1 class="brand">Fala <span>Solta</span></h1>
+      <p class="tagline">Treino de fala: simples, rápido e natural.</p>
+    </div>
+    <div>
+      <div class="speed-label">Voz</div>
+      <div class="speed" role="group" aria-label="Velocidade do áudio">
+        <button type="button" id="spd-slow" data-rate="0.75" aria-pressed="true">Devagar</button>
+        <button type="button" id="spd-norm" data-rate="0.95" aria-pressed="false">Normal</button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mic-warn" class="warn" hidden style="margin-bottom:12px"></div>
+
+  <!-- ===== REPETIR ===== -->
+  <section class="panel" id="tab-rep" aria-labelledby="h-rep">
+    <div class="section-head"><h2 id="h-rep">Repita comigo</h2><div class="score" id="score-rep"></div></div>
+    <p class="lead">Ouça e repita logo em seguida, no mesmo ritmo. Não traduza na cabeça: copie o som. Quando ficar fácil, esconda o texto.</p>
+    <div class="chips" id="rep-levels"></div>
+    <div class="card">
+      <p class="eyebrow" id="rep-count"></p>
+      <p class="en" id="rep-en"></p>
+      <p class="pt" id="rep-pt"></p>
+      <div class="row" style="margin-top:12px">
+        <button type="button" class="icon-btn" id="rep-listen"></button>
+        <button type="button" class="icon-btn" id="rep-hide">Esconder texto</button>
+      </div>
+    </div>
+    <div class="mic-wrap">
+      <button type="button" class="mic" id="rep-mic" aria-label="Falar"></button>
+      <p class="live" id="rep-live"></p>
+      <p class="hint" id="rep-hint">Toque no microfone e repita a frase</p>
+    </div>
+    <div id="rep-fb" hidden></div>
+  </section>
+
+  <!-- ===== BLOCOS ===== -->
+  <section class="panel" id="tab-blk" aria-labelledby="h-blk" hidden>
+    <div class="section-head"><h2 id="h-blk">Fale em blocos</h2><div class="score" id="score-blk"></div></div>
+    <p class="lead">Nativo não monta frase palavra por palavra: ele usa <b>blocos prontos</b>. Leia a situação, pegue o bloco amarelo e complete falando.</p>
+    <div class="card">
+      <p class="eyebrow" id="blk-count"></p>
+      <p style="margin:0 0 10px"><span class="chunk" id="blk-chunk"></span></p>
+      <p class="en" id="blk-pt" style="font-size:1.15rem"></p>
+      <div class="row" style="margin-top:12px">
+        <button type="button" class="icon-btn" id="blk-chunk-say"></button>
+        <button type="button" class="icon-btn" id="blk-peek">Ver uma resposta</button>
+      </div>
+      <p class="pt model" id="blk-peek-txt" hidden></p>
+    </div>
+    <div class="mic-wrap">
+      <button type="button" class="mic" id="blk-mic" aria-label="Falar"></button>
+      <p class="live" id="blk-live"></p>
+      <p class="hint" id="blk-hint">Toque e fale a frase em inglês</p>
+    </div>
+    <div id="blk-fb" hidden></div>
+  </section>
+
+  <!-- ===== RESPONDER ===== -->
+  <section class="panel" id="tab-ans" aria-labelledby="h-ans" hidden>
+    <div class="section-head"><h2 id="h-ans">Responda rápido</h2><div class="score" id="score-ans"></div></div>
+    <p class="lead">A pergunta toca sozinha. Responda <b>em até 3 segundos</b>, com uma frase curta. Vale errar, o que conta aqui é não travar.</p>
+    <div class="card">
+      <p class="eyebrow" id="ans-count"></p>
+      <p class="en blur" id="ans-q"></p>
+      <p class="pt" id="ans-qpt" hidden></p>
+      <div class="row" style="margin-top:12px">
+        <button type="button" class="icon-btn" id="ans-again"></button>
+        <button type="button" class="icon-btn" id="ans-show">Ver pergunta</button>
+      </div>
+    </div>
+    <div class="mic-wrap">
+      <button type="button" class="mic" id="ans-mic" aria-label="Responder"></button>
+      <p class="timer" id="ans-timer">0,0 s</p>
+      <p class="live" id="ans-live"></p>
+      <p class="hint" id="ans-hint">Toque em <b>Começar</b> para ouvir a pergunta</p>
+    </div>
+    <button type="button" class="btn primary" id="ans-start">Começar</button>
+    <div id="ans-fb" hidden></div>
+  </section>
+
+  <!-- ===== FALA LIVRE ===== -->
+  <section class="panel" id="tab-free" aria-labelledby="h-free" hidden>
+    <div class="section-head"><h2 id="h-free">Fale sem parar</h2><div class="score" id="score-free"></div></div>
+    <p class="lead">Escolha o tema e fale até o tempo acabar. Frases simples, sem parar para corrigir. Travou? Use uma frase-ponte (<i>Well…</i>, <i>So…</i>, <i>Let me think…</i>) e siga.</p>
+    <div class="chips" id="free-time"></div>
+    <div class="card">
+      <p class="eyebrow">Tema</p>
+      <p class="en" id="free-topic" style="font-size:1.15rem"></p>
+      <p class="pt" id="free-help"></p>
+      <div class="row" style="margin-top:12px">
+        <button type="button" class="icon-btn" id="free-new">Outro tema</button>
+      </div>
+    </div>
+    <div class="mic-wrap">
+      <button type="button" class="mic" id="free-mic" aria-label="Começar a falar"></button>
+      <p class="timer" id="free-timer">1:00</p>
+      <p class="hint" id="free-hint">Toque no microfone e comece a falar</p>
+    </div>
+    <div class="card" id="free-live-card" hidden><p class="eyebrow">O que eu estou entendendo</p><p id="free-live" style="margin:0"></p></div>
+    <div id="free-fb" hidden></div>
+  </section>
+
+  <!-- ===== DICAS ===== -->
+  <section class="panel" id="tab-tips" aria-labelledby="h-tips" hidden>
+    <div class="section-head"><h2 id="h-tips">Segredos da fluência</h2></div>
+    <div class="tipbox"><b>1. Não traduza.</b> Pensar em português e traduzir é o que deixa a fala lenta. Guarde frases inteiras e use do jeito que estão.</div>
+    <div class="tipbox"><b>2. Frase curta ganha.</b> Duas frases simples soam melhor que uma frase longa e travada. <i>I work with taxes. I love my job.</i></div>
+    <div class="tipbox"><b>3. Use pontes para pensar.</b> Nativo também para para pensar, mas ele enche o silêncio com uma frase-ponte. Decore as de baixo.</div>
+    <div class="tipbox"><b>4. Pouco todo dia.</b> 10 minutos por dia falando em voz alta valem mais que 1 hora no sábado.</div>
+    <div id="tips-groups"></div>
+    <button type="button" class="reset" id="reset">Zerar meus resultados</button>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="Seções">
+  <div class="inner" role="tablist">
+    <button type="button" role="tab" data-tab="rep" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 01-4 4H3"/></svg>Repetir</button>
+    <button type="button" role="tab" data-tab="blk" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="7" height="5" rx="1.2"/><rect x="12" y="6" width="9" height="5" rx="1.2"/><rect x="3" y="14" width="10" height="5" rx="1.2"/><rect x="15" y="14" width="6" height="5" rx="1.2"/></svg>Blocos</button>
+    <button type="button" role="tab" data-tab="ans" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a8.5 8.5 0 01-12.4 7.6L4 21l1.4-4.4A8.5 8.5 0 1121 12z"/><path d="M12 8v4l2.5 1.5"/></svg>Responder</button>
+    <button type="button" role="tab" data-tab="free" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0013 0"/><path d="M12 18v3"/></svg>Livre</button>
+    <button type="button" role="tab" data-tab="tips" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg>Dicas</button>
+  </div>
+</nav>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+var store = {
+  get:function(k,d){ try{ var v=localStorage.getItem("fs_"+k); return v?JSON.parse(v):d; }catch(e){ return d; } },
+  set:function(k,v){ try{ localStorage.setItem("fs_"+k, JSON.stringify(v)); }catch(e){} }
+};
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+var toastEl = $("toast"), toastT;
+function toast(m){ toastEl.textContent=m; toastEl.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){ toastEl.hidden=true; },3200); }
+var SPK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 010 6"/><path d="M18 6.5a7.5 7.5 0 010 11"/></svg>';
+var MIC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor" stroke="none"/><path d="M5.5 11.5a6.5 6.5 0 0013 0"/><path d="M12 18v3"/></svg>';
+var STOP = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>';
+["rep-mic","blk-mic","ans-mic","free-mic"].forEach(function(id){ $(id).innerHTML = MIC; });
+$("rep-listen").innerHTML = SPK + "Ouvir";
+$("blk-chunk-say").innerHTML = SPK + "Ouvir o bloco";
+$("ans-again").innerHTML = SPK + "Ouvir de novo";
+
+/* ---------- voz (falar) ---------- */
+var synth = ("speechSynthesis" in window) ? window.speechSynthesis : null, voices = [];
+function loadVoices(){ try{ voices = synth ? synth.getVoices() : []; }catch(e){ voices = []; } }
+if (synth){ loadVoices(); try{ synth.onvoiceschanged = loadVoices; }catch(e){} }
+function pickVoice(){
+  var en = voices.filter(function(v){ return /^en[-_]/i.test(v.lang); });
+  var pref = /Samantha|Google US|Aria|Jenny|Natural|Ava|Allison|Zira|Daniel|Google UK/i;
+  return en.find(function(v){ return /en[-_]US/i.test(v.lang) && pref.test(v.name); }) || en.find(function(v){ return /en[-_]US/i.test(v.lang); }) || en[0] || null;
+}
+var rate = store.get("rate", 0.75);
+function speak(text, onEnd){
+  if (!synth){ toast("Este navegador não tem voz."); if (onEnd) onEnd(); return; }
+  try{
+    synth.cancel();
+    var u = new SpeechSynthesisUtterance(text), v = pickVoice();
+    if (v){ u.voice = v; u.lang = v.lang; } else u.lang = "en-US";
+    u.rate = rate;
+    var done = false; function fin(){ if (!done){ done = true; if (onEnd) onEnd(); } }
+    u.onend = fin; u.onerror = fin;
+    synth.speak(u);
+  }catch(e){ if (onEnd) onEnd(); }
+}
+var spS = $("spd-slow"), spN = $("spd-norm");
+function paintSpeed(){ spS.setAttribute("aria-pressed", rate < 0.85 ? "true":"false"); spN.setAttribute("aria-pressed", rate >= 0.85 ? "true":"false"); }
+[spS, spN].forEach(function(b){ b.onclick = function(){ rate = parseFloat(b.dataset.rate); store.set("rate", rate); paintSpeed(); }; });
+paintSpeed();
+
+/* ---------- microfone ---------- */
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+var inFrame = false; try{ inFrame = window.self !== window.top; }catch(e){ inFrame = true; }
+var warnEl = $("mic-warn");
+function showWarn(html){ warnEl.innerHTML = html; warnEl.hidden = false; }
+if (!SR){
+  showWarn("<b>Este navegador não reconhece voz.</b> Abra este app no <b>Google Chrome</b> (Android ou computador) ou no Safari do iPhone.");
+} else if (inFrame){
+  showWarn("<b>Abra o app em uma aba própria.</b> Dentro de outra página o microfone costuma ser bloqueado. Abra o endereço direto no Chrome.");
+}
+var active = null; /* reconhecimento em andamento */
+function listen(opts){
+  /* opts: {continuous, onInterim(text), onFinal(alts[]), onError(code), onStart, onSpeech, onEnd, btn} */
+  if (!SR){ toast("Microfone indisponível neste navegador. Use o Chrome."); return null; }
+  stopAll();
+  if (synth) try{ synth.cancel(); }catch(e){}
+  var r = new SR();
+  r.lang = "en-US"; r.interimResults = true; r.maxAlternatives = 3; r.continuous = !!opts.continuous;
+  var finals = [], gotFinal = false;
+  r.onstart = function(){ if (opts.btn){ opts.btn.classList.add("rec"); opts.btn.innerHTML = STOP; } if (opts.onStart) opts.onStart(); };
+  r.onspeechstart = function(){ if (opts.onSpeech) opts.onSpeech(); };
+  r.onresult = function(ev){
+    var interim = "";
+    for (var i = ev.resultIndex; i < ev.results.length; i++){
+      var res = ev.results[i];
+      if (res.isFinal){
+        var alts = []; for (var k = 0; k < res.length; k++) alts.push(res[k].transcript);
+        finals.push(alts); gotFinal = true;
+        if (!opts.continuous && opts.onFinal) opts.onFinal(alts);
+      } else interim += res[0].transcript;
+    }
+    if (opts.onInterim){
+      var sofar = finals.map(function(a){ return a[0]; }).join(" ");
+      opts.onInterim((sofar + " " + interim).trim());
+    }
+  };
+  r.onerror = function(ev){ r._err = ev && ev.error; };
+  r.onend = function(){
+    if (opts.btn){ opts.btn.classList.remove("rec"); opts.btn.innerHTML = MIC; }
+    if (active === r) active = null;
+    if (r._err && r._err !== "aborted" && !(opts.continuous && r._err === "no-speech")){
+      if (opts.onError) opts.onError(r._err);
+    } else if (!opts.continuous && !gotFinal && !r._aborted){
+      if (opts.onError) opts.onError("no-speech");
+    }
+    if (opts.onEnd) opts.onEnd(finals, r);
+  };
+  try{ r.start(); active = r; }catch(e){ if (opts.onError) opts.onError("start"); return null; }
+  return r;
+}
+function stopAll(){ if (active){ try{ active._aborted = true; active.stop(); }catch(e){} active = null; } }
+function errMsg(code){
+  if (code === "not-allowed" || code === "service-not-allowed") return "O microfone foi bloqueado. Toque no cadeado ao lado do endereço, libere o <b>Microfone</b> e recarregue a página.";
+  if (code === "no-speech") return "Não ouvi nada. Fale um pouco mais alto e perto do celular.";
+  if (code === "network") return "O reconhecimento de voz precisa de internet.";
+  if (code === "audio-capture") return "Não encontrei microfone neste aparelho.";
+  return "Não consegui ouvir. Tente de novo.";
+}
+function errBox(el, code, nextBtnId){
+  el.className = "feedback bad";
+  el.innerHTML = '<p class="verdict">Opa!</p><p>' + errMsg(code) + '</p>' + (nextBtnId ? '<div class="row"><button type="button" class="btn ghost grow" id="' + nextBtnId + '">Pular</button></div>' : "");
+  el.hidden = false;
+}
+
+/* ---------- comparação de palavras ---------- */
+var CONTR = {"i'm":"i am","you're":"you are","we're":"we are","they're":"they are","he's":"he is","she's":"she is","it's":"it is","that's":"that is","what's":"what is","where's":"where is","there's":"there is","let's":"let us","i'll":"i will","you'll":"you will","we'll":"we will","they'll":"they will","he'll":"he will","she'll":"she will","it'll":"it will","i'd":"i would","you'd":"you would","we'd":"we would","i've":"i have","you've":"you have","we've":"we have","don't":"do not","doesn't":"does not","didn't":"did not","can't":"cannot","won't":"will not","isn't":"is not","aren't":"are not","wasn't":"was not","weren't":"were not","couldn't":"could not","wouldn't":"would not","shouldn't":"should not","haven't":"have not","gonna":"going to","wanna":"want to","ok":"okay"};
+var NUM = {"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten","11":"eleven","12":"twelve","20":"twenty","30":"thirty"};
+function toks(t){
+  var s = String(t).toLowerCase().replace(/[’`]/g,"'").replace(/[^a-z0-9' ]+/g," ").replace(/\s+/g," ").trim();
+  if (!s) return [];
+  var out = [];
+  s.split(" ").forEach(function(w){
+    w = w.replace(/^'+|'+$/g,"");
+    if (!w) return;
+    if (CONTR[w]) out = out.concat(CONTR[w].split(" "));
+    else if (NUM[w]) out.push(NUM[w]);
+    else if (/^\d+(am|pm)$/.test(w)){ var n = w.replace(/(am|pm)/,""); out.push(NUM[n]||n); out.push(w.slice(-2)); }
+    else out.push(w);
+  });
+  return out.map(function(w){ return w === "cannot" ? "can" : w; });
+}
+function lcsMatch(T, G){
+  var n = T.length, m = G.length, dp = [];
+  for (var i = 0; i <= n; i++){ dp.push(new Array(m+1).fill(0)); }
+  for (i = n-1; i >= 0; i--) for (var j = m-1; j >= 0; j--)
+    dp[i][j] = T[i] === G[j] ? dp[i+1][j+1] + 1 : Math.max(dp[i+1][j], dp[i][j+1]);
+  var hit = new Array(n).fill(false); i = 0; j = 0;
+  while (i < n && j < m){
+    if (T[i] === G[j]){ hit[i] = true; i++; j++; }
+    else if (dp[i+1][j] >= dp[i][j+1]) i++; else j++;
+  }
+  return {hit:hit, score: n ? dp[0][0] / n : 0};
+}
+function best(target, alts){
+  var T = toks(target), bestR = null, bestA = "";
+  alts.forEach(function(a){ var r = lcsMatch(T, toks(a)); if (!bestR || r.score > bestR.score){ bestR = r; bestA = a; } });
+  return {r:bestR || {hit:[],score:0}, heard:bestA, T:T};
+}
+function wordsHTML(T, hit){
+  return '<ul class="words">' + T.map(function(w,i){ return '<li class="w ' + (hit[i] ? "ok" : "bad") + '">' + esc(w) + '</li>'; }).join("") + '</ul>';
+}
+
+/* ---------- placar ---------- */
+var scores = store.get("scores", {});
+["rep","blk","ans","free"].forEach(function(k){ if (!scores[k]) scores[k] = {ok:0,total:0}; });
+function paintScore(k){
+  var s = scores[k], el = $("score-"+k); if (!el) return;
+  if (k === "free") el.innerHTML = s.total ? "<b>" + s.total + "</b> falas · " + (s.words||0) + " palavras" : "Vamos começar";
+  else el.innerHTML = s.total ? "Boas <b>" + s.ok + "</b> de " + s.total : "Vamos começar";
+}
+function addScore(k, ok){ scores[k].total++; if (ok) scores[k].ok++; store.set("scores", scores); paintScore(k); }
+["rep","blk","ans","free"].forEach(paintScore);
+
+/* =========================================================
+   1. REPETIR (shadowing)
+   ========================================================= */
+var REP = {
+ "Básico":[
+  ["Nice to meet you.","Prazer em conhecer você."],["How are you doing?","Como você está?"],["I'm doing well, thanks.","Estou bem, obrigado."],
+  ["My name is Mike.","Meu nome é Mike."],["I'm from Brazil.","Eu sou do Brasil."],["I live in Santo André.","Eu moro em Santo André."],
+  ["I'm an accountant.","Eu sou contador."],["I have my own company.","Eu tenho minha própria empresa."],["I work with taxes.","Eu trabalho com impostos."],
+  ["Sorry, could you repeat that?","Desculpe, pode repetir?"],["Could you speak more slowly?","Pode falar mais devagar?"],["Let me think.","Deixa eu pensar."],
+  ["That sounds great.","Parece ótimo."],["I don't know yet.","Ainda não sei."],["See you tomorrow.","Até amanhã."],["Have a nice day.","Tenha um bom dia."]
+ ],
+ "Trabalho":[
+  ["I'll send you the report today.","Vou te mandar o relatório hoje."],["Let me check and get back to you.","Vou verificar e te dou um retorno."],
+  ["Are you available on Friday?","Você está disponível na sexta?"],["The meeting is at three.","A reunião é às três."],
+  ["I'm meeting a client this afternoon.","Vou encontrar um cliente hoje à tarde."],["We need to pay this tax by Monday.","Precisamos pagar esse imposto até segunda."],
+  ["Can you send me the invoice?","Você pode me mandar a nota fiscal?"],["I'm working on it right now.","Estou trabalhando nisso agora."],
+  ["It depends on the company.","Depende da empresa."],["I help small companies pay less tax.","Eu ajudo pequenas empresas a pagar menos imposto."],
+  ["Let's schedule a call.","Vamos marcar uma ligação."],["Thanks for your patience.","Obrigado pela paciência."]
+ ],
+ "Dia a dia":[
+  ["I'm spending the day with my sister tomorrow.","Vou passar o dia com minha irmã amanhã."],["I'm going to the supermarket.","Vou ao supermercado."],
+  ["I usually wake up at six.","Eu geralmente acordo às seis."],["I'm a bit tired today.","Estou um pouco cansado hoje."],
+  ["What are you doing this weekend?","O que você vai fazer no fim de semana?"],["I really enjoy traveling.","Eu gosto muito de viajar."],
+  ["Can I have the bill, please?","Pode trazer a conta, por favor?"],["I'd like a coffee, please.","Eu queria um café, por favor."],
+  ["How much is it?","Quanto custa?"],["It's very hot today.","Está muito quente hoje."],["I keep forgetting his name.","Eu vivo esquecendo o nome dele."],
+  ["We're flying to Bahia in December.","Vamos voar para a Bahia em dezembro."]
+ ]
+};
+var repLevel = store.get("repLevel","Básico"); if (!REP[repLevel]) repLevel = "Básico";
+var repOrder, repI = 0, repHidden = false;
+function repSet(level){
+  repLevel = level; store.set("repLevel", level);
+  repOrder = shuffle(REP[level]); repI = 0;
+  Array.prototype.forEach.call($("rep-levels").children, function(b){ b.setAttribute("aria-pressed", b.textContent === level ? "true":"false"); });
+  repRender();
+}
+Object.keys(REP).forEach(function(l){
+  var b = document.createElement("button"); b.type="button"; b.className="chipbtn"; b.textContent=l;
+  b.onclick = function(){ repSet(l); }; $("rep-levels").appendChild(b);
+});
+function repRender(){
+  var q = repOrder[repI];
+  $("rep-count").textContent = "Frase " + (repI+1) + " de " + repOrder.length + " · " + repLevel;
+  $("rep-en").textContent = q[0]; $("rep-pt").textContent = q[1];
+  $("rep-en").classList.toggle("blur", repHidden);
+  $("rep-hide").textContent = repHidden ? "Mostrar texto" : "Esconder texto";
+  $("rep-fb").hidden = true; $("rep-live").textContent = "";
+  $("rep-hint").textContent = "Ouça e depois toque no microfone para repetir";
+}
+function repNext(){ repI++; if (repI >= repOrder.length){ repOrder = shuffle(REP[repLevel]); repI = 0; toast("Rodada completa! 🎉"); } repRender(); window.scrollTo({top:0,behavior:"smooth"}); }
+$("rep-listen").onclick = function(){ speak(repOrder[repI][0]); };
+$("rep-hide").onclick = function(){ repHidden = !repHidden; store.set("repHidden", repHidden); repRender(); };
+repHidden = store.get("repHidden", false);
+$("rep-mic").onclick = function(){
+  if (active){ stopAll(); return; }
+  var q = repOrder[repI], fb = $("rep-fb"); fb.hidden = true;
+  $("rep-hint").textContent = "Ouvindo… repita a frase";
+  listen({btn:$("rep-mic"),
+    onInterim:function(t){ $("rep-live").textContent = t; },
+    onFinal:function(alts){
+      stopAll();
+      var b = best(q[0], alts), sc = b.r.score, ok = sc >= 0.8;
+      addScore("rep", ok);
+      fb.className = "feedback " + (ok ? "ok" : sc >= 0.5 ? "mid" : "bad");
+      fb.innerHTML = '<p class="verdict">' + (sc >= 0.95 ? "Perfeito! Soou natural." : ok ? "Muito bom! Deu para entender tudo." : sc >= 0.5 ? "Quase. Ouça de novo as palavras em vermelho." : "Vamos de novo, mais devagar.") + '</p>' +
+        '<p>Eu entendi: <span class="heard">"' + esc(b.heard) + '"</span></p>' + wordsHTML(b.T, b.r.hit) +
+        '<div class="row"><button type="button" class="icon-btn" id="rep-model">' + SPK + 'Ouvir o modelo</button>' +
+        '<button type="button" class="btn ghost" id="rep-retry">Repetir</button><button type="button" class="btn primary grow" id="rep-next">Próxima</button></div>';
+      fb.hidden = false;
+      $("rep-model").onclick = function(){ speak(q[0]); };
+      $("rep-retry").onclick = function(){ fb.hidden = true; $("rep-live").textContent = ""; $("rep-mic").click(); };
+      $("rep-next").onclick = repNext;
+      $("rep-hint").textContent = "Toque no microfone para tentar de novo";
+    },
+    onError:function(code){ $("rep-hint").textContent = "Toque no microfone e repita a frase"; errBox(fb, code, "rep-skip"); var s=$("rep-skip"); if (s) s.onclick = repNext; }
+  });
+};
+repSet(repLevel);
+
+/* =========================================================
+   2. BLOCOS (chunks)
+   ========================================================= */
+var BLK = [
+ {c:"I'm going to…", pt:"Diga que vai viajar em dezembro.", m:["I'm going to travel in December."]},
+ {c:"I'm going to…", pt:"Diga que vai ligar para o cliente amanhã.", m:["I'm going to call the client tomorrow."]},
+ {c:"I'll…", pt:"O telefone tocou. Diga que você atende.", m:["I'll answer it.","I'll get it."]},
+ {c:"I'll…", pt:"Prometa que manda o relatório hoje.", m:["I'll send the report today.","I'll send you the report today."]},
+ {c:"I think…", pt:"Dê sua opinião: a reunião vai ser longa.", m:["I think the meeting will be long."]},
+ {c:"I think…", pt:"Diga que acha que vai chover.", m:["I think it will rain.","I think it's going to rain."]},
+ {c:"Can you…?", pt:"Peça para a pessoa te mandar a nota fiscal.", m:["Can you send me the invoice?"]},
+ {c:"Can you…?", pt:"Peça para a pessoa falar mais devagar.", m:["Can you speak more slowly?"]},
+ {c:"Could you…?", pt:"Peça educadamente para repetir.", m:["Could you repeat that, please?","Could you repeat that?"]},
+ {c:"I'd like…", pt:"No restaurante, peça um café.", m:["I'd like a coffee, please.","I'd like a coffee."]},
+ {c:"I need to…", pt:"Diga que precisa terminar o relatório hoje.", m:["I need to finish the report today."]},
+ {c:"I need to…", pt:"Diga que precisa ir ao banco.", m:["I need to go to the bank."]},
+ {c:"I want to…", pt:"Diga que quer melhorar seu inglês.", m:["I want to improve my English."]},
+ {c:"I usually…", pt:"Conte que você geralmente acorda às seis.", m:["I usually wake up at six."]},
+ {c:"I usually…", pt:"Conte que geralmente trabalha até as sete.", m:["I usually work until seven."]},
+ {c:"I'm trying to…", pt:"Diga que está tentando aprender inglês.", m:["I'm trying to learn English."]},
+ {c:"I enjoy…", pt:"Diga que gosta de viajar com a família.", m:["I enjoy traveling with my family."]},
+ {c:"Do you mind…?", pt:"Pergunte se a pessoa se importa de esperar.", m:["Do you mind waiting?","Do you mind waiting a minute?"]},
+ {c:"How about…?", pt:"Sugira se encontrar na sexta.", m:["How about Friday?","How about meeting on Friday?"]},
+ {c:"Let's…", pt:"Sugira marcar uma ligação.", m:["Let's schedule a call.","Let's have a call."]},
+ {c:"It depends on…", pt:"Diga que depende do cliente.", m:["It depends on the client."]},
+ {c:"I'm not sure…", pt:"Diga que não tem certeza.", m:["I'm not sure.","I'm not sure about that."]},
+ {c:"I've never…", pt:"Diga que nunca foi aos Estados Unidos.", m:["I've never been to the United States.","I've never been to the US."]},
+ {c:"Have you ever…?", pt:"Pergunte se a pessoa já foi ao Brasil.", m:["Have you ever been to Brazil?"]},
+ {c:"What do you think about…?", pt:"Pergunte o que a pessoa acha da proposta.", m:["What do you think about the proposal?"]},
+ {c:"I'm looking for…", pt:"Na loja, diga que procura um presente.", m:["I'm looking for a gift."]},
+ {c:"Is it possible to…?", pt:"Pergunte se é possível pagar com cartão.", m:["Is it possible to pay by card?","Is it possible to pay with a card?"]},
+ {c:"I used to…", pt:"Conte que você morava em São Paulo.", m:["I used to live in São Paulo."]},
+ {c:"I'm spending…", pt:"Diga que vai passar o fim de semana na praia.", m:["I'm spending the weekend at the beach."]},
+ {c:"The problem is…", pt:"Diga que o problema é o prazo.", m:["The problem is the deadline."]}
+];
+var blkOrder = shuffle(BLK), blkI = 0;
+function blkRender(){
+  var q = blkOrder[blkI];
+  $("blk-count").textContent = "Situação " + (blkI+1) + " de " + blkOrder.length;
+  $("blk-chunk").textContent = q.c; $("blk-pt").textContent = q.pt;
+  $("blk-peek-txt").hidden = true; $("blk-peek-txt").textContent = q.m[0];
+  $("blk-fb").hidden = true; $("blk-live").textContent = "";
+  $("blk-hint").textContent = "Toque e fale a frase em inglês";
+}
+function blkNext(){ blkI++; if (blkI >= blkOrder.length){ blkOrder = shuffle(BLK); blkI = 0; toast("Rodada completa! 🎉"); } blkRender(); window.scrollTo({top:0,behavior:"smooth"}); }
+$("blk-chunk-say").onclick = function(){ speak(blkOrder[blkI].c.replace("…","")); };
+$("blk-peek").onclick = function(){ $("blk-peek-txt").hidden = false; speak(blkOrder[blkI].m[0]); };
+$("blk-mic").onclick = function(){
+  if (active){ stopAll(); return; }
+  var q = blkOrder[blkI], fb = $("blk-fb"); fb.hidden = true;
+  $("blk-hint").textContent = "Ouvindo…";
+  listen({btn:$("blk-mic"),
+    onInterim:function(t){ $("blk-live").textContent = t; },
+    onFinal:function(alts){
+      stopAll();
+      var top = null;
+      q.m.forEach(function(m){ var b = best(m, alts); if (!top || b.r.score > top.r.score){ top = b; top.model = m; } });
+      var chunkT = toks(q.c.replace("…","")), heardT = toks(top.heard);
+      var usedChunk = lcsMatch(chunkT, heardT).score >= 0.99;
+      var sc = top.r.score, ok = sc >= 0.75;
+      addScore("blk", ok);
+      fb.className = "feedback " + (ok ? "ok" : sc >= 0.5 ? "mid" : "bad");
+      fb.innerHTML = '<p class="verdict">' + (ok ? "Isso! Natural e simples." : sc >= 0.5 ? "Boa tentativa! Compare com o modelo." : "Vamos treinar esse bloco.") + '</p>' +
+        '<p>Eu entendi: <span class="heard">"' + esc(top.heard) + '"</span></p>' +
+        (usedChunk ? '' : '<p>💡 Tente começar com o bloco <span class="chunk">' + esc(q.c) + '</span></p>') +
+        '<p>Um jeito natural de dizer:</p><p class="model">' + esc(top.model) + '</p>' + wordsHTML(top.T, top.r.hit) +
+        '<div class="row"><button type="button" class="icon-btn" id="blk-model">' + SPK + 'Ouvir</button>' +
+        '<button type="button" class="btn ghost" id="blk-retry">Repetir</button><button type="button" class="btn primary grow" id="blk-next">Próxima</button></div>';
+      fb.hidden = false;
+      $("blk-model").onclick = function(){ speak(top.model); };
+      $("blk-retry").onclick = function(){ fb.hidden = true; $("blk-live").textContent=""; $("blk-mic").click(); };
+      $("blk-next").onclick = blkNext;
+      $("blk-hint").textContent = "Toque no microfone para tentar de novo";
+    },
+    onError:function(code){ $("blk-hint").textContent = "Toque e fale a frase em inglês"; errBox(fb, code, "blk-skip"); var s=$("blk-skip"); if (s) s.onclick = blkNext; }
+  });
+};
+blkRender();
+
+/* =========================================================
+   3. RESPONDER RÁPIDO
+   ========================================================= */
+var ANS = [
+ {q:"What do you do?", pt:"O que você faz? (profissão)", m:["I'm an accountant.","I work with taxes. I have my own company."]},
+ {q:"Where are you from?", pt:"De onde você é?", m:["I'm from Brazil.","I'm from São Paulo, Brazil."]},
+ {q:"Where do you live?", pt:"Onde você mora?", m:["I live in Santo André.","I live near São Paulo."]},
+ {q:"How are you today?", pt:"Como você está hoje?", m:["I'm good, thanks. And you?","A bit tired, but good."]},
+ {q:"What time do you usually wake up?", pt:"Que horas você geralmente acorda?", m:["I usually wake up at six.","Around seven."]},
+ {q:"What are you doing this weekend?", pt:"O que você vai fazer no fim de semana?", m:["I'm spending time with my family.","I'm going to rest."]},
+ {q:"Do you like your job?", pt:"Você gosta do seu trabalho?", m:["Yes, I really like it.","Yes, I love working with numbers."]},
+ {q:"What did you do yesterday?", pt:"O que você fez ontem?", m:["I worked all day.","I went to the office and then I went home."]},
+ {q:"Why are you learning English?", pt:"Por que você está aprendendo inglês?", m:["I want to travel and talk to people.","I need it for my work."]},
+ {q:"Do you have any brothers or sisters?", pt:"Você tem irmãos?", m:["Yes, I have a sister.","Yes, I have one sister."]},
+ {q:"What's your favorite food?", pt:"Qual é sua comida favorita?", m:["I love Brazilian barbecue.","I really like pasta."]},
+ {q:"Have you ever been to the United States?", pt:"Você já foi aos Estados Unidos?", m:["No, never. But I want to go.","Yes, I went to Orlando."]},
+ {q:"What do you do in your free time?", pt:"O que você faz no tempo livre?", m:["I like to travel and watch movies.","I spend time with my family."]},
+ {q:"How was your day?", pt:"Como foi seu dia?", m:["It was busy, but good.","Pretty good, thanks."]},
+ {q:"Can you tell me about your company?", pt:"Pode falar sobre sua empresa?", m:["We are an accounting firm. We help small companies.","We do accounting and tax planning."]},
+ {q:"How long have you worked there?", pt:"Há quanto tempo você trabalha lá?", m:["For many years.","For about ten years."]},
+ {q:"Are you busy right now?", pt:"Você está ocupado agora?", m:["A little. Can I call you later?","No, I'm free. Go ahead."]},
+ {q:"Would you like some coffee?", pt:"Você quer um café?", m:["Yes, please. Thank you.","No, thanks. I'm fine."]},
+ {q:"What's the weather like today?", pt:"Como está o tempo hoje?", m:["It's hot and sunny.","It's cloudy. I think it's going to rain."]},
+ {q:"Where are you going on your next trip?", pt:"Para onde vai na próxima viagem?", m:["I'm going to Bahia.","I'm not sure yet. Maybe Europe."]},
+ {q:"What's the hardest part of your job?", pt:"Qual a parte mais difícil do seu trabalho?", m:["The deadlines.","Taxes change all the time."]},
+ {q:"Can we meet tomorrow?", pt:"Podemos nos encontrar amanhã?", m:["Sure. What time?","Tomorrow is busy. How about Thursday?"]},
+ {q:"Do you prefer the beach or the mountains?", pt:"Prefere praia ou montanha?", m:["I prefer the beach.","The beach, for sure."]},
+ {q:"What's your plan for next year?", pt:"Qual seu plano para o ano que vem?", m:["I want to speak English better.","I'm going to travel more."]}
+];
+var ansOrder = shuffle(ANS), ansI = 0, ansT0 = 0, ansTimerId = null, ansLatency = null, ansState = "idle";
+function fmtS(ms){ return (ms/1000).toFixed(1).replace(".",",") + " s"; }
+function ansReset(){
+  var q = ansOrder[ansI];
+  $("ans-count").textContent = "Pergunta " + (ansI+1) + " de " + ansOrder.length;
+  $("ans-q").textContent = q.q; $("ans-q").classList.add("blur");
+  $("ans-qpt").textContent = q.pt; $("ans-qpt").hidden = true;
+  $("ans-show").textContent = "Ver pergunta";
+  $("ans-fb").hidden = true; $("ans-live").textContent = ""; $("ans-timer").textContent = "0,0 s";
+  $("ans-start").hidden = false; $("ans-start").textContent = "Começar";
+  $("ans-hint").innerHTML = "Toque em <b>Começar</b> para ouvir a pergunta";
+  clearInterval(ansTimerId); ansState = "idle";
+}
+function ansTick(){ if (ansState === "wait") $("ans-timer").textContent = fmtS(Date.now() - ansT0); }
+function ansGo(){
+  var q = ansOrder[ansI];
+  $("ans-start").hidden = true; $("ans-fb").hidden = true; $("ans-live").textContent = "";
+  $("ans-hint").textContent = "Ouça a pergunta…";
+  ansState = "playing";
+  speak(q.q, function(){ ansListen(); });
+}
+function ansListen(){
+  var q = ansOrder[ansI], fb = $("ans-fb");
+  ansLatency = null; ansT0 = Date.now(); ansState = "wait";
+  clearInterval(ansTimerId); ansTimerId = setInterval(ansTick, 100);
+  $("ans-hint").textContent = "Responda agora! Fale uma frase curta.";
+  listen({btn:$("ans-mic"), continuous:false,
+    onSpeech:function(){ if (ansLatency === null){ ansLatency = Date.now() - ansT0; ansState = "talk"; $("ans-timer").textContent = fmtS(ansLatency); } },
+    onInterim:function(t){ if (ansLatency === null && t){ ansLatency = Date.now() - ansT0; ansState = "talk"; $("ans-timer").textContent = fmtS(ansLatency); } $("ans-live").textContent = t; },
+    onFinal:function(alts){
+      stopAll(); clearInterval(ansTimerId); ansState = "done";
+      var said = alts[0] || "", n = toks(said).length, lat = ansLatency === null ? 9999 : ansLatency;
+      var fast = lat <= 3000, ok = fast && n >= 2;
+      addScore("ans", ok);
+      var tone = lat <= 3000 ? "Rápido! Assim que é conversa de verdade." : lat <= 6000 ? "Bom! Tente começar um pouco mais rápido." : "Demorou um pouco. Comece com uma ponte: “Well…”, “Hmm, let me think…”";
+      fb.className = "feedback " + (ok ? "ok" : fast ? "mid" : "bad");
+      fb.innerHTML = '<p class="verdict">' + (n < 2 ? "Resposta muito curta. Tente uma frase inteira." : tone) + '</p>' +
+        '<div class="stats"><div class="stat"><b>' + (ansLatency === null ? "–" : fmtS(lat)) + '</b><span>para começar</span></div><div class="stat"><b>' + n + '</b><span>palavras</span></div><div class="stat"><b>' + (fast ? "✅" : "⏳") + '</b><span>meta 3 s</span></div></div>' +
+        '<p>Você disse: <span class="heard">"' + esc(said) + '"</span></p>' +
+        '<p>Respostas simples que funcionam:</p>' + q.m.map(function(m,i){ return '<p class="model">• ' + esc(m) + ' <button type="button" class="icon-btn" data-m="' + i + '" style="padding:4px 9px;min-height:30px">' + SPK + '</button></p>'; }).join("") +
+        '<div class="row"><button type="button" class="btn ghost" id="ans-retry">Responder de novo</button><button type="button" class="btn primary grow" id="ans-next">Próxima</button></div>';
+      fb.hidden = false;
+      Array.prototype.forEach.call(fb.querySelectorAll("[data-m]"), function(b){ b.onclick = function(){ speak(q.m[+b.dataset.m]); }; });
+      $("ans-retry").onclick = ansGo;
+      $("ans-next").onclick = function(){ ansI++; if (ansI >= ansOrder.length){ ansOrder = shuffle(ANS); ansI = 0; toast("Rodada completa! 🎉"); } ansReset(); ansGo(); };
+      $("ans-hint").textContent = "Veja como foi";
+    },
+    onError:function(code){ clearInterval(ansTimerId); ansState = "done"; errBox(fb, code, "ans-skip"); var s=$("ans-skip"); if (s) s.onclick = function(){ ansI++; if (ansI >= ansOrder.length){ ansOrder = shuffle(ANS); ansI = 0; } ansReset(); }; $("ans-start").hidden = false; $("ans-start").textContent = "Tentar de novo"; }
+  });
+}
+$("ans-start").onclick = ansGo;
+$("ans-mic").onclick = function(){ if (active){ stopAll(); return; } if (ansState === "idle" || ansState === "done") ansGo(); else ansListen(); };
+$("ans-again").onclick = function(){ speak(ansOrder[ansI].q); };
+$("ans-show").onclick = function(){ var h = $("ans-q").classList.toggle("blur"); $("ans-qpt").hidden = h; $("ans-show").textContent = h ? "Ver pergunta" : "Esconder pergunta"; };
+ansReset();
+
+/* =========================================================
+   4. FALA LIVRE
+   ========================================================= */
+var TOPICS = [
+ {t:"Talk about your job.", h:"Fale do seu trabalho. Ideias: I'm an accountant… I help… Every day I… I like…"},
+ {t:"Describe your typical day.", h:"Descreva seu dia. Ideias: I wake up at… Then I… After work I…"},
+ {t:"Talk about your family.", h:"Fale da sua família. Ideias: I have… My sister is… We like to…"},
+ {t:"Talk about your last trip.", h:"Última viagem. Ideias: I went to… It was… I visited… I ate…"},
+ {t:"What are your plans for the weekend?", h:"Planos do fim de semana. Ideias: I'm going to… I'm meeting… Maybe I'll…"},
+ {t:"Talk about your city.", h:"Sua cidade. Ideias: I live in… It's… There are… I like / I don't like…"},
+ {t:"Why do you want to learn English?", h:"Por que aprender inglês. Ideias: I want to… because… I need…"},
+ {t:"Talk about your company.", h:"Sua empresa. Ideias: We are… We help… Our clients are… We have…"},
+ {t:"What did you do yesterday?", h:"O que fez ontem. Ideias: I woke up… I went… I worked… In the evening I…"},
+ {t:"Describe your favorite restaurant.", h:"Restaurante favorito. Ideias: My favorite… It's near… They have… I usually order…"},
+ {t:"Talk about your next vacation.", h:"Próximas férias. Ideias: I'm going to… I want to… I'm flying… I'd like to…"},
+ {t:"What do you like to do in your free time?", h:"Tempo livre. Ideias: I enjoy… I like to… On Sundays I…"}
+];
+var freeSecs = store.get("freeSecs", 60), freeTopic = null, freeEnd = 0, freeTimer = null, freeRunning = false, freeText = "", freeRec = null;
+[30,60,120].forEach(function(s){
+  var b = document.createElement("button"); b.type="button"; b.className="chipbtn"; b.textContent = s < 60 ? s + " s" : (s/60) + " min";
+  b.onclick = function(){ if (freeRunning) return; freeSecs = s; store.set("freeSecs", s); paintFreeTime(); };
+  b.dataset.s = s; $("free-time").appendChild(b);
+});
+function fmtClock(sec){ sec = Math.max(0, Math.ceil(sec)); return Math.floor(sec/60) + ":" + String(sec%60).padStart(2,"0"); }
+function paintFreeTime(){ Array.prototype.forEach.call($("free-time").children, function(b){ b.setAttribute("aria-pressed", +b.dataset.s === freeSecs ? "true":"false"); }); $("free-timer").textContent = fmtClock(freeSecs); }
+function newTopic(){ var o = TOPICS.filter(function(t){ return t !== freeTopic; }); freeTopic = o[Math.floor(Math.random()*o.length)]; $("free-topic").textContent = freeTopic.t; $("free-help").textContent = freeTopic.h; }
+$("free-new").onclick = function(){ if (!freeRunning){ newTopic(); speak(freeTopic.t); } };
+function freeChunk(){
+  /* o Chrome encerra o reconhecimento após silêncio; reinicia enquanto o tempo corre */
+  var base = freeText;
+  freeRec = listen({btn:$("free-mic"), continuous:true,
+    onInterim:function(t){ $("free-live").textContent = (base + " " + t).trim(); },
+    onEnd:function(finals){
+      var add = finals.map(function(a){ return a[0]; }).join(" ").trim();
+      if (add) freeText = (freeText + " " + add).trim();
+      $("free-live").textContent = freeText;
+      if (freeRunning && Date.now() < freeEnd) setTimeout(function(){ if (freeRunning) freeChunk(); }, 150);
+    },
+    onError:function(code){ if (code === "not-allowed" || code === "service-not-allowed" || code === "audio-capture"){ freeStop(false); errBox($("free-fb"), code); } }
+  });
+  if (freeRunning){ $("free-mic").classList.add("rec"); $("free-mic").innerHTML = STOP; }
+}
+function freeStart(){
+  if (!SR){ toast("Microfone indisponível neste navegador. Use o Chrome."); return; }
+  freeRunning = true; freeText = ""; freeEnd = Date.now() + freeSecs*1000;
+  $("free-fb").hidden = true; $("free-live-card").hidden = false; $("free-live").textContent = "";
+  $("free-hint").textContent = "Falando… toque de novo para parar";
+  clearInterval(freeTimer);
+  freeTimer = setInterval(function(){ var left = (freeEnd - Date.now())/1000; $("free-timer").textContent = fmtClock(left); if (left <= 0) freeStop(true); }, 200);
+  freeChunk();
+}
+var FILLERS = ["well","so","actually","like","you know","i mean","let me think","hmm","um","uh"];
+function freeStop(finished){
+  if (!freeRunning) return;
+  freeRunning = false; clearInterval(freeTimer); stopAll();
+  $("free-mic").classList.remove("rec"); $("free-mic").innerHTML = MIC;
+  setTimeout(function(){
+    var spoken = freeSecs - Math.max(0, (freeEnd - Date.now())/1000);
+    var T = toks(freeText), n = T.length, wpm = spoken > 3 ? Math.round(n / (spoken/60)) : 0;
+    var low = " " + T.join(" ") + " ", bridges = FILLERS.filter(function(f){ return low.indexOf(" " + f + " ") !== -1; });
+    var sentences = freeText ? freeText.split(/[.!?]+/).filter(function(s){ return s.trim(); }).length : 0;
+    scores.free.total++; scores.free.words = (scores.free.words||0) + n; if (!scores.free.bestWpm || wpm > scores.free.bestWpm) scores.free.bestWpm = wpm;
+    store.set("scores", scores); paintScore("free");
+    var level = wpm >= 90 ? "Ritmo de conversa! 🔥" : wpm >= 60 ? "Bom ritmo! Continue assim." : wpm >= 30 ? "Começando a soltar. Frases mais curtas ajudam." : "Travou bastante. Use frases bem simples e as pontes.";
+    var fb = $("free-fb");
+    fb.className = "feedback " + (wpm >= 60 ? "ok" : wpm >= 30 ? "mid" : "bad");
+    fb.innerHTML = '<p class="verdict">' + (n ? level : "Não ouvi nada. Tente de novo falando mais perto.") + '</p>' +
+      '<div class="stats"><div class="stat"><b>' + n + '</b><span>palavras</span></div><div class="stat"><b>' + wpm + '</b><span>palavras/min</span></div><div class="stat"><b>' + (scores.free.bestWpm||0) + '</b><span>seu recorde</span></div></div>' +
+      '<p><b>Referência:</b> conversa tranquila de nativo tem 100 a 150 palavras por minuto. Para começar, a meta é <b>60</b>.</p>' +
+      (bridges.length ? '<p>👏 Você usou pontes: <i>' + esc(bridges.join(", ")) + '</i>. Isso deixa a fala natural.</p>' : '<p>💡 Na próxima, use pontes como <i>Well…</i>, <i>So…</i>, <i>Actually…</i> quando travar.</p>') +
+      '<div class="row"><button type="button" class="btn ghost" id="free-again">Mesmo tema</button><button type="button" class="btn primary grow" id="free-next">Outro tema</button></div>';
+    fb.hidden = false;
+    $("free-again").onclick = function(){ $("free-timer").textContent = fmtClock(freeSecs); freeStart(); };
+    $("free-next").onclick = function(){ newTopic(); $("free-timer").textContent = fmtClock(freeSecs); fb.hidden = true; $("free-live-card").hidden = true; speak(freeTopic.t); };
+    $("free-hint").textContent = "Toque no microfone e comece a falar";
+    $("free-timer").textContent = fmtClock(freeSecs);
+  }, 700);
+}
+$("free-mic").onclick = function(){ if (freeRunning) freeStop(false); else freeStart(); };
+newTopic(); paintFreeTime();
+
+/* =========================================================
+   5. DICAS (pontes)
+   ========================================================= */
+var BRIDGES = [
+ {g:"Para ganhar tempo (em vez de ficar calado)", items:[["Well…","Bom…"],["Hmm, let me think.","Hum, deixa eu pensar."],["That's a good question.","Boa pergunta."],["How can I say this…","Como posso dizer…"],["So…","Então…"]]},
+ {g:"Quando falta a palavra", items:[["I don't know the word, but…","Não sei a palavra, mas…"],["It's like a…","É tipo um…"],["What's the word…?","Qual é a palavra…?"],["How do you say… in English?","Como se diz… em inglês?"]]},
+ {g:"Para ligar as ideias", items:[["And then…","E depois…"],["But…","Mas…"],["Because…","Porque…"],["Actually…","Na verdade…"],["Anyway…","Enfim…"]]},
+ {g:"Para reagir rápido", items:[["Really?","Sério?"],["That's great!","Que ótimo!"],["I see.","Entendi."],["Me too.","Eu também."],["Exactly.","Exatamente."],["No way!","Não acredito!"]]}
+];
+var tg = $("tips-groups");
+BRIDGES.forEach(function(g){
+  var w = document.createElement("div"); w.className = "group";
+  var h = document.createElement("h3"); h.textContent = g.g; w.appendChild(h);
+  var l = document.createElement("div"); l.className = "list";
+  g.items.forEach(function(it){
+    var r = document.createElement("div"); r.className = "li";
+    r.innerHTML = '<div><p class="a">' + esc(it[0]) + '</p><p class="b">' + esc(it[1]) + '</p></div>';
+    var b = document.createElement("button"); b.type="button"; b.className="icon-btn"; b.innerHTML = SPK; b.setAttribute("aria-label","Ouvir: "+it[0]);
+    b.onclick = function(){ speak(it[0].replace(/…/g,"")); };
+    r.appendChild(b); l.appendChild(r);
+  });
+  w.appendChild(l); tg.appendChild(w);
+});
+$("reset").onclick = function(){ scores = {rep:{ok:0,total:0}, blk:{ok:0,total:0}, ans:{ok:0,total:0}, free:{ok:0,total:0}}; store.set("scores", scores); ["rep","blk","ans","free"].forEach(paintScore); toast("Resultados zerados."); };
+
+/* ---------- abas ---------- */
+var tabBtns = Array.prototype.slice.call(document.querySelectorAll("nav.tabs button"));
+var TABS = ["rep","blk","ans","free","tips"];
+function showTab(name){
+  if (TABS.indexOf(name) < 0) name = "rep";
+  stopAll(); if (freeRunning) freeStop(false);
+  if (synth) try{ synth.cancel(); }catch(e){}
+  TABS.forEach(function(n){ $("tab-"+n).hidden = n !== name; });
+  tabBtns.forEach(function(b){ b.setAttribute("aria-selected", b.dataset.tab === name ? "true":"false"); });
+  if (name === "ans" && ansState !== "done") ansReset();
+  store.set("tab", name); window.scrollTo({top:0});
+}
+tabBtns.forEach(function(b){ b.onclick = function(){ showTab(b.dataset.tab); }; });
+showTab(store.get("tab","rep"));
+})();
+</script>
+</body>
+</html>
