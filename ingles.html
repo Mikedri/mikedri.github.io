@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Inglês no Bolso</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -174,7 +175,7 @@ details.rules[open] summary .chev{transform:rotate(180deg)}
 nav.tabs{position:fixed; left:0; right:0; bottom:0; background:var(--surface); border-top:1px solid var(--line);
   padding-bottom:env(safe-area-inset-bottom,0px); z-index:10}
 nav.tabs .inner{max-width:560px; margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); height:var(--nav-h)}
-nav.tabs button{font:inherit; border:0; background:transparent; color:var(--muted); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; cursor:pointer; font-size:.64rem; font-weight:700; padding:0 2px; line-height:1.1}
+nav.tabs button{font:inherit; border:0; background:transparent; color:var(--muted); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; cursor:pointer; font-size:.6rem; font-weight:700; padding:0 2px; line-height:1.1}
 nav.tabs button svg{width:20px; height:20px}
 nav.tabs button[aria-selected="true"]{color:var(--accent)}
 nav.tabs button[aria-selected="true"] .dot{background:var(--accent)}
@@ -253,7 +254,7 @@ nav.tabs button[aria-selected="true"] .dot{background:var(--accent)}
 .vmem{font-size:.88rem}
 .vmem summary{cursor:pointer; font-weight:700}
 .vmem ol{margin:6px 0 0; padding-left:1.2em; color:var(--muted)}
-nav.tabs .inner{grid-template-columns:repeat(6,1fr)}
+nav.tabs .inner{grid-template-columns:repeat(7,1fr)}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .vthumb, :root:not([data-theme="light"]) .stage{--dim:.42} }
 :root[data-theme="dark"] .vthumb, :root[data-theme="dark"] .stage{--dim:.42}
 .sc-title,.sc-char,.sc-place,.sc-floor,.vnum,.vplace,.vppl,.vplayic,.vcheck{z-index:4}
@@ -333,6 +334,42 @@ nav.tabs .inner{grid-template-columns:repeat(6,1fr)}
 @keyframes walkAt{0%{left:10%} 20%{bottom:32px} 40%{bottom:26px} 60%{bottom:32px} 100%{left:calc(50% - 100px); bottom:26px}}
 @keyframes wave{from{transform:rotate(-8deg)} to{transform:rotate(8deg)}}
 
+
+/* ===== músicas ===== */
+.mlist{display:flex; flex-direction:column; gap:12px}
+.mcard{background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden}
+.mtop{display:flex; gap:12px; align-items:center; padding:14px 14px 10px}
+.mdisc{width:52px; height:52px; border-radius:50%; flex-shrink:0; display:grid; place-items:center; font-size:1.4rem; background:radial-gradient(circle, var(--surface) 0 18%, var(--mc) 19% 100%); box-shadow:inset 0 0 0 4px rgba(0,0,0,.08)}
+.mcard.done .mdisc{animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.minfo{flex:1; min-width:0}
+.mname{font-weight:700; font-size:1.05rem; margin:0; line-height:1.25}
+.mart{color:var(--muted); font-size:.85rem; margin:1px 0 0}
+.mlvl{font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; border-radius:999px; padding:3px 9px; flex-shrink:0}
+.mlvl.f{background:var(--ok-soft); color:var(--ok)}
+.mlvl.m{background:var(--mark); color:var(--mark-ink)}
+.mtheme{margin:0; padding:0 14px; font-size:.88rem; color:var(--muted)}
+.msteps{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:12px 14px 4px}
+.mstep{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; text-align:center; text-decoration:none; font-weight:700; font-size:.8rem; line-height:1.2; color:var(--ink); background:var(--accent-soft); border-radius:12px; padding:10px 4px; min-height:64px; position:relative}
+.mstep .ic{font-size:1.15rem}
+.mstep small{font-weight:400; color:var(--muted); font-size:.7rem}
+.mstep.seen{background:var(--ok-soft)}
+.mstep.seen::after{content:"✓"; position:absolute; top:4px; right:7px; color:var(--ok); font-weight:800; font-size:.8rem}
+.mmore{padding:6px 14px 14px; font-size:.9rem}
+.mmore summary{cursor:pointer; font-weight:700; color:var(--accent); padding:6px 0; list-style:none}
+.mmore summary::-webkit-details-marker{display:none}
+.mwords{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px}
+.mword{font:inherit; display:inline-flex; align-items:center; gap:5px; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:5px 11px; cursor:pointer; font-size:.86rem}
+.mword b{font-weight:700}
+.mword span{color:var(--muted)}
+.mtip{margin:8px 0 0; background:var(--accent-soft); border-radius:10px; padding:9px 11px}
+.mtip.ear{background:var(--mark); color:var(--mark-ink)}
+.mletra{display:inline-block; margin-top:10px; font-size:.85rem; color:var(--accent); font-weight:700}
+.mdone{margin-top:12px; width:100%}
+.mhow ol{margin:4px 0 0; padding-left:1.2em; color:var(--muted); font-size:.9rem}
+.mhow li{margin:3px 0}
+.mhow b{color:var(--ink)}
+
 /* confete */
 .confetti{position:fixed; top:-12px; width:9px; height:14px; border-radius:2px; z-index:30; pointer-events:none; animation:fall 1.8s ease-in forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(720deg); opacity:.2}}
@@ -411,6 +448,41 @@ nav.tabs .inner{grid-template-columns:repeat(6,1fr)}
       <div id="vid-lines" style="display:flex;flex-direction:column;gap:12px"></div>
       <button type="button" class="btn primary" id="v-next">Próximo vídeo →</button>
     </div>
+  </section>
+
+
+  <!-- ===== MÚSICAS ===== -->
+  <section class="panel" id="tab-music" aria-labelledby="h-music" hidden>
+    <div class="section-head">
+      <h2 id="h-music">Músicas: entenda o que cantam</h2>
+      <div class="score" id="score-music"></div>
+    </div>
+    <div class="card mhow">
+      <p class="eyebrow">Cada música em 3 rodadas</p>
+      <ol>
+        <li><b>🇧🇷 Com tradução</b> — entenda a história. Não tente pegar as palavras ainda.</li>
+        <li><b>🇺🇸 Só inglês</b> — leia junto e cante baixinho. Aqui o ouvido começa a separar as palavras.</li>
+        <li><b>🎧 Sem legenda</b> — só ouça. Quando entender o refrão sem ler, marque como dominada.</li>
+      </ol>
+    </div>
+    <details class="note vmem">
+      <summary>🧠 Como decorar e treinar o ouvido com música</summary>
+      <ol>
+        <li><b>Uma música por semana.</b> Ouvir a mesma música muitas vezes grava mais do que ouvir dez diferentes.</li>
+        <li><b>Comece pelo refrão.</b> Ele repete 3 ou 4 vezes — é a parte mais fácil de pegar.</li>
+        <li><b>Cante junto, ao mesmo tempo</b> (sombra). Cantar treina pronúncia e ritmo sem você perceber.</li>
+        <li><b>Diminua a velocidade:</b> no YouTube, toque na engrenagem ⚙️ → Velocidade → 0,75.</li>
+        <li><b>Legenda traduzida em qualquer vídeo:</b> toque em CC, depois ⚙️ → Legendas → Traduzir automaticamente → Português.</li>
+        <li><b>Ouça no carro</b> as músicas que já passaram da rodada 2. O ouvido continua aprendendo mesmo sem você prestar atenção.</li>
+      </ol>
+    </details>
+    <div class="modes" id="m-filter" role="group" aria-label="Nível das músicas">
+      <button type="button" data-f="all" aria-pressed="true">Todas</button>
+      <button type="button" data-f="f" aria-pressed="false">Fáceis</button>
+      <button type="button" data-f="m" aria-pressed="false">Médias</button>
+    </div>
+    <div class="mlist" id="mlist"></div>
+    <p class="note">Os botões abrem o YouTube com vídeos reais da música. Os vídeos são de canais oficiais e de fãs; se um sair do ar, escolha outro da lista que aparece.</p>
   </section>
 
   <!-- ===== PREPOSIÇÕES ===== -->
@@ -658,6 +730,9 @@ nav.tabs .inner{grid-template-columns:repeat(6,1fr)}
     <button type="button" role="tab" data-tab="video" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg>
       Vídeos<span class="dot"></span></button>
+    <button type="button" role="tab" data-tab="music" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+      Músicas<span class="dot"></span></button>
     <button type="button" role="tab" data-tab="prep" aria-selected="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 21s-7-6.6-7-12a7 7 0 0114 0c0 5.4-7 12-7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
       In·On·At<span class="dot"></span></button>
@@ -753,7 +828,8 @@ var TIPS = {
   futto:"Home, there e -ing vão sem to. School, work e bed vão sem the!",
   futcb:"Está na agenda? Use I'm + -ing. Decidiu agora? Will!",
   help:"Travou na conversa? Estas frases salvam você.",
-  video:"Assista, ouça e depois repita. Eu corrijo sua pronúncia!"
+  video:"Assista, ouça e depois repita. Eu corrijo sua pronúncia!",
+  music:"Escolha uma música e faça as 3 rodadas: tradução, só inglês e sem legenda!"
 };
 var CHEERS = ["Boa!","Mandou bem!","Isso aí!","Perfeito!","Show!","Acertou em cheio!"];
 var OOPS = ["Quase! Leia a dica.","Errar faz parte. Vamos na próxima!","Tudo bem — agora você não esquece mais.","Ops! Ouça a frase certa mais uma vez."];
@@ -2151,10 +2227,164 @@ var tabBtns0 = Array.prototype.slice.call(document.querySelectorAll("nav.tabs bu
 tabBtns0.forEach(function(b){ b.addEventListener("click", function(){ if (b.dataset.tab !== "video"){ stopVid(false); if (rec) try{ rec.abort(); }catch(e){} } }); });
 renderVidGrid();
 
+/* =========================================================
+   7. MÚSICAS — vídeos reais no YouTube em 3 rodadas
+   ========================================================= */
+var SONGS = [
+ {t:"Let It Be", a:"The Beatles", l:"f", c:"#F6C177", e:"🎹",
+  th:"Um conselho para os momentos difíceis: tenha calma e deixe as coisas acontecerem.",
+  w:[["let","deixar"],["trouble","problema"],["wisdom","sabedoria"],["answer","resposta"],["whisper","sussurrar"]],
+  pr:"“Let it be” sai como “lé-di-BÍ”: o T no meio de vogais vira um R fraquinho, igual ao “water” americano.",
+  ear:"O título é repetido muitas vezes no refrão. Na rodada 3, conte quantas vezes você ouve “let it be”."},
+ {t:"Yesterday", a:"The Beatles", l:"f", c:"#C9B6E4", e:"🎸",
+  th:"Saudade de quando a vida era mais simples, antes de uma separação.",
+  w:[["yesterday","ontem"],["suddenly","de repente"],["believe","acreditar"],["shadow","sombra"],["hide","esconder"]],
+  pr:"Yesterday = “IÉS-têr-dêi”, força no começo. Suddenly = “SÂ-dân-li”.",
+  ear:"Só voz e violão, bem devagar. É uma das melhores músicas para começar a rodada “só inglês”."},
+ {t:"What a Wonderful World", a:"Louis Armstrong", l:"f", c:"#9DD9A5", e:"🌳",
+  th:"Um homem olha à sua volta e se encanta com coisas simples: árvores, céu, amigos.",
+  w:[["trees","árvores"],["sky","céu"],["clouds","nuvens"],["rainbow","arco-íris"],["shaking hands","apertando as mãos"]],
+  pr:"Wonderful = “UÂN-dêr-fâl”. World é difícil: “uêrld”, com R e L juntos no fim, quase sem vogal.",
+  ear:"Muito lenta e com palavras do dia a dia. Ótima para a primeira semana."},
+ {t:"Three Little Birds", a:"Bob Marley", l:"f", c:"#F7D774", e:"🐦",
+  th:"Três passarinhos cantam na janela dizendo: não se preocupe, vai dar tudo certo.",
+  w:[["worry","preocupar-se"],["little","pequeno"],["bird","pássaro"],["thing","coisa"],["alright","tudo bem"]],
+  pr:"“Every little thing” = “É-vri LÍ-dâl THÍNG”. Little: o T vira R fraco, “lírâl”.",
+  ear:"Sotaque jamaicano: o TH vira T, então “thing” soa “ting”. Não se assuste, é normal."},
+ {t:"Stand By Me", a:"Ben E. King", l:"f", c:"#8FB8E8", e:"🌙",
+  th:"Mesmo com a noite escura e com medo, tudo bem se você ficar ao meu lado.",
+  w:[["stand by","ficar ao lado, apoiar"],["night","noite"],["dark","escuro"],["moon","lua"],["afraid","com medo"]],
+  pr:"“Stand by me” = “sténd-bai-MÍ”. O D de stand quase some.",
+  ear:"O título repete o tempo todo. Ritmo lento e voz muito clara."},
+ {t:"Count on Me", a:"Bruno Mars", l:"f", c:"#F4A6A0", e:"🤝",
+  th:"Uma música sobre amizade: pode contar comigo, eu sempre vou estar lá.",
+  w:[["count on","contar com"],["friend","amigo"],["ocean","oceano"],["lost","perdido"],["find","encontrar"]],
+  pr:"“Count on me” liga tudo: “káun-ón-MÍ”. O T de count se junta ao “on”.",
+  ear:"Repare na estrutura “if you… I'll…” (se você… eu vou…). É o WILL de promessa da aba Futuro!"},
+ {t:"Perfect", a:"Ed Sheeran", l:"f", c:"#E8B4C8", e:"💃",
+  th:"Um homem dança com a mulher que ama e diz que ela é perfeita.",
+  w:[["darling","querida"],["dance","dançar"],["barefoot","descalço"],["kiss","beijo"],["beautiful","linda"]],
+  pr:"Darling = “DÁR-lin”: o G final some. Beautiful = “BIÚ-ri-fâl”.",
+  ear:"Lenta, mas ele junta palavras. Na rodada 2, siga a legenda com o dedo."},
+ {t:"All of Me", a:"John Legend", l:"f", c:"#B5C7D3", e:"🎹",
+  th:"Uma declaração: eu te dou tudo de mim, com seus defeitos e qualidades.",
+  w:[["mind","mente"],["crazy","louco"],["give","dar"],["all","tudo"],["perfect","perfeito"]],
+  pr:"“All of me” = “ó-lâv-MÍ”. O “of” vira só “âv” e gruda no all.",
+  ear:"Piano e voz. O refrão é curto e repetido — comece por ele."},
+ {t:"Someone You Loved", a:"Lewis Capaldi", l:"f", c:"#A9C4E0", e:"💔",
+  th:"Tristeza depois de perder alguém que dava segurança.",
+  w:[["someone","alguém"],["loved","amou"],["hold","abraçar, segurar"],["fall","cair"],["heal","curar"]],
+  pr:"Loved = “lâvd”, uma sílaba só. Nada de “lâ-ved”.",
+  ear:"Sotaque escocês leve. O refrão é lento e fácil de pegar."},
+ {t:"Yellow", a:"Coldplay", l:"f", c:"#F9E07F", e:"⭐",
+  th:"Olhar as estrelas brilhando e pensar na pessoa amada.",
+  w:[["stars","estrelas"],["shine","brilhar"],["yellow","amarelo"],["skin","pele"],["bones","ossos"]],
+  pr:"Yellow = “IÉ-lôu”. O L é com a língua no céu da boca, não vira U no meio.",
+  ear:"Ele alonga as vogais cantando. Escute o fim das frases: é onde estão as palavras-chave."},
+ {t:"Photograph", a:"Ed Sheeran", l:"m", c:"#D6C4A8", e:"📷",
+  th:"Guardar uma foto no bolso para lembrar de alguém enquanto estão longe.",
+  w:[["photograph","fotografia"],["pocket","bolso"],["wait","esperar"],["home","casa, lar"],["heal","curar"]],
+  pr:"Photograph = “FÔU-râ-gréf”. Força no começo, o T vira R fraco.",
+  ear:"As estrofes são mais rápidas. Na rodada 1, foque só em entender a história."},
+ {t:"Fix You", a:"Coldplay", l:"m", c:"#E9C46A", e:"💡",
+  th:"Apoiar alguém num momento muito triste: eu vou tentar te ajudar.",
+  w:[["fix","consertar"],["try","tentar"],["tired","cansado"],["tears","lágrimas"],["lights","luzes"]],
+  pr:"“Fix you” vira “FÍK-xu”: o S de fix se junta ao you.",
+  ear:"Começa bem lenta e fica forte no fim. A primeira metade é a melhor para treinar."},
+ {t:"Hello", a:"Adele", l:"m", c:"#C7A27C", e:"📞",
+  th:"Uma ligação, anos depois, para pedir desculpas a um ex-amor.",
+  w:[["hello","alô, olá"],["wondering","me perguntando"],["call","ligar"],["sorry","desculpa"],["dream","sonho"]],
+  pr:"Wondering = “UÂN-dê-rin”. Sorry = “SÓ-ri”, com R rápido.",
+  ear:"Adele canta com força e prende as vogais. Repare: ela usa “I'm” e “I've” o tempo todo."},
+ {t:"Someone Like You", a:"Adele", l:"m", c:"#B8A1C9", e:"🎹",
+  th:"Descobrir que o ex casou com outra pessoa e tentar aceitar.",
+  w:[["someone","alguém"],["married","casado"],["find","encontrar"],["forget","esquecer"],["remember","lembrar"]],
+  pr:"“Someone like you” = “SÂM-uân LÁIK iú”.",
+  ear:"Só piano. O refrão é claro; as estrofes são mais rápidas — deixe para a rodada 3."},
+ {t:"Just the Way You Are", a:"Bruno Mars", l:"m", c:"#F2B5A0", e:"😍",
+  th:"Dizer para alguém que ela é incrível do jeito que é, sem mudar nada.",
+  w:[["eyes","olhos"],["hair","cabelo"],["smile","sorriso"],["amazing","incrível"],["change","mudar"]],
+  pr:"Amazing = “â-MÊI-zin”. O G final cai, como em quase todo -ing cantado.",
+  ear:"As estrofes listam partes do rosto. Tente pegar eyes, hair e smile na rodada 3."},
+ {t:"I'm Yours", a:"Jason Mraz", l:"m", c:"#9ED2C6", e:"🌴",
+  th:"Uma música leve e feliz: chega de esperar, eu sou seu.",
+  w:[["yours","seu"],["wait","esperar"],["hesitate","hesitar"],["free","livre"],["sky","céu"]],
+  pr:"Hesitate = “RÉ-zi-têit”: o H tem som de R, e o S de Z.",
+  ear:"As estrofes são rápidas, quase faladas. O refrão é lento — comece por ele e deixe o resto para depois."},
+ {t:"Thinking Out Loud", a:"Ed Sheeran", l:"m", c:"#DDB892", e:"👴",
+  th:"Prometer amor até a velhice, mesmo quando a memória falhar.",
+  w:[["think out loud","pensar alto"],["legs","pernas"],["memory","memória"],["fall in love","se apaixonar"],["old","velho"]],
+  pr:"“Thinking out loud” = “THÍN-kin áut LÁUD”. Língua entre os dentes no TH.",
+  ear:"Ritmo médio e voz clara. Repare em “fall in love”, que aparece no refrão."},
+ {t:"Shallow", a:"Lady Gaga e Bradley Cooper", l:"m", c:"#A7B8C8", e:"🌊",
+  th:"Um diálogo: os dois perguntam se o outro está feliz e decidem mergulhar fundo.",
+  w:[["shallow","raso"],["deep","fundo"],["happy","feliz"],["ground","chão"],["tired","cansado"]],
+  pr:"Shallow = “XÉ-lôu”. Deep = “dííp”, com I bem longo.",
+  ear:"Começa como uma conversa, com perguntas curtas. Primeiro ele canta, depois ela responde."}
+];
+function ytUrl(q){ return "https://www.youtube.com/results?search_query=" + encodeURIComponent(q); }
+var musicSeen = store.get("mseen", {});   // {idx: {pt:1, en:1, no:1, done:1}}
+var musicFilter = store.get("mfilter", "all");
+var elMList = document.getElementById("mlist");
+function paintMusicScore(){
+  var n = 0; SONGS.forEach(function(_, i){ if ((musicSeen[i] || {}).done) n++; });
+  document.getElementById("score-music").innerHTML = "Dominadas <b>" + n + "</b> de " + SONGS.length;
+}
+function renderMusic(){
+  elMList.innerHTML = SONGS.map(function(s, i){
+    if (musicFilter !== "all" && s.l !== musicFilter) return "";
+    var seen = musicSeen[i] || {}, q = s.t + " " + s.a;
+    return '<div class="mcard' + (seen.done ? " done" : "") + '" style="--mc:' + s.c + '">' +
+      '<div class="mtop"><span class="mdisc">' + s.e + '</span>' +
+        '<div class="minfo"><p class="mname">' + esc(s.t) + '</p><p class="mart">' + esc(s.a) + '</p></div>' +
+        '<span class="mlvl ' + s.l + '">' + (s.l === "f" ? "Fácil" : "Média") + '</span></div>' +
+      '<p class="mtheme">' + esc(s.th) + '</p>' +
+      '<div class="msteps">' +
+        '<a class="mstep' + (seen.pt ? " seen" : "") + '" data-m="' + i + '" data-k="pt" target="_blank" rel="noopener" href="' + ytUrl(q + " legendado tradução") + '"><span class="ic">🇧🇷</span>1. Com tradução<small>legenda PT</small></a>' +
+        '<a class="mstep' + (seen.en ? " seen" : "") + '" data-m="' + i + '" data-k="en" target="_blank" rel="noopener" href="' + ytUrl(q + " lyrics") + '"><span class="ic">🇺🇸</span>2. Só inglês<small>letra na tela</small></a>' +
+        '<a class="mstep' + (seen.no ? " seen" : "") + '" data-m="' + i + '" data-k="no" target="_blank" rel="noopener" href="' + ytUrl(q + " official video") + '"><span class="ic">🎧</span>3. Sem legenda<small>clipe oficial</small></a>' +
+      '</div>' +
+      '<details class="mmore"><summary>Treinar antes de ouvir ▾</summary>' +
+        '<p class="eyebrow" style="margin:6px 0 0">Palavras-chave (toque para ouvir)</p>' +
+        '<div class="mwords">' + s.w.map(function(x){ return '<button type="button" class="mword" data-say="' + esc(x[0]) + '">' + SPEAKER.replace('<svg ', '<svg width="15" height="15" ') + '<b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></button>'; }).join("") + '</div>' +
+        '<p class="mtip"><b>🗣️ Pronúncia:</b> ' + esc(s.pr) + '</p>' +
+        '<p class="mtip ear"><b>👂 Escuta:</b> ' + esc(s.ear) + '</p>' +
+        '<a class="mletra" target="_blank" rel="noopener" href="https://www.google.com/search?q=' + encodeURIComponent("letras.mus.br " + q + " tradução") + '">📄 Letra e tradução lado a lado →</a>' +
+        '<button type="button" class="btn ' + (seen.done ? "ghost" : "primary") + ' mdone" data-done="' + i + '">' + (seen.done ? "✓ Dominada — entendo o refrão sem legenda" : "Entendi o refrão sem legenda") + '</button>' +
+      '</details></div>';
+  }).join("");
+  paintMusicScore();
+}
+elMList.addEventListener("click", function(e){
+  var w = e.target.closest(".mword"); if (w){ speak(w.dataset.say); return; }
+  var st = e.target.closest(".mstep");
+  if (st){
+    var i = +st.dataset.m, d = musicSeen[i] || (musicSeen[i] = {});
+    d[st.dataset.k] = 1; store.set("mseen", musicSeen); st.classList.add("seen");
+    mood("", st.dataset.k === "pt" ? "Primeiro entenda a história. Depois volte para a rodada 2!" : st.dataset.k === "en" ? "Leia junto e cante baixinho. 🎤" : "Agora só ouvido! Quantas palavras você pega?");
+    return;
+  }
+  var dn = e.target.closest("[data-done]");
+  if (dn){
+    var k = +dn.dataset.done, dd = musicSeen[k] || (musicSeen[k] = {});
+    dd.done = dd.done ? 0 : 1; store.set("mseen", musicSeen);
+    if (dd.done){ mood("happy", "Música dominada! Seu ouvido agradece 🎶", 1600); confetti(); }
+    renderMusic();
+  }
+});
+var mfBtns = Array.prototype.slice.call(document.querySelectorAll("#m-filter button"));
+function setMusicFilter(f){
+  musicFilter = f; store.set("mfilter", f);
+  mfBtns.forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.f === f ? "true" : "false"); });
+  renderMusic();
+}
+mfBtns.forEach(function(b){ b.onclick = function(){ setMusicFilter(b.dataset.f); }; });
+setMusicFilter(musicFilter);
+
 /* ---------- abas ---------- */
 var tabBtns = Array.prototype.slice.call(document.querySelectorAll("nav.tabs button"));
 function showTab(name){
-  ["video","prep","build","listen","fut","help"].forEach(function(n){ document.getElementById("tab-"+n).hidden = n !== name; });
+  ["video","music","prep","build","listen","fut","help"].forEach(function(n){ document.getElementById("tab-"+n).hidden = n !== name; });
   tabBtns.forEach(function(b){ b.setAttribute("aria-selected", b.dataset.tab === name ? "true" : "false"); });
   store.set("tab", name);
   var panel = document.getElementById("tab-"+name), head = panel.querySelector(".section-head");
@@ -2164,8 +2394,10 @@ function showTab(name){
   window.scrollTo({top:0});
 }
 tabBtns.forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
-var savedTab = store.get("tab","video"); if (["video","prep","build","listen","fut","help"].indexOf(savedTab) < 0) savedTab = "prep";
+var savedTab = store.get("tab","video"); if (["video","music","prep","build","listen","fut","help"].indexOf(savedTab) < 0) savedTab = "prep";
 showTab(savedTab);
 })();
 </script>
+</body></html>
+
 </body></html>
