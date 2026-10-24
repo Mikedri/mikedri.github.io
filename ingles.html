@@ -1,0 +1,2171 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Inglês no Bolso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<style>
+:root{
+  --ground:#F4F5EF; --surface:#FFFFFF; --ink:#1C2640; --muted:#5B6479; --line:#DADDD2;
+  --accent:#2A55CC; --accent-ink:#FFFFFF; --accent-soft:#E4EAFB;
+  --mark:#FFE36A; --mark-ink:#3A3000;
+  --ok:#1E8455; --ok-soft:#DDF2E7; --bad:#C23B2A; --bad-soft:#FBE3DF;
+  --shadow:0 1px 2px rgba(28,38,64,.06), 0 4px 14px rgba(28,38,64,.06);
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --nav-h:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#10151F; --surface:#18202E; --ink:#E6EBF4; --muted:#9AA4B8; --line:#2A3446;
+    --accent:#7C9DFF; --accent-ink:#0D1424; --accent-soft:#1F2A44;
+    --mark:#D9B93A; --mark-ink:#1A1600;
+    --ok:#4CC08A; --ok-soft:#153426; --bad:#FF7A66; --bad-soft:#3A1C18;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10151F; --surface:#18202E; --ink:#E6EBF4; --muted:#9AA4B8; --line:#2A3446;
+  --accent:#7C9DFF; --accent-ink:#0D1424; --accent-soft:#1F2A44;
+  --mark:#D9B93A; --mark-ink:#1A1600;
+  --ok:#4CC08A; --ok-soft:#153426; --bad:#FF7A66; --bad-soft:#3A1C18;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+#vid-player-view:not([hidden]){display:flex}
+body{background:var(--ground); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5;
+  padding-inline:16px; padding-block:0 calc(var(--nav-h) + 24px + env(safe-area-inset-bottom,0px));}
+.wrap{max-width:560px; margin:0 auto}
+header.app{padding-block:18px 10px; display:flex; align-items:flex-end; justify-content:space-between; gap:12px}
+.brand{font-family:var(--display); font-weight:800; font-size:1.55rem; line-height:1.05; letter-spacing:-.01em; margin:0}
+.brand span{display:inline-block; background:var(--mark); color:var(--mark-ink); padding:0 .25em; border-radius:4px; transform:rotate(-1.5deg)}
+.tagline{margin:4px 0 0; color:var(--muted); font-size:.85rem}
+.speed{display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; flex-shrink:0; background:var(--surface)}
+.speed button{border:0; background:transparent; color:var(--muted); font:inherit; font-size:.78rem; font-weight:700; padding:7px 11px; cursor:pointer}
+.speed button[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink)}
+.speed-label{font-size:.7rem; color:var(--muted); text-align:right; margin-bottom:3px; letter-spacing:.04em; text-transform:uppercase}
+
+section.panel{display:flex; flex-direction:column; gap:14px; padding-top:6px}
+.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+.section-head h2{font-family:var(--display); font-weight:800; font-size:1.25rem; margin:0; text-wrap:balance}
+.score{font-size:.8rem; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+.score b{color:var(--ink)}
+.lead{margin:0; color:var(--muted); font-size:.92rem}
+
+.card{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px; box-shadow:var(--shadow)}
+.eyebrow{font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); font-weight:700; margin:0 0 8px}
+.en{font-size:1.35rem; font-weight:700; line-height:1.35; margin:0}
+.pt{color:var(--muted); margin:6px 0 0}
+.gap{display:inline-block; min-width:3.2em; text-align:center; background:var(--mark); color:var(--mark-ink); border-radius:5px; padding:0 .3em; margin:0 .08em}
+.gap.ok{background:var(--ok); color:#fff}
+.gap.bad{background:var(--bad); color:#fff}
+
+/* regra IN ON AT */
+details.rules{background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden}
+details.rules summary{list-style:none; cursor:pointer; padding:13px 16px; font-weight:700; display:flex; justify-content:space-between; align-items:center; gap:8px}
+details.rules summary::-webkit-details-marker{display:none}
+details.rules summary .chev{transition:transform .2s; color:var(--muted)}
+details.rules[open] summary .chev{transform:rotate(180deg)}
+.rule-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:0 12px 12px}
+.rule{display:flex; flex-direction:column; align-items:center; text-align:center; padding:12px 6px; border-radius:10px; background:var(--accent-soft)}
+.rule svg{width:34px; height:34px; color:var(--accent)}
+.rule svg [fill="currentColor"]{transform-box:fill-box; transform-origin:center; animation:rhop 1.8s ease-in-out infinite}
+.rule:nth-child(2) svg [fill="currentColor"]{animation-delay:.3s}
+.rule:nth-child(3) svg [fill="currentColor"]{animation-delay:.6s}
+@keyframes rhop{0%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} 50%{transform:translateY(0) scale(1.12,.88)}}
+.rule h3{margin:4px 0 0; font-family:var(--display); font-size:1.2rem; line-height:1}
+.rule .mean{margin:2px 0 6px; font-size:.8rem; font-weight:700; color:var(--accent)}
+.rule-grid.two{grid-template-columns:repeat(2,1fr)}
+.rule-foot{margin:0; padding:0 14px 14px; font-size:.84rem; color:var(--muted); line-height:1.45}
+.choices.two{grid-template-columns:repeat(2,1fr)}
+.choice.sm{font-size:1.05rem}
+.choice.phrase-opt{font-family:var(--body); font-weight:700; font-size:1rem; letter-spacing:0}
+.rule .ex{margin:0; font-size:.76rem; line-height:1.35; color:var(--muted); font-style:italic}
+
+.choices{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+.choice{font:inherit; font-family:var(--display); font-weight:800; font-size:1.25rem; letter-spacing:.02em; padding:16px 8px; border-radius:12px;
+  border:2px solid var(--line); background:var(--surface); color:var(--ink); cursor:pointer; min-height:60px}
+.choice:hover:not(:disabled){border-color:var(--accent)}
+.choice.ok{border-color:var(--ok); background:var(--ok-soft); color:var(--ok)}
+.choice.bad{border-color:var(--bad); background:var(--bad-soft); color:var(--bad)}
+.choice:disabled{cursor:default}
+.options{display:flex; flex-direction:column; gap:10px}
+.option{font:inherit; text-align:left; padding:14px 16px; border-radius:12px; border:2px solid var(--line); background:var(--surface); color:var(--ink); cursor:pointer; font-size:1rem; min-height:52px}
+.option:hover:not(:disabled){border-color:var(--accent)}
+.option.ok{border-color:var(--ok); background:var(--ok-soft)}
+.option.bad{border-color:var(--bad); background:var(--bad-soft)}
+.option:disabled{cursor:default}
+
+.feedback{border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; gap:6px}
+.feedback.ok{background:var(--ok-soft)}
+.feedback.bad{background:var(--bad-soft)}
+.feedback .verdict{font-weight:700; margin:0}
+.feedback.ok .verdict{color:var(--ok)}
+.feedback.bad .verdict{color:var(--bad)}
+.feedback p{margin:0}
+.feedback .full{font-weight:700; font-size:1.05rem}
+
+.row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.btn{font:inherit; font-weight:700; border-radius:10px; padding:12px 18px; cursor:pointer; border:2px solid transparent; min-height:48px}
+.btn.primary{background:var(--accent); color:var(--accent-ink)}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line)}
+.btn.grow{flex:1}
+.btn:disabled{opacity:.45; cursor:default}
+.icon-btn{display:inline-flex; align-items:center; gap:6px; font:inherit; font-size:.88rem; font-weight:700; color:var(--accent);
+  background:var(--accent-soft); border:0; border-radius:999px; padding:8px 13px; cursor:pointer}
+.icon-btn svg{width:18px; height:18px}
+
+/* montar frase */
+.answer-zone{min-height:62px; border:2px dashed var(--line); border-radius:12px; padding:10px; display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start}
+.answer-zone.empty::before{content:"Toque nas palavras abaixo na ordem certa"; color:var(--muted); font-size:.88rem; padding:8px 4px}
+.answer-zone.ok{border-style:solid; border-color:var(--ok)}
+.answer-zone.bad{border-style:solid; border-color:var(--bad)}
+.bank{display:flex; flex-wrap:wrap; gap:8px}
+.tile{font:inherit; font-weight:700; font-size:1.05rem; padding:10px 14px; border-radius:10px; border:2px solid var(--line); background:var(--surface); color:var(--ink); cursor:pointer; min-height:46px; box-shadow:0 2px 0 var(--line)}
+.tile.used{visibility:hidden}
+.tile.in-answer{background:var(--accent-soft); border-color:var(--accent)}
+
+/* ouvir */
+.play-wrap{display:flex; flex-direction:column; align-items:center; gap:10px; padding:8px 0}
+.play{width:96px; height:96px; border-radius:50%; border:0; background:var(--accent); color:var(--accent-ink); cursor:pointer; display:grid; place-items:center; box-shadow:var(--shadow)}
+.play svg{width:40px; height:40px}
+.play:active{transform:scale(.96)}
+.play-hint{color:var(--muted); font-size:.85rem; margin:0}
+.reveal{text-align:center}
+
+/* socorro */
+.tip{background:var(--mark); color:var(--mark-ink); border-radius:12px; padding:14px 16px; font-size:.92rem}
+.tip strong{display:block; margin-bottom:2px}
+.group h3{font-family:var(--display); font-size:1.02rem; margin:4px 0 8px}
+.phrase-list{display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden}
+.phrase{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; padding:12px 14px; border-top:1px solid var(--line)}
+.phrase:first-child{border-top:0}
+.phrase .p-en{font-weight:700; margin:0}
+.phrase .p-pt{color:var(--muted); font-size:.88rem; margin:1px 0 0}
+.phrase .icon-btn{padding:9px}
+.note{font-size:.82rem; color:var(--muted)}
+.note summary{cursor:pointer; font-weight:700; color:var(--ink)}
+
+/* ditado e fala */
+.modes{display:flex; gap:6px; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:4px}
+.modes button{flex:1; font:inherit; font-weight:700; font-size:.86rem; border:0; background:transparent; color:var(--muted); border-radius:999px; padding:10px 6px; cursor:pointer; min-height:44px}
+.modes button[aria-pressed="true"]{background:var(--accent); color:var(--accent-ink)}
+.dict-input{font:inherit; font-size:1.05rem; width:100%; padding:14px; border-radius:12px; border:2px solid var(--line);
+  background:var(--surface); color:var(--ink); min-height:56px; font-family:var(--body)}
+.dict-input:focus{border-color:var(--accent); outline:none}
+.words{display:flex; flex-wrap:wrap; gap:6px; margin:0; padding:0; list-style:none}
+.w{padding:3px 9px; border-radius:7px; font-weight:700; font-size:.98rem}
+.w.ok{background:var(--ok-soft); color:var(--ok)}
+.w.bad{background:var(--bad-soft); color:var(--bad); text-decoration:line-through}
+.mic{width:112px; height:112px; border-radius:50%; border:0; background:var(--accent); color:var(--accent-ink);
+  cursor:pointer; display:grid; place-items:center; box-shadow:var(--shadow)}
+.mic svg{width:46px; height:46px}
+.mic.rec{background:var(--bad); animation:pulse 1.2s ease-in-out infinite}
+.mic:disabled{opacity:.45}
+@keyframes pulse{0%,100%{transform:scale(1)} 50%{transform:scale(1.07)}}
+.heard{font-weight:700; font-size:1.05rem; margin:0}
+.badge{display:inline-block; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+  padding:4px 10px; border-radius:999px; background:var(--accent); color:var(--accent-ink); margin-bottom:8px}
+.badge.neg{background:var(--bad); color:#fff}
+.warn a{color:inherit; font-weight:700}
+.warn{background:var(--mark); color:var(--mark-ink); border-radius:12px; padding:13px 15px; font-size:.88rem}
+
+/* navegação */
+nav.tabs{position:fixed; left:0; right:0; bottom:0; background:var(--surface); border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px); z-index:10}
+nav.tabs .inner{max-width:560px; margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); height:var(--nav-h)}
+nav.tabs button{font:inherit; border:0; background:transparent; color:var(--muted); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; cursor:pointer; font-size:.64rem; font-weight:700; padding:0 2px; line-height:1.1}
+nav.tabs button svg{width:20px; height:20px}
+nav.tabs button[aria-selected="true"]{color:var(--accent)}
+nav.tabs button[aria-selected="true"] .dot{background:var(--accent)}
+
+/* ===== vídeos ===== */
+.vsteps{margin:0; padding:0 0 0 1.2em; color:var(--muted); font-size:.9rem}
+.vsteps li{margin:2px 0}
+.vsteps b{color:var(--ink)}
+.vgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+.vcard{font:inherit; text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:0 0 10px; cursor:pointer; color:var(--ink); overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column}
+.vcard:active{transform:scale(.98)}
+.vthumb{position:relative; display:block; height:86px; background:var(--vbg)}
+.vthumb::after,.stage::after{content:""; position:absolute; inset:0; background:#000; opacity:var(--dim,0); pointer-events:none}
+.vnum{position:absolute; top:6px; left:8px; font-family:var(--display); font-weight:800; font-size:.8rem; color:#1C2640; background:rgba(255,255,255,.75); border-radius:6px; padding:0 6px; z-index:1}
+.vplace{position:absolute; right:8px; top:6px; font-size:1.5rem; opacity:.9; z-index:1}
+.vppl{position:absolute; left:10px; bottom:6px; font-size:1.9rem; letter-spacing:-.15em; z-index:1}
+.vplayic,.vcheck{position:absolute; right:8px; bottom:8px; width:28px; height:28px; border-radius:50%; display:grid; place-items:center; font-size:.8rem; background:var(--accent); color:var(--accent-ink); z-index:1}
+.vcheck{background:var(--ok); color:#fff; font-weight:800}
+.vname{display:block; font-weight:700; padding:8px 10px 0; line-height:1.25; font-size:.95rem}
+.vmeta{display:block; color:var(--muted); font-size:.76rem; padding:2px 10px 0}
+.vcard.done .vmeta{color:var(--ok); font-weight:700}
+.vtitle{font-family:var(--display); font-weight:800; font-size:1.1rem; margin:0}
+.vplayer{background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}
+.stage{position:relative; height:210px; background:var(--vbg); overflow:hidden}
+.sc-place{position:absolute; left:0; right:0; text-align:center; top:14px; font-size:3.4rem; opacity:.85; z-index:1; animation:vdrift 6s ease-in-out infinite}
+@keyframes vdrift{0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}}
+.sc-floor{position:absolute; left:0; right:0; bottom:0; height:46px; background:rgba(28,38,64,.10); z-index:1}
+.sc-char{position:absolute; bottom:18px; display:flex; flex-direction:column; align-items:center; z-index:2; transition:transform .25s}
+.sc-a{left:14%}.sc-b{right:14%}
+.sc-face{font-size:4.2rem; line-height:1; display:block; transform-origin:50% 100%}
+.sc-b .sc-face{transform:scaleX(-1)}
+.sc-bub{font-size:1.6rem; opacity:0; transform:translateY(8px) scale(.6); transition:all .2s}
+.sc-char.talking .sc-bub{opacity:1; transform:none; animation:bubp .5s ease-in-out infinite alternate}
+.sc-char.talking .sc-face{animation:talkb .32s ease-in-out infinite alternate}
+.sc-b.talking .sc-face{animation-name:talkbb}
+.sc-char:not(.talking){opacity:.85}
+@keyframes talkb{from{transform:translateY(0) rotate(-2deg)} to{transform:translateY(-6px) rotate(2deg)}}
+@keyframes talkbb{from{transform:scaleX(-1) translateY(0) rotate(-2deg)} to{transform:scaleX(-1) translateY(-6px) rotate(2deg)}}
+@keyframes bubp{from{transform:translateY(0)} to{transform:translateY(-4px)}}
+.sc-title{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; background:rgba(28,38,64,.78); color:#fff; font-family:var(--display); font-weight:800; font-size:1.5rem; z-index:3; transition:opacity .5s; padding:16px}
+.sc-title small{font-family:var(--body); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; opacity:.8; margin-bottom:4px}
+.sc-title.gone{opacity:0; pointer-events:none}
+.subs{padding:14px 16px 6px; min-height:86px; text-align:center}
+.sub-en{font-size:1.3rem; font-weight:700; line-height:1.35; margin:0}
+.sub-pt{color:var(--muted); margin:4px 0 0}
+.sub-hint{color:var(--muted); font-weight:400; font-size:.95rem}
+.sw{border-radius:5px; padding:0 .08em; transition:background .1s}
+.sw.on{background:var(--mark); color:var(--mark-ink)}
+.vbar{height:5px; background:var(--line); margin:4px 16px 0; border-radius:3px; overflow:hidden}
+.vbar div{height:100%; width:0; background:var(--accent); transition:width .4s}
+.vctrl{display:flex; align-items:center; justify-content:center; gap:14px; padding:12px 16px}
+.vround{width:46px; height:46px; border-radius:50%; border:2px solid var(--line); background:var(--surface); color:var(--ink); cursor:pointer; display:grid; place-items:center; font-size:1.1rem}
+.vround svg{width:22px; height:22px}
+.vbig{width:66px; height:66px; border-radius:50%; border:0; background:var(--accent); color:var(--accent-ink); cursor:pointer; display:grid; place-items:center; box-shadow:var(--shadow)}
+.vbig svg{width:30px; height:30px}
+.vsubs-wrap{padding:0 12px 12px}
+.vsubs-wrap .eyebrow{text-align:center; margin-bottom:6px}
+.vline .en{font-size:1.15rem}
+.vline-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:4px}
+.vline-who{font-size:1.6rem; line-height:1}
+.vline-badge{font-size:.78rem; font-weight:700; border-radius:999px; padding:2px 9px}
+.vline-badge.ok{background:var(--ok-soft); color:var(--ok)}
+.vline-badge.bad{background:var(--bad-soft); color:var(--bad)}
+.vtip{margin:10px 0 0; font-size:.88rem; background:var(--accent-soft); border-radius:10px; padding:9px 11px}
+.vbtns{margin-top:12px}
+.vmic{display:inline-flex; align-items:center; justify-content:center; gap:6px; flex:1 0 auto}
+.vmic svg{width:20px; height:20px}
+.vmic.rec{background:var(--bad); color:#fff; animation:pulse 1.2s ease-in-out infinite}
+.selfrate{display:flex; gap:8px; flex-wrap:wrap; width:100%}
+.selfrate .btn{flex:1; padding:10px 8px; font-size:.9rem}
+.vlive{margin:10px 0 0; font-style:italic; color:var(--muted)}
+.vline .feedback{margin-top:12px}
+.wbtn{font:inherit; border:0; cursor:pointer}
+.heard-line{font-size:.88rem; color:var(--muted)}
+.heard-line b{color:var(--ink)}
+.vmem{font-size:.88rem}
+.vmem summary{cursor:pointer; font-weight:700}
+.vmem ol{margin:6px 0 0; padding-left:1.2em; color:var(--muted)}
+nav.tabs .inner{grid-template-columns:repeat(6,1fr)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .vthumb, :root:not([data-theme="light"]) .stage{--dim:.42} }
+:root[data-theme="dark"] .vthumb, :root[data-theme="dark"] .stage{--dim:.42}
+.sc-title,.sc-char,.sc-place,.sc-floor,.vnum,.vplace,.vppl,.vplayic,.vcheck{z-index:4}
+
+.dot{width:4px; height:4px; border-radius:50%; background:transparent}
+
+.toast{position:fixed; left:50%; bottom:calc(var(--nav-h) + 16px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--ground); padding:10px 16px; border-radius:10px; font-size:.88rem; max-width:calc(100% - 32px); z-index:20}
+.reset{font:inherit; font-size:.8rem; color:var(--muted); background:none; border:0; text-decoration:underline; cursor:pointer; padding:4px 0; align-self:flex-start}
+
+/* ===== Tuca, o mascote ===== */
+.coach{display:flex; align-items:flex-end; gap:10px; min-height:84px}
+.coach .tuca{width:80px; height:80px; flex-shrink:0; overflow:visible}
+.bubble{position:relative; background:var(--surface); border:2px solid var(--ink); border-radius:16px; padding:9px 13px; font-weight:700; font-size:.95rem; line-height:1.3; margin-bottom:22px; box-shadow:3px 3px 0 var(--ink); max-width:100%}
+.bubble::before{content:""; position:absolute; left:-9px; bottom:12px; width:14px; height:14px; background:var(--surface); border-left:2px solid var(--ink); border-bottom:2px solid var(--ink); transform:rotate(45deg)}
+.bubble.pop{animation:pop .35s ease-out}
+@keyframes pop{0%{transform:scale(.85); opacity:.3} 70%{transform:scale(1.04)} 100%{transform:scale(1); opacity:1}}
+.tuca *{transform-box:fill-box}
+.tuca .t-all{transform-origin:50% 100%; animation:bob 2.6s ease-in-out infinite}
+.tuca .t-eye{transform-origin:50% 50%; animation:blink 4.2s infinite}
+.tuca .t-jaw{transform-origin:0% 0%}
+.tuca .t-wing{transform-origin:80% 20%}
+.tuca .t-happy,.tuca .t-sweat,.tuca .t-spark,.tuca .t-rings{display:none}
+.tuca.happy .t-all{animation:jump .55s ease-out 2}
+.tuca.happy .t-eye{display:none}
+.tuca.happy .t-happy,.tuca.happy .t-spark{display:inline}
+.tuca.happy .t-spark{animation:twinkle .6s ease-in-out infinite alternate}
+.tuca.happy .t-wing{animation:flap .18s ease-in-out 6 alternate}
+.tuca.oops .t-all{animation:shake .45s ease-in-out 2}
+.tuca.oops .t-sweat{display:inline; animation:drip 1.2s ease-in infinite}
+.tuca.talk .t-jaw{animation:talk .17s ease-in-out infinite alternate}
+.tuca.listen .t-all{animation:tilt 1s ease-in-out infinite alternate}
+.tuca.listen .t-rings{display:inline; animation:ring 1s ease-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)} 95%{transform:scaleY(.1)}}
+@keyframes jump{0%{transform:translateY(0) scale(1.08,.9)} 40%{transform:translateY(-20px) scale(.95,1.06)} 80%{transform:translateY(0) scale(1.06,.94)} 100%{transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px) rotate(-4deg)} 75%{transform:translateX(6px) rotate(4deg)}}
+@keyframes talk{from{transform:rotate(0)} to{transform:rotate(16deg)}}
+@keyframes flap{from{transform:rotate(0)} to{transform:rotate(-28deg)}}
+@keyframes tilt{from{transform:rotate(-5deg)} to{transform:rotate(5deg)}}
+@keyframes twinkle{from{opacity:.3; transform:scale(.7)} to{opacity:1; transform:scale(1.15)}}
+@keyframes drip{0%{transform:translateY(0); opacity:1} 100%{transform:translateY(10px); opacity:0}}
+@keyframes ring{0%{opacity:.9; transform:scale(.6)} 100%{opacity:0; transform:scale(1.3)}}
+
+/* ===== cena animada (in/on/at) ===== */
+.scene{position:relative; height:170px; border-radius:12px; overflow:hidden; margin-top:14px;
+  background:linear-gradient(#DDF0FF 0%, #F1F8FF 70%, #CFE8C4 70%, #BFDDB2 100%)}
+:root[data-theme="dark"] .scene{background:linear-gradient(#1B2A45 0%, #22345A 70%, #2B4A32 70%, #233D29 100%)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .scene{background:linear-gradient(#1B2A45 0%, #22345A 70%, #2B4A32 70%, #233D29 100%)} }
+.scene .cloud{position:absolute; top:14px; font-size:26px; opacity:.85; animation:drift 16s linear infinite}
+.scene .cloud.c2{top:36px; font-size:18px; animation-duration:24s; animation-delay:-9s}
+@keyframes drift{from{left:-12%} to{left:105%}}
+.scene .obj{position:absolute; left:50%; bottom:30px; transform:translateX(-50%); font-size:86px; line-height:1; transition:opacity .5s, filter .5s; z-index:2}
+.scene .obj.table{width:120px; height:60px}
+.scene .obj.table::before{content:""; position:absolute; left:0; right:0; top:0; height:12px; background:#8B5A2B; border-radius:4px}
+.scene .obj.table::after{content:""; position:absolute; left:12px; right:12px; top:12px; bottom:0; border-left:10px solid #6E4520; border-right:10px solid #6E4520}
+.scene .mini{position:absolute; width:52px; height:52px; left:10%; bottom:26px; z-index:3; animation:bob 2.2s ease-in-out infinite}
+.scene .pin{position:absolute; left:50%; bottom:200px; font-size:34px; z-index:4; transform:translateX(-50%); opacity:0}
+.scene .qmark{position:absolute; left:calc(10% + 44px); bottom:74px; font-family:var(--display); font-weight:800; font-size:26px; color:var(--accent); animation:bob 1.4s ease-in-out infinite}
+.scene .cap{position:absolute; left:10px; top:10px; background:var(--ink); color:var(--ground); font-family:var(--display); font-weight:800; font-size:.95rem; padding:3px 10px; border-radius:999px; opacity:0; transition:opacity .3s .8s; z-index:5}
+.scene.done .qmark{display:none}
+.scene.done .cap{opacity:1}
+.scene.go-in .mini{animation:hopIn 1.1s ease-in-out forwards}
+.scene.go-in .obj,.scene.go-screen .obj,.scene.go-ride .obj{opacity:.55; filter:saturate(.8)}
+@keyframes hopIn{0%{left:10%; bottom:26px; transform:scale(1)} 45%{left:34%; bottom:120px; transform:scale(.9)} 100%{left:calc(50% - 20px); bottom:58px; transform:scale(.72)}}
+.scene.go-screen .mini{animation:hopIn 1.1s ease-in-out forwards, glow 1s 1.1s ease-in-out infinite alternate}
+@keyframes glow{from{filter:drop-shadow(0 0 0 #7C9DFF)} to{filter:drop-shadow(0 0 8px #7C9DFF)}}
+.scene.go-ride .obj{animation:ride 2.4s 1.1s ease-in-out infinite}
+.scene.go-ride .mini{animation:hopIn 1.1s ease-in-out forwards, ride 2.4s 1.1s ease-in-out infinite}
+@keyframes ride{0%,100%{margin-left:0} 50%{margin-left:18px}}
+.scene.go-on .mini{animation:hopOn 1.1s ease-in-out forwards}
+@keyframes hopOn{0%{left:10%; bottom:26px} 50%{left:36%; bottom:150px} 80%{left:calc(50% - 26px); bottom:108px; transform:scale(1.08,.88)} 100%{left:calc(50% - 26px); bottom:112px; transform:scale(1)}}
+.scene.go-on .obj.table ~ .mini{animation-name:hopOnT}
+@keyframes hopOnT{0%{left:10%; bottom:26px} 50%{left:36%; bottom:130px} 80%{left:calc(50% - 26px); bottom:86px; transform:scale(1.08,.88)} 100%{left:calc(50% - 26px); bottom:88px; transform:scale(1)}}
+.scene.go-at .pin{animation:pinDrop .6s .1s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes pinDrop{from{bottom:200px; opacity:1} to{bottom:118px; opacity:1}}
+.scene.go-at .mini{animation:walkAt 1.2s .5s ease-in-out forwards, wave .3s 1.7s ease-in-out 6 alternate}
+@keyframes walkAt{0%{left:10%} 20%{bottom:32px} 40%{bottom:26px} 60%{bottom:32px} 100%{left:calc(50% - 100px); bottom:26px}}
+@keyframes wave{from{transform:rotate(-8deg)} to{transform:rotate(8deg)}}
+
+/* confete */
+.confetti{position:fixed; top:-12px; width:9px; height:14px; border-radius:2px; z-index:30; pointer-events:none; animation:fall 1.8s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg); opacity:.2}}
+
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head><body>
+<div class="wrap">
+  <header class="app">
+    <div>
+      <h1 class="brand">Inglês <span>no Bolso</span></h1>
+      <p class="tagline">Um passo de cada vez, com a Tuca. Sem pressa.</p>
+    </div>
+    <div>
+      <div class="speed-label">Voz</div>
+      <div class="speed" role="group" aria-label="Velocidade do áudio">
+        <button type="button" id="spd-slow" data-rate="0.72" aria-pressed="true">Devagar</button>
+        <button type="button" id="spd-norm" data-rate="0.95" aria-pressed="false">Normal</button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ===== VÍDEOS ===== -->
+  <section class="panel" id="tab-video" aria-labelledby="h-video" hidden>
+    <div class="section-head">
+      <h2 id="h-video">Vídeos: ouça e repita</h2>
+      <div class="score" id="score-video"></div>
+    </div>
+    <div id="vid-list-view" style="display:flex;flex-direction:column;gap:14px">
+      <div class="card">
+        <p class="eyebrow">Como usar cada vídeo</p>
+        <ol class="vsteps">
+          <li><b>Assista com legenda em português</b> para entender a cena.</li>
+          <li><b>Assista de novo só com inglês</b> — tente pegar as palavras.</li>
+          <li><b>Repita frase por frase</b>: o app escuta e marca o que saiu certo.</li>
+          <li><b>Sombra</b>: toque a cena e fale junto, ao mesmo tempo, 3 vezes.</li>
+        </ol>
+      </div>
+      <div class="vgrid" id="vgrid"></div>
+    </div>
+    <div id="vid-player-view" hidden style="flex-direction:column;gap:14px">
+      <button type="button" class="reset" id="vid-back">← Todos os vídeos</button>
+      <h3 class="vtitle" id="vid-title"></h3>
+      <div class="vplayer">
+        <div class="stage" id="stage"></div>
+        <div class="subs"><p class="sub-en" id="sub-en"></p><p class="sub-pt" id="sub-pt"></p></div>
+        <div class="vbar"><div id="vprog"></div></div>
+        <div class="vctrl">
+          <button type="button" class="vround" id="v-prev" aria-label="Frase anterior"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.4v14H6zM19 5.5v13L9.5 12z"/></svg></button>
+          <button type="button" class="vbig" id="v-play" aria-label="Assistir"></button>
+          <button type="button" class="vround" id="v-again" aria-label="Repetir esta frase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/></svg></button>
+        </div>
+        <div class="vsubs-wrap">
+          <p class="eyebrow">Legenda</p>
+          <div class="modes" id="v-subs" role="group" aria-label="Legenda">
+            <button type="button" data-s="both" aria-pressed="true">Inglês + PT</button>
+            <button type="button" data-s="en" aria-pressed="false">Só inglês</button>
+            <button type="button" data-s="none" aria-pressed="false">Sem legenda</button>
+          </div>
+        </div>
+      </div>
+      <div class="tip" id="vid-ear"></div>
+      <details class="note vmem">
+        <summary>🧠 Como decorar estas frases</summary>
+        <ol>
+          <li>Repita cada frase em voz alta 3 vezes, olhando a tradução — não o inglês.</li>
+          <li>Feche os olhos e diga a frase inteira de memória.</li>
+          <li>Amanhã, assista "Sem legenda" e veja se entende tudo. Revisar no dia seguinte grava muito mais.</li>
+          <li>Use a frase de verdade hoje: fale sozinho no carro ou mande num áudio.</li>
+        </ol>
+      </details>
+      <div class="section-head"><h2 style="font-size:1.1rem">Sua vez: repita cada frase</h2></div>
+      <div class="warn" id="mic-warn" hidden></div>
+      <div id="vid-lines" style="display:flex;flex-direction:column;gap:12px"></div>
+      <button type="button" class="btn primary" id="v-next">Próximo vídeo →</button>
+    </div>
+  </section>
+
+  <!-- ===== PREPOSIÇÕES ===== -->
+  <section class="panel" id="tab-prep" aria-labelledby="h-prep">
+    <div class="section-head">
+      <h2 id="h-prep">In, on ou at?</h2>
+      <div class="score" id="score-prep"></div>
+    </div>
+
+    <details class="rules" id="rules" open>
+      <summary>A regra em três imagens
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="rule-grid">
+        <div class="rule">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><rect x="7" y="11" width="34" height="28" rx="3"/><circle cx="24" cy="25" r="5" fill="currentColor" stroke="none"/></svg>
+          <h3>IN</h3><p class="mean">dentro</p>
+          <p class="ex">in an office<br>in the car<br>in São Paulo</p>
+        </div>
+        <div class="rule">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M24 43s-13-12.2-13-22a13 13 0 0126 0c0 9.8-13 22-13 22z"/><circle cx="24" cy="21" r="4.5" fill="currentColor" stroke="none"/></svg>
+          <h3>AT</h3><p class="mean">no ponto</p>
+          <p class="ex">at work<br>at home<br>at a hospital</p>
+        </div>
+        <div class="rule">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 32h36"/><path d="M12 32v8M36 32v8"/><circle cx="24" cy="24" r="6" fill="currentColor" stroke="none"/></svg>
+          <h3>ON</h3><p class="mean">em cima</p>
+          <p class="ex">on the table<br>on the wall<br>on the bus</p>
+        </div>
+      </div>
+    </details>
+
+    <div class="card" id="prep-card">
+      <p class="eyebrow" id="prep-count"></p>
+      <p class="en" id="prep-sentence"></p>
+      <p class="pt" id="prep-pt"></p>
+      <div class="scene" id="prep-scene" aria-hidden="true"></div>
+    </div>
+    <div class="choices" id="prep-choices">
+      <button type="button" class="choice" data-v="in">IN</button>
+      <button type="button" class="choice" data-v="on">ON</button>
+      <button type="button" class="choice" data-v="at">AT</button>
+    </div>
+    <div id="prep-feedback" hidden></div>
+  </section>
+
+  <!-- ===== MONTAR FRASES ===== -->
+  <section class="panel" id="tab-build" aria-labelledby="h-build" hidden>
+    <div class="section-head">
+      <h2 id="h-build">Monte a frase</h2>
+      <div class="score" id="score-build"></div>
+    </div>
+    <div class="modes" role="group" aria-label="Modo do treino de frases">
+      <button type="button" id="bmode-btn-build" aria-pressed="true">Montar</button>
+      <button type="button" id="bmode-btn-struct" aria-pressed="false">Perg./Neg.</button>
+      <button type="button" id="bmode-btn-vt" aria-pressed="false">To/-ing</button>
+    </div>
+    <div id="bmode-build">
+    <p class="lead">Frases curtas e certas, do jeito que um nativo fala. Cuidado: às vezes sobra uma palavra que não entra.</p>
+    <div class="card">
+      <p class="eyebrow" id="build-count"></p>
+      <p class="en" id="build-pt" style="font-size:1.2rem"></p>
+    </div>
+    <div class="answer-zone empty" id="build-answer" aria-live="polite"></div>
+    <div class="bank" id="build-bank"></div>
+    <div class="row">
+      <button type="button" class="btn ghost" id="build-clear">Limpar</button>
+      <button type="button" class="btn primary grow" id="build-check" disabled>Verificar</button>
+    </div>
+    <div id="build-feedback" hidden></div>
+    </div>
+
+    <div id="bmode-struct" hidden>
+      <p class="lead" style="margin-bottom:14px">Leia a frase, veja o que se pede e escolha a versão certa. As opções erradas são os erros mais comuns — aprenda a reconhecê-los.</p>
+      <div class="card" style="margin-bottom:14px">
+        <p class="eyebrow" id="struct-count"></p>
+        <span class="badge" id="struct-badge"></span>
+        <p class="en" id="struct-base"></p>
+        <p class="pt" id="struct-pt"></p>
+      </div>
+      <div class="options" id="struct-options"></div>
+      <div id="struct-feedback" hidden style="margin-top:14px"></div>
+    </div>
+
+    <div id="bmode-vt" hidden>
+      <details class="rules" id="vt-rules" open style="margin-bottom:14px">
+        <summary>A regra: to ou -ing depois do verbo?
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="rule-grid">
+          <div class="rule"><h3>TO</h3><p class="mean">olha pra frente</p><p class="ex">want · need · decide · plan · hope · try · learn · would like · promise · forget · agree</p></div>
+          <div class="rule"><h3>-ING</h3><p class="mean">já faz / curte</p><p class="ex">enjoy · finish · stop · avoid · mind · keep · spend · go · can't stand</p></div>
+          <div class="rule"><h3>OS DOIS</h3><p class="mean">mesmo sentido</p><p class="ex">like · love · hate · start · begin</p></div>
+        </div>
+        <p class="rule-foot">Depois de <i>can, will, must, should</i> não vai to: <b>I can help</b>, nunca “I can to help”.</p>
+      </details>
+      <div class="card" style="margin-bottom:14px">
+        <p class="eyebrow" id="vt-count"></p>
+        <p class="en" id="vt-sentence"></p>
+        <p class="pt" id="vt-pt"></p>
+      </div>
+      <div class="choices two" id="vt-choices"></div>
+      <div id="vt-feedback" hidden style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- ===== OUVIR ===== -->
+  <section class="panel" id="tab-listen" aria-labelledby="h-listen" hidden>
+    <div class="section-head">
+      <h2 id="h-listen">Treino de ouvido</h2>
+      <div class="score" id="score-listen"></div>
+    </div>
+    <div class="modes" role="group" aria-label="Modo do treino de ouvido">
+      <button type="button" id="mode-btn-choose" aria-pressed="true">Entender</button>
+      <button type="button" id="mode-btn-dict" aria-pressed="false">Ditado</button>
+    </div>
+    <div id="mode-choose">
+    <p class="lead">Ouça quantas vezes quiser e escolha o que a pessoa disse.</p>
+    <div class="card">
+      <p class="eyebrow" id="listen-count"></p>
+      <div class="play-wrap">
+        <button type="button" class="play" id="listen-play" aria-label="Ouvir a frase">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 001.5.87l11-6.5a1 1 0 000-1.74l-11-6.5A1 1 0 008 5.5z"/></svg>
+        </button>
+        <p class="play-hint" id="listen-hint">Toque para ouvir</p>
+      </div>
+      <div class="reveal" id="listen-reveal" hidden>
+        <p class="en" id="listen-en"></p>
+      </div>
+    </div>
+    <p class="eyebrow" style="margin:0">O que a pessoa disse?</p>
+    <div class="options" id="listen-options"></div>
+    <div id="listen-feedback" hidden></div>
+    </div>
+
+    <div id="mode-dict" hidden>
+      <p class="lead" style="margin-bottom:14px">Ouça e escreva o que você entendeu. Não precisa acertar a pontuação nem as maiúsculas.</p>
+      <div class="card" style="margin-bottom:14px">
+        <p class="eyebrow" id="dict-count"></p>
+        <div class="play-wrap">
+          <button type="button" class="play" id="dict-play" aria-label="Ouvir a frase">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 001.5.87l11-6.5a1 1 0 000-1.74l-11-6.5A1 1 0 008 5.5z"/></svg>
+          </button>
+          <p class="play-hint">Toque para ouvir. Use <b>Devagar</b> lá em cima se precisar.</p>
+        </div>
+      </div>
+      <label for="dict-answer" class="eyebrow" style="display:block">Escreva aqui</label>
+      <input class="dict-input" id="dict-answer" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ex.: I am at home" style="margin-bottom:12px">
+      <div class="row">
+        <button type="button" class="btn ghost" id="dict-reveal">Não sei</button>
+        <button type="button" class="btn primary grow" id="dict-check">Verificar</button>
+      </div>
+      <div id="dict-feedback" hidden style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- ===== FUTURO ===== -->
+  <section class="panel" id="tab-fut" aria-labelledby="h-fut" hidden>
+    <div class="section-head">
+      <h2 id="h-fut">Going to ou will?</h2>
+      <div class="score" id="score-fut"></div>
+    </div>
+    <div class="modes" role="group" aria-label="Modo do treino de futuro">
+      <button type="button" id="fmode-btn-gw" aria-pressed="true">Going/Will</button>
+      <button type="button" id="fmode-btn-to" aria-pressed="false">To/the/nada</button>
+      <button type="button" id="fmode-btn-cb" aria-pressed="false">Combinado</button>
+    </div>
+
+    <details class="rules" id="fut-rules-gw" open>
+      <summary>A regra: decidiu antes ou agora?
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="rule-grid two">
+        <div class="rule">
+          <h3>GOING TO</h3><p class="mean">já planejado · estou vendo 👀</p>
+          <p class="ex">I'm going to travel in December.<br>Look! It's going to rain.</p>
+        </div>
+        <div class="rule">
+          <h3>WILL</h3><p class="mean">decidi agora · prometo · acho 💭</p>
+          <p class="ex">The phone is ringing. I'll answer it.<br>I think it will rain tomorrow.</p>
+        </div>
+      </div>
+      <p class="rule-foot"><b>Pistas:</b> <i>Look!, Watch out!, Be careful!</i> ou um fato na frase (1% de bateria) → <b>going to</b>. <i>I think, I believe, I'm sure, maybe</i> → <b>will</b>. Lembre: <i>It's</i> + going to; com will fica só <i>It will</i>.</p>
+    </details>
+
+    <details class="rules" id="fut-rules-cb" hidden open>
+      <summary>A regra: já está combinado?
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="rule-grid two">
+        <div class="rule">
+          <h3>I'M + -ING</h3><p class="mean">compromisso marcado 📅</p>
+          <p class="ex">I'm meeting a client at 3.<br>I'm spending the day with my sister tomorrow.</p>
+        </div>
+        <div class="rule">
+          <h3>WILL</h3><p class="mean">decidi agora · prometo · acho 💭</p>
+          <p class="ex">OK, I'll meet him.<br>I think I'll stay home.</p>
+        </div>
+      </div>
+      <p class="rule-foot"><b>Pistas do -ing:</b> já tem hora, lugar, passagem, reserva ou a outra pessoa já sabe. Parece agenda. <i>Going to</i> também serve nesses casos; o <b>-ing</b> só soa mais "marcado".</p>
+    </details>
+
+    <details class="rules" id="fut-rules-to" hidden open>
+      <summary>A regra: to, to the ou nada?
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="rule-grid">
+        <div class="rule"><h3>TO THE</h3><p class="mean">lugar comum</p><p class="ex">to the bank<br>to the office<br>to the beach</p></div>
+        <div class="rule"><h3>TO</h3><p class="mean">verbo, cidade, rotina</p><p class="ex">going to eat<br>to São Paulo<br>to school · to work · to bed</p></div>
+        <div class="rule"><h3>NADA</h3><p class="mean">sem "to"</p><p class="ex">going home<br>going there / here<br>going shopping</p></div>
+      </div>
+    </details>
+
+    <div class="card">
+      <p class="eyebrow" id="fut-count"></p>
+      <p class="en" id="fut-sentence"></p>
+      <p class="pt" id="fut-pt"></p>
+    </div>
+    <div class="choices" id="fut-choices"></div>
+    <div id="fut-feedback" hidden></div>
+  </section>
+
+  <!-- ===== SOCORRO ===== -->
+  <section class="panel" id="tab-help" aria-labelledby="h-help" hidden>
+    <div class="section-head">
+      <h2 id="h-help">Quando não entender</h2>
+    </div>
+    <div class="tip">
+      <strong>Ninguém entende tudo — nem nativo.</strong>
+      Pedir para repetir ou falar devagar é normal e educado. Decore estas frases: elas salvam qualquer conversa.
+    </div>
+    <div id="help-groups"></div>
+    <details class="note">
+      <summary>Como deixar este app na tela do celular</summary>
+      <p><b>Android (Chrome):</b> toque nos três pontinhos ⋮ no canto e escolha <i>Adicionar à tela inicial</i>.<br>
+      <b>iPhone (Safari):</b> toque no botão Compartilhar e escolha <i>Adicionar à Tela de Início</i>.<br>
+      O áudio usa a voz em inglês do próprio celular. Se estiver mudo, confira o volume e o modo silencioso.</p>
+    </details>
+    <button type="button" class="reset" id="reset">Zerar meus acertos</button>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="Seções">
+  <div class="inner" role="tablist">
+    <button type="button" role="tab" data-tab="video" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg>
+      Vídeos<span class="dot"></span></button>
+    <button type="button" role="tab" data-tab="prep" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 21s-7-6.6-7-12a7 7 0 0114 0c0 5.4-7 12-7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+      In·On·At<span class="dot"></span></button>
+    <button type="button" role="tab" data-tab="build" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="7" height="5" rx="1.2"/><rect x="12" y="6" width="9" height="5" rx="1.2"/><rect x="3" y="14" width="10" height="5" rx="1.2"/><rect x="15" y="14" width="6" height="5" rx="1.2"/></svg>
+      Frases<span class="dot"></span></button>
+    <button type="button" role="tab" data-tab="listen" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>
+      Ouvir<span class="dot"></span></button>
+    <button type="button" role="tab" data-tab="fut" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13"/><path d="M13 7l5 5-5 5"/><path d="M20 5v14"/></svg>
+      Futuro<span class="dot"></span></button>
+    <button type="button" role="tab" data-tab="help" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a8.5 8.5 0 01-12.4 7.6L4 21l1.4-4.4A8.5 8.5 0 1121 12z"/><path d="M9.8 9.6a2.3 2.3 0 014.4.8c0 1.6-2.2 2-2.2 3.3"/><circle cx="12" cy="16.4" r=".6" fill="currentColor"/></svg>
+      Socorro<span class="dot"></span></button>
+  </div>
+</nav>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- armazenamento local (opcional) ---------- */
+var store = {
+  get:function(k,d){ try{ var v=localStorage.getItem("inb_"+k); return v?JSON.parse(v):d; }catch(e){ return d; } },
+  set:function(k,v){ try{ localStorage.setItem("inb_"+k, JSON.stringify(v)); }catch(e){} }
+};
+
+/* ---------- áudio ---------- */
+var synth = ("speechSynthesis" in window) ? window.speechSynthesis : null;
+var voices = [];
+function loadVoices(){ try{ voices = synth ? synth.getVoices() : []; }catch(e){ voices = []; } }
+if (synth){ loadVoices(); try{ synth.onvoiceschanged = loadVoices; }catch(e){} }
+function pickVoice(){
+  var en = voices.filter(function(v){ return /^en[-_]/i.test(v.lang); });
+  var pref = /Samantha|Google US|Aria|Jenny|Natural|Ava|Allison|Zira|Daniel|Google UK/i;
+  return en.find(function(v){ return /en[-_]US/i.test(v.lang) && pref.test(v.name); })
+      || en.find(function(v){ return /en[-_]US/i.test(v.lang); })
+      || en.find(function(v){ return pref.test(v.name); })
+      || en[0] || null;
+}
+var rate = store.get("rate", 0.72);
+function speak(text){
+  if (!synth){ toast("Este navegador não tem voz. Abra no Chrome ou no Safari do celular."); return; }
+  try{
+    synth.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    var v = pickVoice();
+    if (v){ u.voice = v; u.lang = v.lang; } else { u.lang = "en-US"; }
+    u.rate = rate;
+    u.onstart = function(){ tucaTalk(true); };
+    u.onend = u.onerror = function(){ tucaTalk(false); };
+    synth.speak(u);
+  }catch(e){ toast("Não consegui tocar o áudio agora."); }
+}
+var spdSlow = document.getElementById("spd-slow"), spdNorm = document.getElementById("spd-norm");
+function paintSpeed(){ spdSlow.setAttribute("aria-pressed", rate < 0.85 ? "true":"false"); spdNorm.setAttribute("aria-pressed", rate >= 0.85 ? "true":"false"); }
+[spdSlow, spdNorm].forEach(function(b){ b.addEventListener("click", function(){ rate = parseFloat(b.dataset.rate); store.set("rate", rate); paintSpeed(); }); });
+paintSpeed();
+
+/* ---------- Tuca, a mascote ---------- */
+var TUCA = '<svg class="tuca" viewBox="-6 -8 112 112" aria-hidden="true"><g class="t-all">' +
+ '<g class="t-rings" fill="none" stroke="#3FA7F0" stroke-width="3" stroke-linecap="round"><path d="M16 22a14 14 0 0 0 0 22"/><path d="M8 14a25 25 0 0 0 0 38"/></g>' +
+ '<path d="M40 91l-5 7M40 91l2 8M58 91l-2 8M58 91l5 7" stroke="#F28C28" stroke-width="3.5" stroke-linecap="round"/>' +
+ '<path d="M24 78L9 95l20-6z" fill="#1B2438"/>' +
+ '<ellipse cx="48" cy="60" rx="30" ry="33" fill="#22304A"/>' +
+ '<ellipse cx="50" cy="71" rx="18" ry="20" fill="#FFF4DA"/>' +
+ '<path d="M31 50q19-11 36 0q-6 12-17 12q-12 0-19-12z" fill="#FFD23F"/>' +
+ '<g class="t-wing"><path d="M22 57q-9 16 4 29q8-12 4-29z" fill="#141C2C"/></g>' +
+ '<path d="M44 29q-3-11 4-15q0 8 4 12q2-9 8-10q-4 8-4 14z" fill="#22304A"/>' +
+ '<circle cx="38" cy="48" r="4" fill="#FF8FA3" opacity=".75"/>' +
+ '<circle cx="46" cy="37" r="10" fill="#fff" stroke="#3FA7F0" stroke-width="3.5"/>' +
+ '<g class="t-eye"><circle cx="48" cy="37" r="4.6" fill="#111"/><circle cx="49.6" cy="35.2" r="1.5" fill="#fff"/></g>' +
+ '<path class="t-happy" d="M40 39q6-8 12 0" fill="none" stroke="#111" stroke-width="3.2" stroke-linecap="round"/>' +
+ '<g class="t-jaw"><path d="M58 49q16 1 30-1q-8 10-28 9z" fill="#E4671B"/></g>' +
+ '<path d="M56 36q22-10 42 6q-2 6-10 6q-16 2-30 2z" fill="#FF9B26"/>' +
+ '<path d="M58 38q18-8 34 2q-16-2-32 4z" fill="#FFD23F"/>' +
+ '<path d="M92 40q6 2 6 4q-3 4-10 4z" fill="#1B2438"/>' +
+ '<path class="t-sweat" d="M30 22q-5 8 0 11q5-3 0-11z" fill="#6CC4FF"/>' +
+ '<g class="t-spark" fill="#FFD23F"><path d="M10 18l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/><path d="M86 6l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z"/></g>' +
+ '</g></svg>';
+var coach = document.createElement("div"); coach.className = "coach";
+coach.innerHTML = TUCA + '<div class="bubble" id="bubble" aria-live="polite"></div>';
+var tucaEl = coach.querySelector(".tuca"), bubbleEl = coach.querySelector("#bubble"), moodT;
+var TIPS = {
+  prep:"Oi, eu sou a Tuca! Escolha IN, ON ou AT e veja onde eu vou parar.",
+  build:"Toque nas palavras na ordem certa. No fim eu leio a frase pra você.",
+  struct:"Pergunta ou negativa? Lembre: o ajudante come o -s!",
+  vt:"Want, need, decide pedem TO. Enjoy, finish, stop pedem -ING!",
+  listen:"Ouça com calma. Pode repetir quantas vezes quiser!",
+  fut:"Decidiu antes ou está vendo? Going to. Decidiu agora ou acha? Will!",
+  futto:"Home, there e -ing vão sem to. School, work e bed vão sem the!",
+  futcb:"Está na agenda? Use I'm + -ing. Decidiu agora? Will!",
+  help:"Travou na conversa? Estas frases salvam você.",
+  video:"Assista, ouça e depois repita. Eu corrijo sua pronúncia!"
+};
+var CHEERS = ["Boa!","Mandou bem!","Isso aí!","Perfeito!","Show!","Acertou em cheio!"];
+var OOPS = ["Quase! Leia a dica.","Errar faz parte. Vamos na próxima!","Tudo bem — agora você não esquece mais.","Ops! Ouça a frase certa mais uma vez."];
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function say(msg){ bubbleEl.textContent = msg; bubbleEl.classList.remove("pop"); void bubbleEl.offsetWidth; bubbleEl.classList.add("pop"); }
+function mood(state, msg, ms){
+  tucaEl.classList.remove("happy","oops","listen"); void tucaEl.getBoundingClientRect();
+  if (state) tucaEl.classList.add(state);
+  if (msg) say(msg);
+  clearTimeout(moodT);
+  if (state && ms) moodT = setTimeout(function(){ tucaEl.classList.remove(state); }, ms);
+}
+function tucaTalk(on){ tucaEl.classList.toggle("talk", !!on); }
+var streak = 0;
+function confetti(){
+  var cols = ["#FFD23F","#FF9B26","#3FA7F0","#1E8455","#FF8FA3","#2A55CC"];
+  for (var i = 0; i < 36; i++){
+    var c = document.createElement("div"); c.className = "confetti";
+    c.style.left = (Math.random()*100) + "vw"; c.style.background = pick(cols);
+    c.style.animationDelay = (Math.random()*0.5) + "s"; c.style.animationDuration = (1.4 + Math.random()) + "s";
+    document.body.appendChild(c);
+    setTimeout(function(el){ return function(){ el.remove(); }; }(c), 2800);
+  }
+}
+function react(ok){
+  if (ok){
+    streak++;
+    if (streak % 5 === 0){ mood("happy", streak + " seguidas! Você está voando! 🎉", 1600); confetti(); }
+    else mood("happy", pick(CHEERS), 1400);
+  } else { streak = 0; mood("oops", pick(OOPS), 1400); }
+}
+
+var SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 010 6"/><path d="M18 6.5a7.5 7.5 0 010 11"/></svg>';
+
+/* ---------- utilidades ---------- */
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+var toastEl = document.getElementById("toast"), toastT;
+function toast(msg){ toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.hidden = true; }, 3200); }
+
+var scores = store.get("scores", {prep:{ok:0,total:0}, build:{ok:0,total:0}, listen:{ok:0,total:0}, dict:{ok:0,total:0}, fut:{ok:0,total:0}});
+if(!scores.dict) scores.dict={ok:0,total:0};
+if(!scores.fut) scores.fut={ok:0,total:0};
+if(!scores.struct) scores.struct={ok:0,total:0};
+function paintScore(k){
+  var s = scores[k], el = document.getElementById("score-"+k);
+  if(!el) return;
+  el.innerHTML = s.total ? "Acertos <b>"+s.ok+"</b> de "+s.total : "Vamos começar";
+}
+function addScore(k, ok){ react(ok); scores[k].total++; if(ok) scores[k].ok++; store.set("scores", scores); paintScore(k); }
+["prep","build","listen","fut"].forEach(paintScore);
+
+/* =========================================================
+   1. PREPOSIÇÕES
+   ========================================================= */
+var PREP = [
+ {s:"I work ___ an office.", a:["in"], o:"🏢", pt:"Eu trabalho em um escritório.", why:"Escritório é um lugar fechado, com paredes. Você está <b>dentro</b> → <b>IN</b>."},
+ {s:"She works ___ a hospital.", a:["at","in"], o:"🏥", pt:"Ela trabalha em um hospital.", why:"Hospital como <b>local de trabalho</b>, um ponto no mapa → <b>AT</b>. <b>IN</b> também está certo. Só <b>ON</b> é errado."},
+ {s:"I'm ___ home now.", a:["at"], o:"🏠", pt:"Estou em casa agora.", why:"<b>at home</b> é expressão fixa, e sem <i>the</i>. Nunca “in the home”."},
+ {s:"The keys are ___ the table.", a:["on"], o:"table", pt:"As chaves estão na mesa.", why:"Em cima de uma superfície → <b>ON</b>."},
+ {s:"The picture is ___ the wall.", a:["on"], o:"🧱", pt:"O quadro está na parede.", why:"A parede é uma superfície; o quadro fica encostado nela → <b>ON</b>."},
+ {s:"My wallet is ___ my bag.", a:["in"], o:"👜", pt:"Minha carteira está na minha bolsa.", why:"Dentro da bolsa → <b>IN</b>."},
+ {s:"He lives ___ São Paulo.", a:["in"], o:"🏙️", pt:"Ele mora em São Paulo.", why:"Cidade é uma área grande → <b>IN</b>."},
+ {s:"We live ___ Brazil.", a:["in"], o:"🗺️", pt:"Nós moramos no Brasil.", why:"País → <b>IN</b>. Cidade, estado e país sempre com IN."},
+ {s:"I'm ___ work until 6.", a:["at"], o:"💼", pt:"Estou no trabalho até as 6.", why:"<b>at work</b> = no trabalho. Expressão fixa, sem <i>the</i>."},
+ {s:"Wait for me ___ the bus stop.", a:["at"], o:"🚏", pt:"Me espere no ponto de ônibus.", why:"Ponto de ônibus é um ponto específico, um alfinete no mapa → <b>AT</b>."},
+ {s:"The file is ___ my computer.", a:["on"], o:"💻", m:"screen", pt:"O arquivo está no meu computador.", why:"Arquivo, foto e documento digital ficam <b>ON</b> o computador, a tela ou o celular."},
+ {s:"She's ___ the phone.", a:["on"], o:"📱", m:"screen", pt:"Ela está ao telefone.", why:"<b>on the phone</b> = falando ao telefone. Expressão fixa."},
+ {s:"I saw it ___ the internet.", a:["on"], o:"🌐", m:"screen", pt:"Eu vi isso na internet.", why:"<b>on the internet</b>, <b>on TV</b>, <b>on the radio</b>: meios de comunicação usam ON."},
+ {s:"He's ___ the car.", a:["in"], o:"🚗", pt:"Ele está no carro.", why:"Carro e táxi: você entra e fica sentado <b>dentro</b> → <b>IN</b>."},
+ {s:"We're ___ the bus.", a:["on"], o:"🚌", m:"ride", pt:"Estamos no ônibus.", why:"Ônibus, trem, avião e navio: veículos grandes onde dá para andar em pé → <b>ON</b>."},
+ {s:"The meeting is ___ room 12.", a:["in"], o:"🚪", pt:"A reunião é na sala 12.", why:"Dentro de uma sala → <b>IN</b>."},
+ {s:"Turn left ___ the corner.", a:["at"], o:"🚦", pt:"Vire à esquerda na esquina.", why:"A esquina é um ponto no caminho → <b>AT</b>."},
+ {s:"My office is ___ the second floor.", a:["on"], o:"🏬", pt:"Meu escritório fica no segundo andar.", why:"Andar de prédio → <b>ON</b>. Pense no piso como uma superfície."},
+ {s:"I'll meet you ___ the entrance.", a:["at"], o:"🚪", pt:"Te encontro na entrada.", why:"Ponto de encontro → <b>AT</b>."},
+ {s:"The documents are ___ the drawer.", a:["in"], o:"🗄️", pt:"Os documentos estão na gaveta.", why:"Dentro da gaveta → <b>IN</b>."},
+ {s:"The meeting is ___ 3 p.m.", a:["at"], o:"🕒", pt:"A reunião é às 3 da tarde.", why:"Hora → <b>AT</b>. É o menor ponto do tempo."},
+ {s:"I was born ___ 1985.", a:["in"], o:"🗓️", pt:"Eu nasci em 1985.", why:"Ano → <b>IN</b>. Períodos grandes: ano, mês, estação."},
+ {s:"We travel ___ December.", a:["in"], o:"🎄", pt:"Nós viajamos em dezembro.", why:"Mês → <b>IN</b>."},
+ {s:"See you ___ Monday.", a:["on"], o:"📅", pt:"Até segunda.", why:"Dia da semana → <b>ON</b>."},
+ {s:"I work better ___ the morning.", a:["in"], o:"🌅", pt:"Eu trabalho melhor de manhã.", why:"<b>in the morning</b>, <b>in the afternoon</b>, <b>in the evening</b>."},
+ {s:"I can't sleep ___ night.", a:["at"], o:"🌙", pt:"Não consigo dormir à noite.", why:"<b>at night</b> é a exceção: noite usa AT, não IN."},
+ {s:"My birthday is ___ 5 May.", a:["on"], o:"🎂", pt:"Meu aniversário é em 5 de maio.", why:"Data com dia → <b>ON</b>. Só o mês seria IN: <i>in May</i>."},
+ {s:"He called ___ lunchtime.", a:["at"], o:"🍽️", pt:"Ele ligou na hora do almoço.", why:"Um momento específico do dia → <b>AT</b>."},
+ {s:"I'm ___ the supermarket.", a:["at"], o:"🛒", pt:"Estou no supermercado.", why:"Lugar aonde você vai para fazer algo (comprar, trabalhar, estudar) → <b>AT</b>."},
+ {s:"The papers are ___ the box.", a:["in"], o:"📦", pt:"Os papéis estão na caixa.", why:"Dentro da caixa → <b>IN</b>."},
+ {s:"The cat is ___ the sofa.", a:["on"], o:"🛋️", pt:"O gato está no sofá.", why:"Em cima do sofá → <b>ON</b>."},
+ {s:"She's ___ the airport.", a:["at"], o:"🛫", pt:"Ela está no aeroporto.", why:"Aeroporto, estação e rodoviária são pontos da viagem → <b>AT</b>."},
+ {s:"We're ___ the plane.", a:["on"], o:"✈️", m:"ride", pt:"Estamos no avião.", why:"Avião é veículo grande → <b>ON</b>, igual a <i>on the bus</i>."},
+ {s:"I'm ___ a taxi.", a:["in"], o:"🚕", pt:"Estou em um táxi.", why:"Táxi é como carro: você fica sentado dentro → <b>IN</b>."},
+ {s:"There's sugar ___ my coffee.", a:["in"], o:"☕", pt:"Tem açúcar no meu café.", why:"Misturado, dentro do líquido → <b>IN</b>."},
+ {s:"He's ___ the bank.", a:["at"], o:"🏦", pt:"Ele está no banco.", why:"No banco resolvendo algo, um ponto no mapa → <b>AT</b>."},
+ {s:"I have a meeting ___ Friday.", a:["on"], o:"📅", pt:"Tenho uma reunião na sexta.", why:"Dia da semana → <b>ON</b>. <i>on Friday</i>, <i>on Fridays</i>."},
+ {s:"The office opens ___ 8 a.m.", a:["at"], o:"🕗", pt:"O escritório abre às 8 da manhã.", why:"Hora exata → <b>AT</b>."},
+ {s:"It's cold ___ winter.", a:["in"], o:"❄️", pt:"Faz frio no inverno.", why:"Estação do ano → <b>IN</b>."},
+ {s:"The children are ___ school.", a:["at"], o:"🏫", pt:"As crianças estão na escola.", why:"<b>at school</b> = estudando. Expressão fixa, como <i>at work</i> e <i>at home</i>."},
+ {s:"The pen is ___ the desk.", a:["on"], o:"table", pt:"A caneta está na mesa.", why:"Em cima da mesa de trabalho → <b>ON</b>."},
+ {s:"I'm ___ the train.", a:["on"], o:"🚆", m:"ride", pt:"Estou no trem.", why:"Trem é veículo grande → <b>ON</b>."},
+ {s:"She's ___ the kitchen.", a:["in"], o:"🍳", pt:"Ela está na cozinha.", why:"Cômodo da casa, dentro das paredes → <b>IN</b>."},
+ {s:"The client is ___ reception.", a:["at"], o:"🛎️", pt:"O cliente está na recepção.", why:"Balcão de atendimento, um ponto → <b>AT</b>."},
+ {s:"I read it ___ the newspaper.", a:["in"], o:"📰", pt:"Eu li isso no jornal.", why:"Jornal, livro e revista: o texto está <b>dentro</b> das páginas → <b>IN</b>. (Internet e TV usam ON.)"},
+ {s:"We have lunch ___ noon.", a:["at"], o:"🕛", pt:"Nós almoçamos ao meio-dia.", why:"<b>at noon</b>, <b>at midnight</b>: momentos exatos → <b>AT</b>."},
+ {s:"There's a bird ___ the sky.", a:["in"], o:"☁️", pt:"Tem um pássaro no céu.", why:"<b>in the sky</b>: o céu é um espaço, não uma superfície."},
+ {s:"The office is ___ Paulista Avenue.", a:["on"], o:"🛣️", pt:"O escritório fica na Avenida Paulista.", why:"Nome de rua ou avenida (sem número) → <b>ON</b>. Com número completo usa <b>AT</b>."},
+ {s:"Sorry, I'm ___ a meeting.", a:["in"], o:"👥", pt:"Desculpe, estou em reunião.", why:"<b>in a meeting</b> = participando da reunião, dentro dela."},
+ {s:"He's ___ vacation.", a:["on"], o:"🏖️", pt:"Ele está de férias.", why:"<b>on vacation</b>, <b>on a trip</b>, <b>on holiday</b>: expressões fixas com ON."},
+ {s:"I'm staying ___ a hotel.", a:["at","in"], o:"🏨", pt:"Estou hospedado em um hotel.", why:"<b>at a hotel</b> (o local) ou <b>in a hotel</b> (dentro) — os dois estão certos. Só ON é errado."}
+];
+var prepOrder = shuffle(PREP), prepI = 0, prepDone = false;
+var elPS = document.getElementById("prep-sentence"), elPPt = document.getElementById("prep-pt"),
+    elPC = document.getElementById("prep-count"), elPF = document.getElementById("prep-feedback"),
+    prepBtns = Array.prototype.slice.call(document.querySelectorAll("#prep-choices .choice"));
+
+var elScene = document.getElementById("prep-scene");
+function paintScene(q){
+  var table = q.o === "table";
+  elScene.className = "scene";
+  elScene.innerHTML = '<span class="cloud">☁️</span><span class="cloud c2">☁️</span>' +
+    '<div class="obj' + (table ? ' table' : '') + '">' + (table ? '' : q.o) + '</div>' +
+    '<span class="pin">📍</span>' + TUCA.replace('class="tuca"','class="tuca mini"') +
+    '<span class="qmark">?</span><span class="cap"></span>';
+}
+function playScene(q){
+  var a = q.a[0], m = q.m || a;
+  elScene.querySelector(".cap").textContent = a.toUpperCase() + (q.m === "ride" ? " · veículo grande" : q.m === "screen" ? " · na tela" : a === "in" ? " · dentro" : a === "on" ? " · em cima" : " · no ponto");
+  elScene.classList.add("done", "go-" + m);
+}
+function prepRender(){
+  var q = prepOrder[prepI]; prepDone = false;
+  elPC.textContent = "Frase " + (prepI+1) + " de " + prepOrder.length;
+  elPS.innerHTML = esc(q.s).replace("___", '<span class="gap" id="prep-gap">&nbsp;?&nbsp;</span>');
+  elPPt.textContent = q.pt;
+  paintScene(q);
+  prepBtns.forEach(function(b){ b.disabled=false; b.classList.remove("ok","bad"); });
+  elPF.hidden = true; elPF.innerHTML = "";
+}
+function prepAnswer(v){
+  if (prepDone) return; prepDone = true;
+  var q = prepOrder[prepI], ok = q.a.indexOf(v) !== -1;
+  var gap = document.getElementById("prep-gap");
+  gap.textContent = ok ? v : q.a[0]; gap.classList.add("ok");
+  prepBtns.forEach(function(b){
+    b.disabled = true;
+    if (q.a.indexOf(b.dataset.v) !== -1 && (b.dataset.v === v || b.dataset.v === q.a[0])) b.classList.add("ok");
+    if (b.dataset.v === v && !ok) b.classList.add("bad");
+  });
+  playScene(q);
+  addScore("prep", ok);
+  var full = q.s.replace("___", ok ? v : q.a[0]);
+  elPF.className = "feedback " + (ok ? "ok" : "bad");
+  elPF.innerHTML =
+    '<p class="verdict">' + (ok ? "Certo!" : "Não é " + v.toUpperCase() + ". A resposta é " + q.a[0].toUpperCase() + ".") + '</p>' +
+    '<p>' + q.why + '</p>' +
+    '<div class="row" style="margin-top:6px"><button type="button" class="icon-btn" id="prep-say">' + SPEAKER + 'Ouvir a frase</button>' +
+    '<button type="button" class="btn primary grow" id="prep-next">Próxima</button></div>';
+  elPF.hidden = false;
+  document.getElementById("prep-say").onclick = function(){ speak(full); };
+  document.getElementById("prep-next").onclick = prepNext;
+  document.getElementById("prep-next").focus({preventScroll:true});
+}
+function prepNext(){
+  prepI++;
+  if (prepI >= prepOrder.length){ prepOrder = shuffle(PREP); prepI = 0; toast("Rodada completa! Começando de novo, em outra ordem."); }
+  prepRender(); window.scrollTo({top:0, behavior:"smooth"});
+}
+prepBtns.forEach(function(b){ b.addEventListener("click", function(){ prepAnswer(b.dataset.v); }); });
+prepRender();
+if (store.get("rulesClosed", false)) document.getElementById("rules").open = false;
+document.getElementById("rules").addEventListener("toggle", function(e){ store.set("rulesClosed", !e.target.open); });
+
+/* =========================================================
+   2. MONTAR FRASES
+   ========================================================= */
+var BUILD = [
+ {pt:"Eu sou contador.", w:["I","am","an","accountant"], x:["a"], end:".", tip:"Profissão sempre leva artigo. <i>Accountant</i> começa com som de vogal, então é <b>an</b>, não <i>a</i>."},
+ {pt:"Eu trabalho em um escritório.", w:["I","work","in","an","office"], x:["on"], end:".", tip:"Escritório: dentro de um lugar fechado → <b>in</b>."},
+ {pt:"Ela mora em São Paulo.", w:["She","lives","in","São Paulo"], x:["live"], end:".", tip:"Com <i>she</i> e <i>he</i>, o verbo ganha <b>-s</b>: <i>she lives</i>."},
+ {pt:"Nós estamos em casa.", w:["We","are","at","home"], x:["the"], end:".", tip:"<b>at home</b>, sem <i>the</i>. “At the home” soa estranho para um nativo."},
+ {pt:"Você fala inglês?", w:["Do","you","speak","English"], x:["Are"], end:"?", tip:"Pergunta no presente começa com <b>Do</b> (ou <b>Does</b> para he/she)."},
+ {pt:"Ele não trabalha aos domingos.", w:["He","doesn't","work","on","Sundays"], x:["works"], end:".", tip:"Depois de <b>doesn't</b>, o verbo volta sem -s. Dia da semana → <b>on</b>."},
+ {pt:"O relatório está na mesa.", w:["The","report","is","on","the","table"], x:["in"], end:".", tip:"Em cima da mesa → <b>on</b>."},
+ {pt:"Eu gosto de café.", w:["I","like","coffee"], x:["of"], end:".", tip:"<i>Like</i> não leva “of”. É <b>I like coffee</b>, nunca “I like of coffee”."},
+ {pt:"Onde você trabalha?", w:["Where","do","you","work"], x:[], end:"?", tip:"Palavra de pergunta + <b>do</b> + pessoa + verbo."},
+ {pt:"Ela está ao telefone.", w:["She","is","on","the","phone"], x:["in"], end:".", tip:"<b>on the phone</b> é expressão fixa."},
+ {pt:"Eu tenho uma reunião às 3.", w:["I","have","a","meeting","at","3"], x:["in"], end:".", tip:"Hora → <b>at</b>."},
+ {pt:"Ele está no carro.", w:["He","is","in","the","car"], x:["on"], end:".", tip:"Carro: você fica sentado dentro → <b>in</b>."},
+ {pt:"Eu estou no ônibus.", w:["I","am","on","the","bus"], x:["in"], end:".", tip:"Ônibus, trem e avião → <b>on</b>."},
+ {pt:"Você pode me ajudar?", w:["Can","you","help","me"], x:["to"], end:"?", tip:"Depois de <b>can</b>, o verbo vem direto, sem <i>to</i>."},
+ {pt:"Eu não entendo.", w:["I","don't","understand"], x:[], end:".", tip:"<b>don't</b> + verbo na forma básica."},
+ {pt:"Qual é o seu nome?", w:["What","is","your","name"], x:["How"], end:"?", tip:"É <b>What</b>, não <i>How</i>. “How is your name” é o erro clássico de quem traduz “como”."},
+ {pt:"Meu escritório fica em Santo André.", w:["My","office","is","in","Santo André"], x:["at"], end:".", tip:"Cidade → <b>in</b>. E “fica” vira simplesmente <b>is</b>."},
+ {pt:"Eu moro perto do escritório.", w:["I","live","near","the","office"], x:["of"], end:".", tip:"<b>near</b> = perto de. Não leva “of”."},
+ {pt:"Ela trabalha em um hospital.", w:["She","works","at","a","hospital"], x:["on"], end:".", tip:"Hospital como local de trabalho → <b>at</b>. <i>In a hospital</i> também é aceito; <i>on</i>, nunca."},
+ {pt:"A reunião é na segunda-feira.", w:["The","meeting","is","on","Monday"], x:["in"], end:".", tip:"Dia da semana → <b>on</b>."},
+ {pt:"Eu tenho um carro.", w:["I","have","a","car"], x:["an"], end:".", tip:"<i>Car</i> começa com som de consoante → <b>a</b>. <i>An</i> só antes de som de vogal."},
+ {pt:"Ela é minha cliente.", w:["She","is","my","client"], x:["me"], end:".", tip:"<b>my</b> = meu/minha. <i>Me</i> é “me/mim”: <i>help me</i>."},
+ {pt:"Nós começamos às nove.", w:["We","start","at","nine"], x:["in"], end:".", tip:"Hora → <b>at</b>."},
+ {pt:"Eu moro em Santo André.", w:["I","live","in","Santo André"], x:["on"], end:".", tip:"Cidade → <b>in</b>."},
+ {pt:"Ele está no escritório agora.", w:["He","is","in","the","office","now"], x:["on"], end:".", tip:"Dentro do escritório → <b>in</b>. <i>Now</i> fica no fim da frase."},
+ {pt:"Quanto custa?", w:["How","much","is","it"], x:["many"], end:"?", tip:"Preço é <b>How much</b>. <i>How many</i> é para contar coisas: <i>how many clients?</i>"},
+ {pt:"Eu preciso de ajuda.", w:["I","need","help"], x:["of"], end:".", tip:"<i>Need</i> não leva “of”: <b>I need help</b>."},
+ {pt:"Você está disponível amanhã?", w:["Are","you","available","tomorrow"], x:["Do"], end:"?", tip:"<i>Available</i> é adjetivo, então a pergunta usa <b>Are</b>, não <i>Do</i>."},
+ {pt:"Eles não estão aqui.", w:["They","are","not","here"], x:["is"], end:".", tip:"<b>they are</b>. <i>Is</i> é só para he/she/it."},
+ {pt:"Eu vou te ligar amanhã.", w:["I","will","call","you","tomorrow"], x:["to"], end:".", tip:"<b>call you</b>, sem “to”. Nunca “call to you”."},
+ {pt:"Eu trabalhei de casa ontem.", w:["I","worked","from","home","yesterday"], x:["work"], end:".", tip:"Passado regular: verbo + <b>-ed</b>. “De casa” = <b>from home</b>."},
+ {pt:"Ela não gosta de chá.", w:["She","doesn't","like","tea"], x:["likes"], end:".", tip:"Depois de <b>doesn't</b>, o verbo perde o -s: <i>doesn't like</i>."},
+ {pt:"Que horas são?", w:["What","time","is","it"], x:["hour"], end:"?", tip:"Para perguntar as horas: <b>What time is it?</b> Nunca “what hour”."},
+ {pt:"Eu estou com fome.", w:["I","am","hungry"], x:["have"], end:".", tip:"Fome, sede, frio e calor usam <b>be</b>: <i>I am hungry, I am cold</i>."},
+ {pt:"Ele tem 30 anos.", w:["He","is","30","years","old"], x:["has"], end:".", tip:"Idade usa <b>be</b>, não <i>have</i>: <i>He is 30</i>."},
+ {pt:"O relatório está pronto.", w:["The","report","is","ready"], x:["stay"], end:".", tip:"“Estar” quase sempre vira <b>is/are/am</b>."},
+ {pt:"Por favor, me envie o arquivo.", w:["Please","send","me","the","file"], x:["to"], end:".", tip:"<b>send me</b> + coisa. Sem “to”."},
+ {pt:"Eu fui ao banco ontem.", w:["I","went","to","the","bank","yesterday"], x:["goed"], end:".", tip:"<i>Go</i> é irregular: o passado é <b>went</b>."},
+ {pt:"Está chovendo hoje.", w:["It","is","raining","today"], x:["Is"], end:".", tip:"Em inglês a frase precisa de sujeito: <b>It</b> is raining."},
+ {pt:"Eu trabalho de segunda a sexta.", w:["I","work","from","Monday","to","Friday"], x:["of"], end:".", tip:"“De… a…” = <b>from… to…</b>."},
+ {pt:"A loja fecha às seis.", w:["The","store","closes","at","six"], x:["close"], end:".", tip:"<i>The store</i> = it → verbo com <b>-s</b>: <i>closes</i>."}
+];
+var buildOrder = shuffle(BUILD), buildI = 0, picked = [], buildDone = false;
+var elBPt = document.getElementById("build-pt"), elBC = document.getElementById("build-count"),
+    elBA = document.getElementById("build-answer"), elBB = document.getElementById("build-bank"),
+    elBF = document.getElementById("build-feedback"), btnCheck = document.getElementById("build-check"),
+    btnClear = document.getElementById("build-clear");
+var tiles = [];
+
+function buildRender(){
+  var q = buildOrder[buildI]; picked = []; buildDone = false;
+  elBC.textContent = "Frase " + (buildI+1) + " de " + buildOrder.length + " · em inglês:";
+  elBPt.textContent = q.pt;
+  var all = shuffle(q.w.concat(q.x));
+  tiles = all.map(function(word, idx){ return {word:word, id:idx, used:false}; });
+  elBF.hidden = true; elBF.innerHTML = "";
+  elBA.className = "answer-zone empty";
+  paintBuild();
+}
+function paintBuild(){
+  elBB.innerHTML = "";
+  tiles.forEach(function(t){
+    var b = document.createElement("button"); b.type="button"; b.className="tile"+(t.used?" used":""); b.textContent=t.word;
+    b.setAttribute("aria-label","Adicionar "+t.word);
+    b.disabled = t.used || buildDone;
+    b.onclick = function(){ t.used = true; picked.push(t); paintBuild(); };
+    elBB.appendChild(b);
+  });
+  elBA.innerHTML = "";
+  picked.forEach(function(t, i){
+    var b = document.createElement("button"); b.type="button"; b.className="tile in-answer"; b.textContent=t.word;
+    b.setAttribute("aria-label","Remover "+t.word);
+    b.disabled = buildDone;
+    b.onclick = function(){ t.used = false; picked.splice(i,1); paintBuild(); };
+    elBA.appendChild(b);
+  });
+  if (!buildDone) elBA.className = "answer-zone" + (picked.length ? "" : " empty");
+  btnCheck.disabled = picked.length === 0 || buildDone;
+  btnClear.disabled = picked.length === 0 || buildDone;
+}
+btnClear.onclick = function(){ tiles.forEach(function(t){ t.used=false; }); picked=[]; paintBuild(); };
+btnCheck.onclick = function(){
+  var q = buildOrder[buildI];
+  var got = picked.map(function(t){ return t.word; }).join(" ");
+  var want = q.w.join(" ");
+  var ok = got === want;
+  buildDone = true; addScore("build", ok);
+  elBA.className = "answer-zone " + (ok ? "ok" : "bad");
+  paintBuild();
+  var full = want + q.end;
+  elBF.className = "feedback " + (ok ? "ok" : "bad");
+  elBF.innerHTML =
+    '<p class="verdict">' + (ok ? "Perfeito! Um nativo entende e fala assim." : "Quase. A frase certa é:") + '</p>' +
+    '<p class="full">' + esc(full) + '</p>' +
+    '<p>' + q.tip + '</p>' +
+    '<div class="row" style="margin-top:6px"><button type="button" class="icon-btn" id="build-say">' + SPEAKER + 'Ouvir</button>' +
+    '<button type="button" class="btn primary grow" id="build-next">Próxima</button></div>';
+  elBF.hidden = false;
+  document.getElementById("build-say").onclick = function(){ speak(full); };
+  document.getElementById("build-next").onclick = function(){
+    buildI++;
+    if (buildI >= buildOrder.length){ buildOrder = shuffle(BUILD); buildI = 0; toast("Rodada completa! Começando de novo, em outra ordem."); }
+    buildRender(); window.scrollTo({top:0, behavior:"smooth"});
+  };
+  speak(full);
+};
+buildRender();
+
+/* =========================================================
+   2b. PERGUNTA E NEGATIVA
+   ========================================================= */
+var STRUCT = [
+ {b:"She is my client.", pt:"Ela é minha cliente.", t:"q", ok:"Is she my client?",
+  no:["Does she is my client?","She is my client?"],
+  tip:"A frase já tem <b>is</b>, então ele mesmo vai para a frente. Não se chama o <i>does</i>."},
+ {b:"They are at the office.", pt:"Eles estão no escritório.", t:"n", ok:"They aren't at the office.",
+  no:["They don't are at the office.","They not are at the office."],
+  tip:"Com <b>are</b>, o <i>not</i> vem logo depois: are not = <b>aren't</b>."},
+ {b:"He works in São Paulo.", pt:"Ele trabalha em São Paulo.", t:"q", ok:"Does he work in São Paulo?",
+  no:["Is he work in São Paulo?","Does he works in São Paulo?"],
+  tip:"Verbo de ação pede <b>does</b>, e o <i>does</i> come o -s: <b>work</b>, sem s."},
+ {b:"She sends the reports.", pt:"Ela envia os relatórios.", t:"n", ok:"She doesn't send the reports.",
+  no:["She doesn't sends the reports.","She isn't send the reports."],
+  tip:"O <b>doesn't</b> já carrega o -s, então o verbo fica <b>send</b>."},
+ {b:"They live in Brazil.", pt:"Eles moram no Brasil.", t:"q", ok:"Do they live in Brazil?",
+  no:["Are they live in Brazil?","Does they live in Brazil?"],
+  tip:"<i>They</i> usa <b>do</b>, nunca <i>does</i> nem <i>are</i> com verbo de ação."},
+ {b:"The client pays on Friday.", pt:"O cliente paga na sexta.", t:"n", ok:"The client doesn't pay on Friday.",
+  no:["The client doesn't pays on Friday.","The client don't pay on Friday."],
+  tip:"<i>The client</i> = he, então <b>doesn't</b>. E o verbo perde o -s: <b>pay</b>."},
+ {b:"I am tired.", pt:"Estou cansado.", t:"n", ok:"I'm not tired.",
+  no:["I amn't tired.","I don't tired."],
+  tip:"Não existe <i>amn't</i>. Com <i>I</i>, a forma é <b>I'm not</b>."},
+ {b:"You work on Saturdays.", pt:"Você trabalha aos sábados.", t:"q", ok:"Do you work on Saturdays?",
+  no:["Are you work on Saturdays?","Do you works on Saturdays?"],
+  tip:"<i>Work</i> é ação, então entra o <b>do</b>. Com <i>you</i>, nunca -s."},
+ {b:"He is an accountant.", pt:"Ele é contador.", t:"q", ok:"Is he an accountant?",
+  no:["Does he an accountant?","Is he is an accountant?"],
+  tip:"Só existe um <b>is</b> na frase, e ele vai para a frente."},
+ {b:"We have a meeting today.", pt:"Temos uma reunião hoje.", t:"n", ok:"We don't have a meeting today.",
+  no:["We aren't have a meeting today.","We don't has a meeting today."],
+  tip:"<i>Have</i> é verbo de ação aqui. Com <i>we</i>, o ajudante é <b>don't</b>."},
+ {b:"He speaks English.", pt:"Ele fala inglês.", t:"q", ok:"Does he speak English?",
+  no:["Does he speaks English?","Is he speak English?"],
+  tip:"O -s aparece uma vez só, e já está no <b>does</b>."},
+ {b:"She lives near here.", pt:"Ela mora perto daqui.", t:"n", ok:"She doesn't live near here.",
+  no:["She doesn't lives near here.","She not lives near here."],
+  tip:"Depois de <b>doesn't</b>, o verbo fica na forma básica: <b>live</b>."},
+ {b:"He is at the bank.", pt:"Ele está no banco.", t:"n", ok:"He isn't at the bank.",
+  no:["He doesn't at the bank.","He don't is at the bank."],
+  tip:"Tem <b>is</b> na frase, então é ele que recebe o <i>not</i>."},
+ {b:"They work with us.", pt:"Eles trabalham conosco.", t:"q", ok:"Do they work with us?",
+  no:["Are they work with us?","Does they work with us?"],
+  tip:"Ação + <i>they</i> = <b>do</b>."},
+ {b:"I went to the concert.", pt:"Eu fui ao show.", t:"n", ok:"I didn't go to the concert.",
+  no:["I didn't went to the concert.","I wasn't to the concert."],
+  tip:"<b>Didn't</b> já marca o passado, então o verbo volta a <b>go</b>."},
+ {b:"You bought yogurt.", pt:"Você comprou iogurte.", t:"q", ok:"Did you buy yogurt?",
+  no:["Did you bought yogurt?","Do you buy yogurt?"],
+  tip:"<b>Did</b> carrega o passado; o verbo vira <b>buy</b>."},
+ {b:"She sent the invoice.", pt:"Ela enviou a nota fiscal.", t:"n", ok:"She didn't send the invoice.",
+  no:["She didn't sent the invoice.","She doesn't send the invoice."],
+  tip:"Passado negativo usa <b>didn't</b> + verbo básico. <i>Doesn't</i> seria presente."},
+ {b:"They were at home.", pt:"Eles estavam em casa.", t:"q", ok:"Were they at home?",
+  no:["Did they were at home?","Was they at home?"],
+  tip:"Com <b>was/were</b> não entra <i>did</i>. E <i>they</i> pede <b>were</b>."},
+ {b:"He paid the bill.", pt:"Ele pagou a conta.", t:"q", ok:"Did he pay the bill?",
+  no:["Did he paid the bill?","Does he pay the bill?"],
+  tip:"<b>Did</b> + <b>pay</b>. O passado aparece uma vez só."},
+ {b:"I was tired.", pt:"Eu estava cansado.", t:"n", ok:"I wasn't tired.",
+  no:["I didn't was tired.","I didn't tired."],
+  tip:"<b>Was</b> faz a própria negativa: <b>wasn't</b>. Nada de <i>didn't</i>."},
+ {b:"We had breakfast.", pt:"Nós tomamos café da manhã.", t:"n", ok:"We didn't have breakfast.",
+  no:["We didn't had breakfast.","We don't had breakfast."],
+  tip:"Depois de <b>didn't</b>, <i>had</i> volta a ser <b>have</b>."},
+ {b:"She took the documents.", pt:"Ela levou os documentos.", t:"q", ok:"Did she take the documents?",
+  no:["Did she took the documents?","Is she take the documents?"],
+  tip:"<b>Did</b> + <b>take</b>, a forma básica do irregular."},
+ {b:"You woke up at 6 a.m.", pt:"Você acordou às 6 da manhã.", t:"q", ok:"Did you wake up at 6 a.m.?",
+  no:["Did you woke up at 6 a.m.?","Do you woke up at 6 a.m.?"],
+  tip:"<i>Woke</i> vira <b>wake</b> porque o <b>did</b> já é o passado."},
+ {b:"The meeting started at 3.", pt:"A reunião começou às 3.", t:"n", ok:"The meeting didn't start at 3.",
+  no:["The meeting didn't started at 3.","The meeting wasn't start at 3."],
+  tip:"Verbo regular também perde o -ed depois de <b>didn't</b>: <b>start</b>."},
+ {b:"She is in a meeting.", pt:"Ela está em reunião.", t:"q", ok:"Is she in a meeting?",
+  no:["Does she in a meeting?","Is she is in a meeting?"],
+  tip:"Tem <b>is</b>, então ele vai para a frente. Simples assim."},
+ {b:"You like coffee.", pt:"Você gosta de café.", t:"q", ok:"Do you like coffee?",
+  no:["Are you like coffee?","Do you likes coffee?"],
+  tip:"<i>Like</i> é ação. Com <i>you</i>, o ajudante é <b>do</b> e o verbo não leva -s."}
+];
+var structOrder = shuffle(STRUCT), structI = 0, structDone = false;
+var elStC = document.getElementById("struct-count"), elStB = document.getElementById("struct-base"),
+    elStPt = document.getElementById("struct-pt"), elStBadge = document.getElementById("struct-badge"),
+    elStO = document.getElementById("struct-options"), elStF = document.getElementById("struct-feedback");
+
+function paintStructCount(){
+  var s2 = scores.struct;
+  elStC.textContent = "Frase " + (structI+1) + " de " + structOrder.length + (s2.total ? "  ·  acertos " + s2.ok + " de " + s2.total : "");
+}
+function structRender(){
+  var q = structOrder[structI]; structDone = false;
+  paintStructCount();
+  elStBadge.textContent = q.t === "q" ? "Passe para a pergunta" : "Passe para a negativa";
+  elStBadge.className = "badge" + (q.t === "n" ? " neg" : "");
+  elStB.textContent = q.b; elStPt.textContent = q.pt;
+  elStF.hidden = true; elStF.innerHTML = "";
+  elStO.innerHTML = "";
+  shuffle([q.ok].concat(q.no)).forEach(function(opt){
+    var b = document.createElement("button"); b.type = "button"; b.className = "option"; b.textContent = opt;
+    b.onclick = function(){ structAnswer(b, opt); };
+    elStO.appendChild(b);
+  });
+}
+function structAnswer(btn, opt){
+  if (structDone) return; structDone = true;
+  var q = structOrder[structI], ok = opt === q.ok;
+  Array.prototype.forEach.call(elStO.children, function(b){
+    b.disabled = true;
+    if (b.textContent === q.ok) b.classList.add("ok");
+  });
+  if (!ok) btn.classList.add("bad");
+  addScore("struct", ok);
+  paintStructCount();
+  elStF.className = "feedback " + (ok ? "ok" : "bad");
+  elStF.innerHTML =
+    '<p class="verdict">' + (ok ? "Certo!" : "A forma correta é:") + '</p>' +
+    '<p class="full">' + esc(q.ok) + '</p>' +
+    '<p>' + q.tip + '</p>' +
+    '<div class="row" style="margin-top:6px"><button type="button" class="icon-btn" id="struct-say">' + SPEAKER + 'Ouvir</button>' +
+    '<button type="button" class="btn primary grow" id="struct-next">Próxima</button></div>';
+  elStF.hidden = false;
+  document.getElementById("struct-say").onclick = function(){ speak(q.ok); };
+  document.getElementById("struct-next").onclick = function(){
+    structI++;
+    if (structI >= structOrder.length){ structOrder = shuffle(STRUCT); structI = 0; toast("Rodada completa! Começando de novo."); }
+    structRender(); window.scrollTo({top:0, behavior:"smooth"});
+  };
+}
+structRender();
+
+/* =========================================================
+   2c. TO OU -ING
+   ========================================================= */
+var VT = [
+ {s:"I want ___ to Bahia.", pt:"Eu quero viajar para a Bahia.", to:"to travel", ing:"traveling", a:"to", tip:"<b>want</b> + to. Querer olha para a frente."},
+ {s:"I enjoy ___ with my family.", pt:"Eu curto viajar com minha família.", to:"to travel", ing:"traveling", a:"ing", tip:"<b>enjoy</b> + -ing. Sempre."},
+ {s:"I need ___ the client today.", pt:"Preciso ligar para o cliente hoje.", to:"to call", ing:"calling", a:"to", tip:"<b>need</b> + to."},
+ {s:"I finished ___ at 6.", pt:"Terminei de trabalhar às 6.", to:"to work", ing:"working", a:"ing", tip:"<b>finish</b> + -ing."},
+ {s:"We decided ___ a new car.", pt:"Decidimos comprar um carro novo.", to:"to buy", ing:"buying", a:"to", tip:"<b>decide</b> + to."},
+ {s:"Please stop ___! I'm working.", pt:"Por favor, pare de falar! Estou trabalhando.", to:"to talk", ing:"talking", a:"ing", tip:"<b>stop</b> + -ing = parar de fazer."},
+ {s:"I'm trying ___ English.", pt:"Estou tentando aprender inglês.", to:"to learn", ing:"learning", a:"to", tip:"<b>try</b> + to = tentar."},
+ {s:"I avoid ___ at night.", pt:"Eu evito dirigir à noite.", to:"to drive", ing:"driving", a:"ing", tip:"<b>avoid</b> + -ing."},
+ {s:"I'd like ___ the steak, please.", pt:"Eu gostaria de pedir o bife, por favor.", to:"to order", ing:"ordering", a:"to", tip:"<b>would like</b> + to. (Diferente de <i>like</i>, que aceita os dois.)"},
+ {s:"Do you mind ___ a minute?", pt:"Você se importa de esperar um minuto?", to:"to wait", ing:"waiting", a:"ing", tip:"<b>mind</b> + -ing."},
+ {s:"Don't forget ___ the report.", pt:"Não esqueça de mandar o relatório.", to:"to send", ing:"sending", a:"to", tip:"<b>forget</b> + to = esquecer de fazer."},
+ {s:"Keep ___! You're doing great.", pt:"Continue estudando! Você está indo muito bem.", to:"to study", ing:"studying", a:"ing", tip:"<b>keep</b> + -ing = continuar."},
+ {s:"He promised ___ me tomorrow.", pt:"Ele prometeu me ajudar amanhã.", to:"to help", ing:"helping", a:"to", tip:"<b>promise</b> + to."},
+ {s:"I spent the day ___ with my sister.", pt:"Passei o dia fazendo compras com minha irmã.", to:"to shop", ing:"shopping", a:"ing", tip:"<b>spend</b> (tempo) + -ing."},
+ {s:"We plan ___ in December.", pt:"Planejamos viajar em dezembro.", to:"to travel", ing:"traveling", a:"to", tip:"<b>plan</b> + to."},
+ {s:"She hopes ___ you soon.", pt:"Ela espera te ver em breve.", to:"to see", ing:"seeing", a:"to", tip:"<b>hope</b> + to."},
+ {s:"I like ___ in the morning.", pt:"Eu gosto de correr de manhã.", to:"to run", ing:"running", a:"both", tip:"<b>like</b> aceita os dois: <i>to run</i> ou <i>running</i>."},
+ {s:"It started ___.", pt:"Começou a chover.", to:"to rain", ing:"raining", a:"both", tip:"<b>start</b> aceita os dois, com o mesmo sentido."},
+ {s:"I love ___ with my kids.", pt:"Eu amo cozinhar com meus filhos.", to:"to cook", ing:"cooking", a:"both", tip:"<b>love</b> aceita os dois."},
+ {s:"I hate ___ in traffic.", pt:"Eu odeio esperar no trânsito.", to:"to wait", ing:"waiting", a:"both", tip:"<b>hate</b> aceita os dois."},
+ {s:"She's learning ___.", pt:"Ela está aprendendo a dirigir.", to:"to drive", ing:"driving", a:"to", tip:"<b>learn</b> + to."},
+ {s:"Let's go ___ on Saturday.", pt:"Vamos fazer compras no sábado.", to:"to shop", ing:"shopping", a:"ing", tip:"<b>go</b> + atividade = -ing: <i>go shopping, go swimming</i>."},
+ {s:"I can't stand ___ early.", pt:"Não suporto acordar cedo.", to:"to wake up", ing:"waking up", a:"ing", tip:"<b>can't stand</b> (não suportar) + -ing."},
+ {s:"He agreed ___ the contract.", pt:"Ele concordou em assinar o contrato.", to:"to sign", ing:"signing", a:"to", tip:"<b>agree</b> + to."}
+];
+var vtOrder = shuffle(VT), vtI = 0, vtDone = false;
+if(!scores.vt) scores.vt={ok:0,total:0};
+var elVC = document.getElementById("vt-count"), elVS = document.getElementById("vt-sentence"),
+    elVP = document.getElementById("vt-pt"), elVCh = document.getElementById("vt-choices"),
+    elVF = document.getElementById("vt-feedback");
+function paintVtCount(){
+  var s2 = scores.vt;
+  elVC.textContent = "Frase " + (vtI+1) + " de " + vtOrder.length + (s2.total ? "  ·  acertos " + s2.ok + " de " + s2.total : "");
+}
+function vtRender(){
+  var q = vtOrder[vtI]; vtDone = false;
+  paintVtCount();
+  elVS.innerHTML = esc(q.s).replace("___", '<span class="gap">&nbsp;?&nbsp;</span>');
+  elVP.textContent = q.pt;
+  elVF.hidden = true; elVF.innerHTML = "";
+  elVCh.innerHTML = "";
+  [["to", q.to], ["ing", q.ing]].forEach(function(o){
+    var b = document.createElement("button"); b.type = "button"; b.className = "choice sm phrase-opt"; b.textContent = o[1]; b.dataset.v = o[0];
+    b.onclick = function(){ vtAnswer(b, o[0]); };
+    elVCh.appendChild(b);
+  });
+}
+function vtAnswer(btn, v){
+  if (vtDone) return; vtDone = true;
+  var q = vtOrder[vtI], ok = q.a === "both" || v === q.a;
+  var shown = q.a === "both" ? (v === "to" ? q.to : q.ing) : (q.a === "to" ? q.to : q.ing);
+  Array.prototype.forEach.call(elVCh.children, function(b){
+    b.disabled = true;
+    if (q.a === "both" || b.dataset.v === q.a) b.classList.add("ok");
+  });
+  if (!ok) btn.classList.add("bad");
+  elVS.innerHTML = esc(q.s).replace("___", '<span class="gap ok">' + esc(shown) + '</span>');
+  addScore("vt", ok); paintVtCount();
+  var full = q.s.replace("___", shown);
+  elVF.className = "feedback " + (ok ? "ok" : "bad");
+  elVF.innerHTML =
+    '<p class="verdict">' + (q.a === "both" ? "Certo! Aqui os dois servem." : ok ? "Certo!" : "O certo é “" + esc(shown) + "”:") + '</p>' +
+    '<p class="full">' + esc(full) + '</p>' +
+    '<p>' + q.tip + '</p>' +
+    '<div class="row" style="margin-top:6px"><button type="button" class="icon-btn" id="vt-say">' + SPEAKER + 'Ouvir</button>' +
+    '<button type="button" class="btn primary grow" id="vt-next">Próxima</button></div>';
+  elVF.hidden = false;
+  document.getElementById("vt-say").onclick = function(){ speak(full); };
+  document.getElementById("vt-next").onclick = function(){
+    vtI++;
+    if (vtI >= vtOrder.length){ vtOrder = shuffle(VT); vtI = 0; toast("Rodada completa! Começando de novo."); }
+    vtRender(); window.scrollTo({top:0, behavior:"smooth"});
+  };
+}
+vtRender();
+
+var bmB = document.getElementById("bmode-btn-build"), bmS = document.getElementById("bmode-btn-struct"), bmV = document.getElementById("bmode-btn-vt");
+function setBuildMode(m){
+  document.getElementById("bmode-build").hidden = m !== "build";
+  document.getElementById("bmode-struct").hidden = m !== "struct";
+  document.getElementById("bmode-vt").hidden = m !== "vt";
+  bmV.setAttribute("aria-pressed", m === "vt" ? "true" : "false");
+  bmB.setAttribute("aria-pressed", m === "build" ? "true" : "false");
+  bmS.setAttribute("aria-pressed", m === "struct" ? "true" : "false");
+  document.getElementById("score-build").hidden = m !== "build";
+  document.getElementById("h-build").textContent = m === "build" ? "Monte a frase" : m === "struct" ? "Pergunta e negativa" : "To ou -ing?";
+  store.set("buildMode", m);
+  mood("", m === "build" ? TIPS.build : m === "struct" ? TIPS.struct : TIPS.vt);
+  if (synth) try{ synth.cancel(); }catch(e){}
+}
+bmB.onclick = function(){ setBuildMode("build"); };
+bmS.onclick = function(){ setBuildMode("struct"); };
+bmV.onclick = function(){ setBuildMode("vt"); };
+setBuildMode(store.get("buildMode","build"));
+
+/* =========================================================
+   3. OUVIR
+   ========================================================= */
+var LISTEN = [
+ {en:"How's it going?", ok:"Como vai? Tudo certo?", no:["Aonde você vai?","Como foi a viagem?"]},
+ {en:"What do you do?", ok:"O que você faz? (qual sua profissão)", no:["O que você está fazendo agora?","O que você quer?"]},
+ {en:"Where are you from?", ok:"De onde você é?", no:["Onde você está agora?","Para onde você vai?"]},
+ {en:"Nice to meet you.", ok:"Prazer em conhecer você.", no:["Até mais tarde.","Que bom te ver de novo."]},
+ {en:"Can I help you?", ok:"Posso te ajudar?", no:["Você pode me ajudar?","Posso ir com você?"]},
+ {en:"See you tomorrow.", ok:"Até amanhã.", no:["Te vejo hoje à noite.","Até a semana que vem."]},
+ {en:"Sorry, I'm running late.", ok:"Desculpe, estou atrasado.", no:["Desculpe, estou correndo.","Desculpe, cheguei cedo."]},
+ {en:"Could you send me the invoice?", ok:"Você poderia me enviar a nota fiscal?", no:["Você recebeu a nota fiscal?","Posso te enviar a nota fiscal?"]},
+ {en:"I'll call you back.", ok:"Eu te ligo de volta.", no:["Você me liga amanhã?","Eu te liguei ontem."]},
+ {en:"What time is the meeting?", ok:"Que horas é a reunião?", no:["Quanto tempo dura a reunião?","Onde é a reunião?"]},
+ {en:"Sorry, I didn't catch that.", ok:"Desculpe, não entendi.", no:["Desculpe, perdi o trem.","Desculpe, não posso ir."]},
+ {en:"How much is it?", ok:"Quanto custa?", no:["Quantos são?","Quanto tempo leva?"]},
+ {en:"Are you available on Friday?", ok:"Você está disponível na sexta?", no:["Você trabalhou na sexta?","Você vai viajar na sexta?"]},
+ {en:"Let me check.", ok:"Deixa eu verificar.", no:["Deixa comigo.","Me deixe em paz."]},
+ {en:"Take your time.", ok:"Sem pressa, fique à vontade.", no:["Você está atrasado.","Seja rápido, por favor."]},
+ {en:"It's on the second floor.", ok:"Fica no segundo andar.", no:["Fica na segunda sala.","Fica a duas quadras."]},
+ {en:"I work from home on Mondays.", ok:"Eu trabalho de casa às segundas.", no:["Eu vou para casa às segundas.","Eu trabalho no escritório às segundas."]},
+ {en:"What does that mean?", ok:"O que isso significa?", no:["O que ele quer?","O que aconteceu?"]},
+ {en:"Have a nice weekend!", ok:"Bom fim de semana!", no:["Como foi o fim de semana?","Até segunda!"]},
+ {en:"Sorry to keep you waiting.", ok:"Desculpe te fazer esperar.", no:["Desculpe, estou esperando alguém.","Desculpe, não posso esperar."]},
+ {en:"Can I have the bill, please?", ok:"Pode trazer a conta, por favor?", no:["Posso pagar com cartão?","Tem mesa para dois?"]},
+ {en:"Is this seat free?", ok:"Este lugar está livre?", no:["Isto é de graça?","Este assento é seu?"]},
+ {en:"Where is the bathroom?", ok:"Onde fica o banheiro?", no:["Onde fica a saída?","Onde fica o quarto?"]},
+ {en:"I'm just looking, thanks.", ok:"Só estou olhando, obrigado.", no:["Estou procurando algo, obrigado.","Estou só esperando, obrigado."]},
+ {en:"Do you take credit cards?", ok:"Vocês aceitam cartão de crédito?", no:["Você tem cartão de visita?","Você pagou com cartão?"]},
+ {en:"What would you like to drink?", ok:"O que você gostaria de beber?", no:["O que você bebeu?","Você gosta de beber?"]},
+ {en:"The flight is delayed.", ok:"O voo está atrasado.", no:["O voo foi cancelado.","O voo está lotado."]},
+ {en:"Here's my business card.", ok:"Aqui está meu cartão de visita.", no:["Aqui está meu cartão de crédito.","Aqui está minha passagem."]},
+ {en:"Could you sign here, please?", ok:"Você pode assinar aqui, por favor?", no:["Você pode sentar aqui, por favor?","Você pode esperar aqui, por favor?"]},
+ {en:"The deadline is next week.", ok:"O prazo é na semana que vem.", no:["A reunião é na semana que vem.","O prazo foi na semana passada."]},
+ {en:"I'll send it by email.", ok:"Vou mandar por e-mail.", no:["Mandei ontem por e-mail.","Me mande por e-mail."]},
+ {en:"How was your weekend?", ok:"Como foi o seu fim de semana?", no:["O que você vai fazer no fim de semana?","Você trabalha no fim de semana?"]},
+ {en:"It's nice to see you again.", ok:"Que bom te ver de novo.", no:["Prazer em te conhecer.","Te vejo de novo amanhã."]},
+ {en:"Can you turn left here?", ok:"Pode virar à esquerda aqui?", no:["Pode parar aqui?","Pode virar à direita aqui?"]},
+ {en:"Keep the change.", ok:"Pode ficar com o troco.", no:["Pode trocar de lugar.","Guarde o recibo."]},
+ {en:"I have a reservation.", ok:"Eu tenho uma reserva.", no:["Eu quero fazer uma reserva.","Eu cancelei a reserva."]},
+ {en:"What's the Wi-Fi password?", ok:"Qual é a senha do Wi-Fi?", no:["O Wi-Fi está funcionando?","Onde fica o Wi-Fi?"]},
+ {en:"Sorry, he's not in today.", ok:"Desculpe, ele não está hoje.", no:["Desculpe, ele está ocupado agora.","Desculpe, ele ainda não chegou."]},
+ {en:"Can I leave a message?", ok:"Posso deixar um recado?", no:["Posso ir embora?","Você recebeu minha mensagem?"]},
+ {en:"Please take a seat.", ok:"Por favor, sente-se.", no:["Por favor, pegue uma cadeira.","Por favor, espere lá fora."]}
+];
+var listenOrder = shuffle(LISTEN), listenI = 0, listenDone = false;
+var elLC = document.getElementById("listen-count"), elLO = document.getElementById("listen-options"),
+    elLF = document.getElementById("listen-feedback"), elLR = document.getElementById("listen-reveal"),
+    elLE = document.getElementById("listen-en"), elLH = document.getElementById("listen-hint");
+
+function listenRender(){
+  var q = listenOrder[listenI]; listenDone = false;
+  elLC.textContent = "Frase " + (listenI+1) + " de " + listenOrder.length;
+  elLR.hidden = true; elLE.textContent = q.en;
+  elLH.textContent = synth ? "Toque para ouvir. Pode repetir quantas vezes quiser." : "Sem voz neste navegador — leia a frase abaixo.";
+  if (!synth) elLR.hidden = false;
+  elLF.hidden = true; elLF.innerHTML = "";
+  elLO.innerHTML = "";
+  shuffle([q.ok].concat(q.no)).forEach(function(opt){
+    var b = document.createElement("button"); b.type="button"; b.className="option"; b.textContent=opt;
+    b.onclick = function(){ listenAnswer(b, opt); };
+    elLO.appendChild(b);
+  });
+}
+function listenAnswer(btn, opt){
+  if (listenDone) return; listenDone = true;
+  var q = listenOrder[listenI], ok = opt === q.ok;
+  Array.prototype.forEach.call(elLO.children, function(b){
+    b.disabled = true;
+    if (b.textContent === q.ok) b.classList.add("ok");
+  });
+  if (!ok) btn.classList.add("bad");
+  addScore("listen", ok);
+  elLR.hidden = false;
+  elLF.className = "feedback " + (ok ? "ok" : "bad");
+  elLF.innerHTML =
+    '<p class="verdict">' + (ok ? "Isso! Você entendeu." : "Não foi dessa vez — ouça de novo lendo a frase.") + '</p>' +
+    '<p><b>' + esc(q.en) + '</b> = ' + esc(q.ok) + '</p>' +
+    '<div class="row" style="margin-top:6px"><button type="button" class="icon-btn" id="listen-again">' + SPEAKER + 'Ouvir de novo</button>' +
+    '<button type="button" class="btn primary grow" id="listen-next">Próxima</button></div>';
+  elLF.hidden = false;
+  document.getElementById("listen-again").onclick = function(){ speak(q.en); };
+  document.getElementById("listen-next").onclick = function(){
+    listenI++;
+    if (listenI >= listenOrder.length){ listenOrder = shuffle(LISTEN); listenI = 0; toast("Rodada completa! Começando de novo, em outra ordem."); }
+    listenRender(); window.scrollTo({top:0, behavior:"smooth"});
+  };
+}
+document.getElementById("listen-play").onclick = function(){ speak(listenOrder[listenI].en); };
+listenRender();
+
+/* =========================================================
+   4. SOCORRO
+   ========================================================= */
+var HELP = [
+ {g:"Quando você não entendeu", items:[
+   ["Sorry, could you repeat that?","Desculpe, pode repetir?"],
+   ["Could you speak more slowly, please?","Pode falar mais devagar, por favor?"],
+   ["Sorry, I didn't catch that.","Desculpe, não entendi."],
+   ["Could you write it down, please?","Pode escrever, por favor?"],
+   ["What does that word mean?","O que essa palavra significa?"]
+ ]},
+ {g:"Para ganhar tempo", items:[
+   ["Just a moment, please.","Um momento, por favor."],
+   ["Let me think.","Deixa eu pensar."],
+   ["How do you say this in English?","Como se diz isso em inglês?"],
+   ["My English is basic, but I'm learning.","Meu inglês é básico, mas estou aprendendo."]
+ ]},
+ {g:"Para confirmar que entendeu", items:[
+   ["Do you mean…?","Você quer dizer…?"],
+   ["So, you're saying that…","Então, você está dizendo que…"],
+   ["Is that right?","Está certo?"],
+   ["Okay, I understand. Thank you.","Certo, entendi. Obrigado."]
+ ]},
+ {g:"No restaurante", items:[
+   ["A table for two, please.","Uma mesa para dois, por favor."],
+   ["Can I see the menu, please?","Posso ver o cardápio, por favor?"],
+   ["I'd like this one, please.","Eu queria este, por favor."],
+   ["Can I have the bill, please?","Pode trazer a conta, por favor?"],
+   ["Can I pay by card?","Posso pagar com cartão?"]
+ ]},
+ {g:"No hotel e no aeroporto", items:[
+   ["I have a reservation.","Eu tenho uma reserva."],
+   ["What time is check-out?","Que horas é o check-out?"],
+   ["Is breakfast included?","O café da manhã está incluído?"],
+   ["Where is gate 12?","Onde fica o portão 12?"],
+   ["Can you call a taxi for me?","Pode chamar um táxi para mim?"]
+ ]},
+ {g:"No trabalho", items:[
+   ["Nice to meet you. I'm an accountant.","Prazer em conhecer. Sou contador."],
+   ["Here's my business card.","Aqui está meu cartão de visita."],
+   ["Let me check and get back to you.","Vou verificar e te dou um retorno."],
+   ["Could you send me an email?","Você pode me mandar um e-mail?"],
+   ["I'll send the report today.","Vou mandar o relatório hoje."]
+ ]}
+];
+var hg = document.getElementById("help-groups");
+HELP.forEach(function(group){
+  var wrap = document.createElement("div"); wrap.className = "group";
+  var h = document.createElement("h3"); h.textContent = group.g; wrap.appendChild(h);
+  var list = document.createElement("div"); list.className = "phrase-list";
+  group.items.forEach(function(it){
+    var row = document.createElement("div"); row.className = "phrase";
+    row.innerHTML = '<div><p class="p-en">' + esc(it[0]) + '</p><p class="p-pt">' + esc(it[1]) + '</p></div>';
+    var b = document.createElement("button"); b.type="button"; b.className="icon-btn"; b.innerHTML = SPEAKER;
+    b.setAttribute("aria-label","Ouvir: "+it[0]);
+    b.onclick = function(){ speak(it[0].replace("…","")); };
+    row.appendChild(b); list.appendChild(row);
+  });
+  wrap.appendChild(list); hg.appendChild(wrap);
+});
+document.getElementById("reset").onclick = function(){
+  scores = {prep:{ok:0,total:0}, build:{ok:0,total:0}, listen:{ok:0,total:0}, dict:{ok:0,total:0}, fut:{ok:0,total:0}, struct:{ok:0,total:0}, vt:{ok:0,total:0}};
+  store.set("scores", scores); ["prep","build","listen","fut"].forEach(paintScore); paintDictCount(); structRender(); vtRender(); toast("Acertos zerados.");
+};
+
+/* =========================================================
+   5. DITADO
+   ========================================================= */
+var DICT = [
+ {en:"I am at home.", pt:"Estou em casa."},
+ {en:"She is my client.", pt:"Ela é minha cliente."},
+ {en:"We work in an office.", pt:"Nós trabalhamos em um escritório."},
+ {en:"He lives in Brazil.", pt:"Ele mora no Brasil."},
+ {en:"The meeting is at three.", pt:"A reunião é às três."},
+ {en:"I don't understand.", pt:"Eu não entendo."},
+ {en:"Can you help me?", pt:"Você pode me ajudar?"},
+ {en:"Where do you work?", pt:"Onde você trabalha?"},
+ {en:"The report is on the table.", pt:"O relatório está na mesa."},
+ {en:"She sends the invoice.", pt:"Ela envia a nota fiscal."},
+ {en:"I have a meeting today.", pt:"Eu tenho uma reunião hoje."},
+ {en:"They are not here.", pt:"Eles não estão aqui."},
+ {en:"What time is it?", pt:"Que horas são?"},
+ {en:"Do you speak English?", pt:"Você fala inglês?"},
+ {en:"My office is near the station.", pt:"Meu escritório fica perto da estação."},
+ {en:"I work from home on Fridays.", pt:"Eu trabalho de casa às sextas."},
+ {en:"The client pays on Monday.", pt:"O cliente paga na segunda."},
+ {en:"Could you repeat that, please?", pt:"Você pode repetir, por favor?"},
+ {en:"I need the documents today.", pt:"Eu preciso dos documentos hoje."},
+ {en:"We start at nine in the morning.", pt:"Nós começamos às nove da manhã."},
+ {en:"She doesn't work on weekends.", pt:"Ela não trabalha nos fins de semana."},
+ {en:"How much does it cost?", pt:"Quanto custa?"},
+ {en:"I will call you tomorrow.", pt:"Eu te ligo amanhã."},
+ {en:"Thank you very much for your help.", pt:"Muito obrigado pela sua ajuda."},
+ {en:"Good morning, everyone.", pt:"Bom dia a todos."},
+ {en:"The bill, please.", pt:"A conta, por favor."},
+ {en:"I am hungry.", pt:"Estou com fome."},
+ {en:"It is very hot today.", pt:"Está muito quente hoje."},
+ {en:"My phone is on the table.", pt:"Meu celular está na mesa."},
+ {en:"She works at a bank.", pt:"Ela trabalha em um banco."},
+ {en:"We have a reservation.", pt:"Nós temos uma reserva."},
+ {en:"Where is the bathroom?", pt:"Onde fica o banheiro?"},
+ {en:"The flight is at ten.", pt:"O voo é às dez."},
+ {en:"I went to the office yesterday.", pt:"Eu fui ao escritório ontem."},
+ {en:"Please send me the file.", pt:"Por favor, me envie o arquivo."},
+ {en:"He is in a meeting.", pt:"Ele está em reunião."},
+ {en:"See you on Monday.", pt:"Até segunda."},
+ {en:"I like my job.", pt:"Eu gosto do meu trabalho."},
+ {en:"The coffee is very good.", pt:"O café está muito bom."},
+ {en:"Is this seat free?", pt:"Este lugar está livre?"}
+];
+function norm(t){ return String(t).toLowerCase().replace(/[.,!?;:"'`’]/g,"").replace(/\s+/g," ").trim(); }
+function wordsOf(t){ var n = norm(t); return n ? n.split(" ") : []; }
+function diffHTML(target, got){
+  var T = wordsOf(target), G = wordsOf(got), out = "";
+  for (var i = 0; i < T.length; i++){
+    var ok = G[i] === T[i];
+    out += '<li class="w ' + (ok ? "ok" : "bad") + '">' + esc(target.split(/\s+/)[i] || T[i]) + '</li>';
+  }
+  return '<ul class="words">' + out + '</ul>';
+}
+function scoreWords(target, got){
+  var T = wordsOf(target), G = wordsOf(got), hit = 0;
+  for (var i = 0; i < T.length; i++) if (G[i] === T[i]) hit++;
+  return T.length ? hit / T.length : 0;
+}
+var dictOrder = shuffle(DICT), dictI = 0, dictDone = false;
+var elDC = document.getElementById("dict-count"), elDA = document.getElementById("dict-answer"),
+    elDF = document.getElementById("dict-feedback");
+function paintDictCount(){
+  var s = scores.dict;
+  elDC.textContent = "Frase " + (dictI+1) + " de " + dictOrder.length + (s.total ? "  ·  acertos " + s.ok + " de " + s.total : "");
+}
+function dictRender(){
+  dictDone = false; elDA.value = ""; elDA.disabled = false;
+  elDF.hidden = true; elDF.innerHTML = "";
+  paintDictCount();
+}
+function dictShow(ok){
+  var q = dictOrder[dictI];
+  dictDone = true; elDA.disabled = true;
+  elDF.className = "feedback " + (ok ? "ok" : "bad");
+  elDF.innerHTML =
+    '<p class="verdict">' + (ok ? "Perfeito!" : "Veja o que faltou:") + '</p>' +
+    diffHTML(q.en, elDA.value) +
+    '<p class="full">' + esc(q.en) + '</p>' +
+    '<p>' + esc(q.pt) + '</p>' +
+    '<div class="row" style="margin-top:6px"><button type="button" class="icon-btn" id="dict-say">' + SPEAKER + 'Ouvir de novo</button>' +
+    '<button type="button" class="btn primary grow" id="dict-next">Próxima</button></div>';
+  elDF.hidden = false;
+  document.getElementById("dict-say").onclick = function(){ speak(q.en); };
+  document.getElementById("dict-next").onclick = function(){
+    dictI++;
+    if (dictI >= dictOrder.length){ dictOrder = shuffle(DICT); dictI = 0; toast("Rodada completa! Começando de novo."); }
+    dictRender(); window.scrollTo({top:0, behavior:"smooth"});
+  };
+  paintDictCount();
+}
+document.getElementById("dict-play").onclick = function(){ speak(dictOrder[dictI].en); };
+document.getElementById("dict-check").onclick = function(){
+  if (dictDone) return;
+  var q = dictOrder[dictI], ok = norm(elDA.value) === norm(q.en);
+  react(ok); scores.dict.total++; if (ok) scores.dict.ok++; store.set("scores", scores);
+  dictShow(ok);
+};
+document.getElementById("dict-reveal").onclick = function(){ if (!dictDone){ streak = 0; mood("", "Sem problema! Veja a frase e ouça de novo."); dictShow(false); } };
+elDA.addEventListener("keydown", function(e){ if (e.key === "Enter") document.getElementById("dict-check").click(); });
+dictRender();
+
+var mbChoose = document.getElementById("mode-btn-choose"), mbDict = document.getElementById("mode-btn-dict");
+function setListenMode(m){
+  document.getElementById("mode-choose").hidden = m !== "choose";
+  document.getElementById("mode-dict").hidden = m !== "dict";
+  mbChoose.setAttribute("aria-pressed", m === "choose" ? "true" : "false");
+  mbDict.setAttribute("aria-pressed", m === "dict" ? "true" : "false");
+  document.getElementById("score-listen").hidden = m !== "choose";
+  store.set("listenMode", m);
+  if (synth) try{ synth.cancel(); }catch(e){}
+}
+mbChoose.onclick = function(){ setListenMode("choose"); };
+mbDict.onclick = function(){ setListenMode("dict"); };
+setListenMode(store.get("listenMode","choose"));
+
+/* =========================================================
+   6. FUTURO — going to × will  e  to / to the / nada
+   ========================================================= */
+var GW = [
+ {s:"I've bought the tickets. We ___ travel to Bahia in December.", pt:"Já comprei as passagens. Vamos viajar para a Bahia em dezembro.", a:"g", full:"We're going to travel to Bahia in December.", tip:"Já comprou as passagens = <b>plano feito antes</b>."},
+ {s:"\"I'm thirsty.\" \"Wait, I ___ get you some water.\"", pt:"\"Estou com sede.\" \"Espera, vou pegar água pra você.\"", a:"w", full:"Wait, I'll get you some water.", tip:"Oferta decidida <b>na hora</b>."},
+ {s:"Be careful! You ___ fall!", pt:"Cuidado! Você vai cair!", a:"g", full:"Be careful! You're going to fall!", tip:"<i>Be careful!</i> = você <b>está vendo</b> o perigo 👀."},
+ {s:"I think Brazil ___ win the next World Cup.", pt:"Acho que o Brasil vai ganhar a próxima Copa.", a:"w", full:"I think Brazil will win the next World Cup.", tip:"<i>I think</i> = <b>opinião</b>, palpite 💭."},
+ {s:"She has decided. She ___ study English every day.", pt:"Ela decidiu. Ela vai estudar inglês todo dia.", a:"g", full:"She's going to study English every day.", tip:"<i>Has decided</i> = <b>decidido antes</b>."},
+ {s:"Don't worry, I ___ call the client tomorrow.", pt:"Não se preocupe, eu ligo para o cliente amanhã.", a:"w", full:"Don't worry, I'll call the client tomorrow.", tip:"<i>Don't worry</i> = <b>promessa</b>."},
+ {s:"\"The phone is ringing!\" \"I ___ answer it.\"", pt:"\"O telefone está tocando!\" \"Eu atendo.\"", a:"w", full:"I'll answer it.", tip:"Decidiu <b>agora</b>, no momento."},
+ {s:"Look at the sky! It ___ rain.", pt:"Olhe o céu! Vai chover.", a:"g", full:"Look at the sky! It's going to rain.", tip:"<i>Look!</i> = <b>prova na sua frente</b> (as nuvens)."},
+ {s:"\"I forgot my wallet.\" \"Don't worry, I ___ pay.\"", pt:"\"Esqueci a carteira.\" \"Pode deixar, eu pago.\"", a:"w", full:"Don't worry, I'll pay.", tip:"Oferta <b>na hora</b>."},
+ {s:"I have it in my calendar. I ___ meet the client at 10am.", pt:"Está na minha agenda. Vou encontrar o cliente às 10h.", a:"g", full:"I'm going to meet the client at 10am.", tip:"Está na agenda = <b>plano</b>."},
+ {s:"\"Can you send me the report?\" \"Sure, I ___ send it today.\"", pt:"\"Pode me mandar o relatório?\" \"Claro, mando hoje.\"", a:"w", full:"Sure, I'll send it today.", tip:"<b>Promessa</b> na resposta."},
+ {s:"We decided last week. We ___ buy a new car.", pt:"Decidimos semana passada. Vamos comprar um carro novo.", a:"g", full:"We're going to buy a new car.", tip:"<i>Decided last week</i> = <b>decidido antes</b>."},
+ {s:"Watch out! That glass ___ fall off the table!", pt:"Cuidado! Aquele copo vai cair da mesa!", a:"g", full:"Watch out! That glass is going to fall off the table!", tip:"<i>Watch out!</i> = <b>estou vendo</b> 👀."},
+ {s:"I think the meeting ___ be long tomorrow.", pt:"Acho que a reunião vai ser longa amanhã.", a:"w", full:"I think the meeting will be long tomorrow.", tip:"<i>I think</i> = <b>palpite</b>."},
+ {s:"Look at that car! It's too fast. It ___ crash!", pt:"Olha aquele carro! Está rápido demais. Vai bater!", a:"g", full:"It's going to crash!", tip:"<i>Look!</i> + rápido demais = <b>prova</b>."},
+ {s:"My phone has 1% battery. It ___ die.", pt:"Meu celular está com 1% de bateria. Vai desligar.", a:"g", full:"My phone is going to die.", tip:"1% na tela é um <b>fato</b> que você vê."},
+ {s:"I believe the client ___ like our proposal.", pt:"Acredito que o cliente vai gostar da proposta.", a:"w", full:"I believe the client will like our proposal.", tip:"<i>I believe</i> = <b>opinião</b>."},
+ {s:"The baby is rubbing her eyes. She ___ sleep.", pt:"A bebê está esfregando os olhos. Ela vai dormir.", a:"g", full:"She's going to sleep.", tip:"Esfregando os olhos = <b>sinal visível</b>."},
+ {s:"I'm sure you ___ pass the exam.", pt:"Tenho certeza de que você vai passar na prova.", a:"w", full:"I'm sure you'll pass the exam.", tip:"<i>I'm sure</i> = <b>opinião</b>, mesmo com certeza."},
+ {s:"Be careful! The ladder is moving. You ___ fall!", pt:"Cuidado! A escada está mexendo. Você vai cair!", a:"g", full:"You're going to fall!", tip:"<i>Be careful!</i> + escada mexendo = <b>prova</b>."},
+ {s:"Maybe it ___ rain this weekend.", pt:"Talvez chova neste fim de semana.", a:"w", full:"Maybe it will rain this weekend.", tip:"<i>Maybe</i> = <b>palpite</b>."},
+ {s:"The sky is black and there's thunder. It ___ rain.", pt:"O céu está preto e está trovejando. Vai chover.", a:"g", full:"It's going to rain.", tip:"Céu preto e trovão = <b>prova</b>."},
+ {s:"\"This box is heavy.\" \"I ___ help you.\"", pt:"\"Esta caixa está pesada.\" \"Eu te ajudo.\"", a:"w", full:"I'll help you.", tip:"Oferta <b>na hora</b>."},
+ {s:"I already booked the hotel. I ___ stay three nights.", pt:"Já reservei o hotel. Vou ficar três noites.", a:"g", full:"I'm going to stay three nights.", tip:"Já reservou = <b>plano</b>."},
+ {s:"OK, I ___ have the pizza, please.", pt:"Ok, vou querer a pizza, por favor.", a:"w", full:"OK, I'll have the pizza, please.", tip:"Escolheu olhando o cardápio = decidiu <b>agora</b>."},
+ {s:"Don't worry, I ___ be there at eight.", pt:"Pode deixar, estarei lá às oito.", a:"w", full:"Don't worry, I'll be there at eight.", tip:"<b>Promessa</b>."}
+];
+var TOQ = [
+ {s:"I'm going ___ supermarket after work.", pt:"Vou ao supermercado depois do trabalho.", a:"the", full:"I'm going to the supermarket after work.", tip:"Lugar comum → <b>to the</b>."},
+ {s:"She's going ___ call her mother tonight.", pt:"Ela vai ligar para a mãe hoje à noite.", a:"to", full:"She's going to call her mother tonight.", tip:"Depois vem <b>verbo</b> (call) → só <b>to</b>."},
+ {s:"We're going ___ home now.", pt:"Estamos indo para casa agora.", a:"no", full:"We're going home now.", tip:"<b>Home</b> nunca leva to depois de go."},
+ {s:"They're going ___ Rio de Janeiro next week.", pt:"Eles vão para o Rio na semana que vem.", a:"to", full:"They're going to Rio de Janeiro next week.", tip:"<b>Cidade</b> → só <b>to</b>."},
+ {s:"I'm going ___ office early tomorrow.", pt:"Vou ao escritório cedo amanhã.", a:"the", full:"I'm going to the office early tomorrow.", tip:"Lugar comum → <b>to the</b>."},
+ {s:"He's tired. He's going ___ bed.", pt:"Ele está cansado. Vai para a cama.", a:"to", full:"He's going to bed.", tip:"<b>Bed, school, work, church</b> → to, sem the."},
+ {s:"Are you going ___ there by car?", pt:"Você vai lá de carro?", a:"no", full:"Are you going there by car?", tip:"<b>There / here</b> não levam to."},
+ {s:"We're going ___ beach on Saturday.", pt:"Vamos à praia no sábado.", a:"the", full:"We're going to the beach on Saturday.", tip:"Lugar comum → <b>to the</b>."},
+ {s:"I'm going ___ shopping with my wife.", pt:"Vou fazer compras com minha esposa.", a:"no", full:"I'm going shopping with my wife.", tip:"Verbo com <b>-ing</b> vem direto após going."},
+ {s:"The kids are going ___ school.", pt:"As crianças vão para a escola.", a:"to", full:"The kids are going to school.", tip:"Vão <b>estudar</b> → to school, sem the."},
+ {s:"My son is going ___ school by bus.", pt:"Meu filho vai para a escola de ônibus.", a:"to", full:"My son is going to school by bus.", tip:"Vai estudar → <b>to school</b>."},
+ {s:"We're going ___ swimming this weekend.", pt:"Vamos nadar neste fim de semana.", a:"no", full:"We're going swimming this weekend.", tip:"<b>-ing</b> → sem to."},
+ {s:"I love that restaurant. Let's go ___ there again.", pt:"Adoro aquele restaurante. Vamos lá de novo.", a:"no", full:"Let's go there again.", tip:"<b>There</b> → sem to."},
+ {s:"She's going ___ work early today.", pt:"Ela vai trabalhar cedo hoje.", a:"to", full:"She's going to work early today.", tip:"<b>Work</b> → to, sem the."},
+ {s:"I'm going ___ school to pick up my son's report card.", pt:"Vou à escola buscar o boletim do meu filho.", a:"the", full:"I'm going to the school to pick up my son's report card.", tip:"Vai ao <b>prédio</b> por outro motivo (não para estudar) → to the."},
+ {s:"Are you going ___ fishing with your father?", pt:"Você vai pescar com seu pai?", a:"no", full:"Are you going fishing with your father?", tip:"<b>-ing</b> → sem to."},
+ {s:"He's going ___ church on Sunday.", pt:"Ele vai à igreja no domingo.", a:"to", full:"He's going to church on Sunday.", tip:"<b>Church</b> (para a missa/culto) → to, sem the."},
+ {s:"I'm going ___ doctor tomorrow.", pt:"Vou ao médico amanhã.", a:"the", full:"I'm going to the doctor tomorrow.", tip:"<b>To the doctor</b> / to the dentist."},
+ {s:"I'm going ___ home after work.", pt:"Vou para casa depois do trabalho.", a:"no", full:"I'm going home after work.", tip:"<b>Home</b> → sem to."},
+ {s:"We're going ___ run tomorrow morning.", pt:"Vamos correr amanhã de manhã.", a:"to", full:"We're going to run tomorrow morning.", tip:"<b>Verbo</b> (run) → to. Ou: <i>going running</i>."},
+ {s:"I'm going ___ bank to pay a bill.", pt:"Vou ao banco pagar uma conta.", a:"the", full:"I'm going to the bank to pay a bill.", tip:"Lugar comum → <b>to the</b>."},
+ {s:"She's going ___ Brazil in July.", pt:"Ela vai ao Brasil em julho.", a:"to", full:"She's going to Brazil in July.", tip:"<b>País</b> → só to."},
+ {s:"I'm going ___ downtown.", pt:"Vou ao centro.", a:"no", full:"I'm going downtown.", tip:"<b>Downtown, abroad, out</b> → sem to."},
+ {s:"We're going ___ airport at six.", pt:"Vamos ao aeroporto às seis.", a:"the", full:"We're going to the airport at six.", tip:"Lugar comum → <b>to the</b>."}
+];
+var CB = [
+ {s:"___ a client at 3. It's in my calendar.", pt:"Vou encontrar um cliente às 3. Está na minha agenda.", ing:"I'm meeting", w:"I'll meet", a:"ing", full:"I'm meeting a client at 3.", tip:"Está na agenda = <b>compromisso marcado</b>."},
+ {s:"___ the day with my sister tomorrow. We planned it last week.", pt:"Vou passar o dia com minha irmã amanhã. Combinamos semana passada.", ing:"I'm spending", w:"I'll spend", a:"ing", full:"I'm spending the day with my sister tomorrow.", tip:"Vocês já combinaram = <b>-ing</b>."},
+ {s:"We have the tickets. ___ to Bahia on Friday.", pt:"Temos as passagens. Vamos voar para a Bahia na sexta.", ing:"We're flying", w:"We'll fly", a:"ing", full:"We're flying to Bahia on Friday.", tip:"Passagem comprada = <b>marcado</b>."},
+ {s:"“The phone is ringing!” “OK, ___ it.”", pt:"“O telefone está tocando!” “Ok, eu atendo.”", ing:"I'm answering", w:"I'll answer", a:"w", full:"OK, I'll answer it.", tip:"Decidiu <b>agora</b> → will."},
+ {s:"___ dinner with my wife tonight. I booked a table.", pt:"Vou jantar com minha esposa hoje. Reservei uma mesa.", ing:"I'm having", w:"I'll have", a:"ing", full:"I'm having dinner with my wife tonight.", tip:"Mesa reservada = <b>marcado</b>. (<i>have dinner</i> = jantar)"},
+ {s:"“This box is heavy.” “Wait, ___ you.”", pt:"“Esta caixa está pesada.” “Espera, eu te ajudo.”", ing:"I'm helping", w:"I'll help", a:"w", full:"Wait, I'll help you.", tip:"Oferta <b>na hora</b> → will."},
+ {s:"___ the dentist on Thursday at 10.", pt:"Vou ao dentista na quinta às 10.", ing:"I'm seeing", w:"I'll see", a:"ing", full:"I'm seeing the dentist on Thursday at 10.", tip:"Consulta com dia e hora = <b>marcado</b>."},
+ {s:"I think ___ home tonight. I'm tired.", pt:"Acho que vou ficar em casa hoje. Estou cansado.", ing:"I'm staying", w:"I'll stay", a:"w", full:"I think I'll stay home tonight.", tip:"<i>I think</i> = decisão/palpite do momento → will."},
+ {s:"___ the team on Monday morning. The meeting is confirmed.", pt:"Vou me reunir com a equipe segunda de manhã. A reunião está confirmada.", ing:"We're meeting", w:"We'll meet", a:"ing", full:"We're meeting the team on Monday morning.", tip:"Reunião confirmada = <b>-ing</b>."},
+ {s:"Don't worry, ___ you the report today.", pt:"Não se preocupe, te mando o relatório hoje.", ing:"I'm sending", w:"I'll send", a:"w", full:"Don't worry, I'll send you the report today.", tip:"<i>Don't worry</i> = <b>promessa</b> → will."},
+ {s:"My parents ___ us this weekend. They bought the bus tickets.", pt:"Meus pais vão nos visitar neste fim de semana. Compraram as passagens.", ing:"are visiting", w:"will visit", a:"ing", full:"My parents are visiting us this weekend.", tip:"Passagens compradas = <b>marcado</b>."},
+ {s:"“I forgot my wallet.” “No problem, ___.”", pt:"“Esqueci a carteira.” “Sem problema, eu pago.”", ing:"I'm paying", w:"I'll pay", a:"w", full:"No problem, I'll pay.", tip:"Oferta <b>na hora</b> → will."},
+ {s:"She ___ at 6 tomorrow. Her flight is at 9.", pt:"Ela vai sair às 6 amanhã. O voo dela é às 9.", ing:"is leaving", w:"will leave", a:"ing", full:"She's leaving at 6 tomorrow.", tip:"Horário de voo definido = <b>marcado</b>."},
+ {s:"Maybe ___ a new car next year.", pt:"Talvez eu compre um carro novo ano que vem.", ing:"I'm buying", w:"I'll buy", a:"w", full:"Maybe I'll buy a new car next year.", tip:"<i>Maybe</i> = nada decidido → will."},
+ {s:"___ tennis with Paulo on Saturday. We booked the court.", pt:"Vou jogar tênis com o Paulo no sábado. Reservamos a quadra.", ing:"I'm playing", w:"I'll play", a:"ing", full:"I'm playing tennis with Paulo on Saturday.", tip:"Quadra reservada = <b>marcado</b>."},
+ {s:"“It's cold in here.” “___ the window.”", pt:"“Está frio aqui.” “Eu fecho a janela.”", ing:"I'm closing", w:"I'll close", a:"w", full:"I'll close the window.", tip:"Decidiu <b>agora</b> → will."},
+ {s:"___ from home tomorrow. My boss already said OK.", pt:"Vou trabalhar de casa amanhã. Meu chefe já aprovou.", ing:"I'm working", w:"I'll work", a:"ing", full:"I'm working from home tomorrow.", tip:"Já combinado com o chefe = <b>-ing</b>."},
+ {s:"I'm sure ___ the project.", pt:"Tenho certeza de que você vai gostar do projeto.", ing:"you're liking", w:"you'll like", a:"w", full:"I'm sure you'll like the project.", tip:"<i>I'm sure</i> = opinião → will. (E <i>like</i> quase nunca vai para -ing.)"}
+];
+var FUT_OPTS = {
+  gw:[["g","GOING TO"],["w","WILL"]],
+  to:[["the","TO THE"],["to","TO"],["no","NADA"]]
+};
+var futMode = store.get("futMode","gw");
+var FUT_SRC = {gw:GW, to:TOQ, cb:CB};
+if (futMode !== "to" && futMode !== "cb") futMode = "gw";
+var futOrder = {gw:shuffle(GW), to:shuffle(TOQ), cb:shuffle(CB)}, futI = {gw:0, to:0, cb:0}, futDone = false;
+function futOpts(q){ return futMode === "cb" ? [["ing", q.ing], ["w", q.w]] : FUT_OPTS[futMode]; }
+var elFC = document.getElementById("fut-count"), elFS = document.getElementById("fut-sentence"),
+    elFP = document.getElementById("fut-pt"), elFCh = document.getElementById("fut-choices"),
+    elFF = document.getElementById("fut-feedback");
+function futBlank(txt, cls, label){
+  var parts = esc(txt).split("___");
+  return parts[0] + '<span class="gap' + (cls ? " " + cls : "") + '">' + (label || "&nbsp;?&nbsp;") + '</span>' + (parts[1] || "");
+}
+function futRender(){
+  var list = futOrder[futMode], q = list[futI[futMode]]; futDone = false;
+  elFC.textContent = "Frase " + (futI[futMode]+1) + " de " + list.length;
+  elFS.innerHTML = futBlank(q.s); elFP.textContent = q.pt;
+  elFF.hidden = true; elFF.innerHTML = "";
+  elFCh.className = "choices" + (futMode !== "to" ? " two" : "");
+  elFCh.innerHTML = "";
+  futOpts(q).forEach(function(o){
+    var b = document.createElement("button"); b.type = "button"; b.className = "choice sm" + (futMode === "cb" ? " phrase-opt" : ""); b.textContent = o[1]; b.dataset.v = o[0];
+    b.onclick = function(){ futAnswer(b, o[0]); };
+    elFCh.appendChild(b);
+  });
+}
+function futAnswer(btn, v){
+  if (futDone) return; futDone = true;
+  var q = futOrder[futMode][futI[futMode]], ok = v === q.a;
+  var label = futOpts(q).filter(function(o){ return o[0] === q.a; })[0][1];
+  Array.prototype.forEach.call(elFCh.children, function(b){ b.disabled = true; if (b.dataset.v === q.a) b.classList.add("ok"); });
+  if (!ok) btn.classList.add("bad");
+  elFS.innerHTML = futBlank(q.s, "ok", futMode === "cb" ? esc(label) : (label.toLowerCase() === "nada" ? "—" : label.toLowerCase()));
+  addScore("fut", ok);
+  elFF.className = "feedback " + (ok ? "ok" : "bad");
+  elFF.innerHTML =
+    '<p class="verdict">' + (ok ? "Certo!" : "A resposta é " + (futMode === "cb" ? "“" + esc(label) + "”" : label) + ":") + '</p>' +
+    '<p class="full">' + esc(q.full) + '</p>' +
+    '<p>' + q.tip + '</p>' +
+    '<div class="row" style="margin-top:6px"><button type="button" class="icon-btn" id="fut-say">' + SPEAKER + 'Ouvir</button>' +
+    '<button type="button" class="btn primary grow" id="fut-next">Próxima</button></div>';
+  elFF.hidden = false;
+  document.getElementById("fut-say").onclick = function(){ speak(q.full); };
+  document.getElementById("fut-next").onclick = function(){
+    futI[futMode]++;
+    if (futI[futMode] >= futOrder[futMode].length){ futOrder[futMode] = shuffle(FUT_SRC[futMode]); futI[futMode] = 0; toast("Rodada completa! Começando de novo."); }
+    futRender(); window.scrollTo({top:0, behavior:"smooth"});
+  };
+}
+var fmGW = document.getElementById("fmode-btn-gw"), fmTO = document.getElementById("fmode-btn-to"), fmCB = document.getElementById("fmode-btn-cb");
+function setFutMode(m, quiet){
+  futMode = m; store.set("futMode", m);
+  fmGW.setAttribute("aria-pressed", m === "gw" ? "true" : "false");
+  fmTO.setAttribute("aria-pressed", m === "to" ? "true" : "false");
+  fmCB.setAttribute("aria-pressed", m === "cb" ? "true" : "false");
+  document.getElementById("fut-rules-cb").hidden = m !== "cb";
+  document.getElementById("fut-rules-gw").hidden = m !== "gw";
+  document.getElementById("fut-rules-to").hidden = m !== "to";
+  document.getElementById("h-fut").textContent = m === "gw" ? "Going to ou will?" : m === "to" ? "To, to the ou nada?" : "Combinado ou decidido agora?";
+  if (!quiet) mood("", m === "gw" ? TIPS.fut : m === "to" ? TIPS.futto : TIPS.futcb);
+  if (synth) try{ synth.cancel(); }catch(e){}
+  futRender();
+}
+fmGW.onclick = function(){ setFutMode("gw"); };
+fmTO.onclick = function(){ setFutMode("to"); };
+fmCB.onclick = function(){ setFutMode("cb"); };
+setFutMode(futMode, true);
+
+/* ===== 30 vídeos: [quem fala, inglês, tradução, dica de pronúncia] ===== */
+var VIDS = [
+{t:"Cumprimentar", place:"🏢", bg:"#DCEBFF", a:"🧔", b:"👩",
+ ear:"Nativo junta tudo: 'how's it going' vira 'ráuzigôuin'. Ouça a melodia, não cada palavra.",
+ l:[["A","Hey! How's it going?","Oi! Tudo bem?","rêi! ráuz it GÔU-in — o 'going' perde o G final."],
+    ["B","Pretty good, thanks. And you?","Bem, obrigada. E você?","PRÍ-di gud, THENKS — o 'tt' de pretty soa como um R fraquinho."],
+    ["A","Not bad. Busy day today.","Nada mal. Dia corrido hoje.","nót BÉD. BÍ-zi dêi tu-DÊI."],
+    ["B","Yeah, me too.","É, eu também.","IÉ, mi TÚ."]]},
+{t:"Se apresentar", place:"🤝", bg:"#FFE9D6", a:"👩", b:"🧔",
+ ear:"'Nice to meet you' sai como 'naistumítchu'. O 't you' vira 'tchu'.",
+ l:[["A","Hi, I'm Anna.","Oi, eu sou a Anna.","rái, aim ÉNA — I'm é uma sílaba só: 'aim'."],
+    ["B","Hi Anna, I'm Mike. Nice to meet you.","Oi Anna, eu sou o Mike. Prazer.","nais tu MÍ-tchu — 'meet you' vira 'mítchu'."],
+    ["A","Nice to meet you too.","O prazer é meu.","nais tu MÍ-tchu TÚ — o 'too' no final é forte."],
+    ["B","So, what do you do?","Então, o que você faz?","sôu, UÓ-dju DÚ — 'what do you' vira 'uódju'."]]},
+{t:"De onde você é?", place:"🌎", bg:"#E2F4E6", a:"🧑", b:"🧔",
+ ear:"Preste atenção no 'Where are you from' — nativo diz 'uérâiu FRÓM', com força no final.",
+ l:[["A","Where are you from?","De onde você é?","UÉR-âr iu FRÓM — força no 'from'."],
+    ["B","I'm from Brazil. São Paulo.","Sou do Brasil. São Paulo.","aim from bra-ZÍL — força no fim: braZIL, não BRAsil."],
+    ["A","Oh, cool! I've never been there.","Ah, legal! Nunca fui lá.","ôu, KÚL! aiv NÉ-vêr bin DÉR."],
+    ["B","You should go. The food is amazing.","Você deveria ir. A comida é incrível.","iu xud GÔU. dâ FÚD iz â-MÊI-zin."]]},
+{t:"Pedir um café", place:"☕", bg:"#F1E4D3", a:"👩‍🍳", b:"🧔",
+ ear:"No balcão eles falam rápido: 'whatcan I get you' vira 'uódcanaigétchu'. Espere a palavra 'get'.",
+ l:[["A","Hi! What can I get you?","Oi! O que vai querer?","uót kan ai GÉ-tchu — 'get you' vira 'gétchu'."],
+    ["B","Can I get a coffee, please?","Pode me ver um café, por favor?","kan ai GÉ-dâ KÓ-fi, PLÍZ — 'get a' vira 'gédâ'."],
+    ["A","Sure. For here or to go?","Claro. Para tomar aqui ou levar?","XUR. for RÍR or tu GÔU."],
+    ["B","To go, thanks.","Para levar, obrigado.","tu GÔU, THENKS — língua entre os dentes no TH."]]},
+{t:"No restaurante", place:"🍝", bg:"#FFE1E1", a:"🧑‍🍳", b:"🧔",
+ ear:"'Are you ready to order' sai como 'râiu RÉdi tu ÓRdâr'. O 'are you' quase some.",
+ l:[["A","Are you ready to order?","Já posso anotar o pedido?","âr-iu RÉ-di tu ÓR-dêr."],
+    ["B","Yes. I'll have the chicken, please.","Sim. Vou querer o frango, por favor.","iés. ail RÉV dâ TCHÍ-kin — I'll = 'ail', uma sílaba."],
+    ["A","Anything to drink?","Algo para beber?","É-ni-thin tu DRÍNK."],
+    ["B","Just water, thanks.","Só água, obrigado.","djâst UÓ-dêr — americano diz 'uóder', o T vira R fraco."]]},
+{t:"Pedir a conta", place:"🧾", bg:"#EDE6FF", a:"🧔", b:"👩‍💼",
+ ear:"Nos EUA se diz 'check'. Escute 'separate' — eles dizem 'SÉ-prit', com 2 sílabas.",
+ l:[["A","Excuse me. Can we get the check?","Com licença. Pode trazer a conta?","eks-KIÚZ mi. kan ui GÉT dâ TCHÉK."],
+    ["B","Sure. Together or separate?","Claro. Junto ou separado?","XUR. tu-GUÉ-dhêr or SÉ-prit."],
+    ["A","Together, please.","Junto, por favor.","tu-GUÉ-dhêr, PLÍZ."],
+    ["B","Here you go.","Aqui está.","RÍR iu GÔU — frase fixa, use sempre que entregar algo."]]},
+{t:"Pedir direção", place:"🗺️", bg:"#DFF3F7", a:"🧑", b:"👵",
+ ear:"Escute as palavras de direção: left, right, straight, corner. O resto é enfeite.",
+ l:[["A","Excuse me. Where's the subway?","Com licença. Onde fica o metrô?","eks-KIÚZ mi. UÉRZ dâ SÂB-uêi."],
+    ["B","Go straight and turn left at the corner.","Siga reto e vire à esquerda na esquina.","gôu STRÊIT, ând têrn LÉFT ét dâ KÓR-nêr."],
+    ["A","Is it far?","É longe?","IZ-it FÁR — 'is it' vira 'ízit'."],
+    ["B","No, it's about five minutes.","Não, uns cinco minutos.","nôu, its â-BÁUT faiv MÍ-nits — minutes é 'MÍnits'."]]},
+{t:"Check-in no hotel", place:"🏨", bg:"#FFF1C7", a:"👩‍💼", b:"🧔",
+ ear:"'I have a reservation' — nativo diz 'aiavâ rézêr-VÊI-xân'. O 'have a' vira 'ava'.",
+ l:[["A","Hi, welcome! Checking in?","Oi, bem-vindo! Fazendo check-in?","rái, UÉL-kâm! TCHÉ-kin ÍN."],
+    ["B","Yes. I have a reservation. Mike Pellegrini.","Sim. Tenho uma reserva. Mike Pellegrini.","ai RÉ-vâ ré-zêr-VÊI-xân."],
+    ["A","Great. Can I see your passport?","Ótimo. Posso ver seu passaporte?","grêit. kan ai SÍ iór PÉS-port."],
+    ["B","Sure, here it is.","Claro, aqui está.","XUR, RÍR it iz."]]},
+{t:"Imigração no aeroporto", place:"🛂", bg:"#E4E9F2", a:"👮", b:"🧔",
+ ear:"O agente fala firme e curto. Ouça a primeira palavra: What, How long, Where.",
+ l:[["A","What's the purpose of your visit?","Qual o motivo da sua visita?","uóts dâ PÊR-pâs âv iór VÍ-zit."],
+    ["B","I'm here on vacation.","Estou aqui de férias.","aim RÍR on vei-KÊI-xân."],
+    ["A","How long are you staying?","Quanto tempo vai ficar?","ráu LÓNG âr-iu STÊI-in."],
+    ["B","Two weeks.","Duas semanas.","tú UÍKS — 'weeks' com I longo: uíiks."]]},
+{t:"No Uber", place:"🚗", bg:"#E6E6E6", a:"🧑", b:"🧔",
+ ear:"Motoristas puxam conversa: 'How's your day going?'. Responda curto e simples.",
+ l:[["A","Hi! Are you Mike?","Oi! Você é o Mike?","rái! âr-iu MÁIK."],
+    ["B","Yes, that's me.","Sim, sou eu.","iés, DHÉTS mi."],
+    ["A","Downtown, right?","Centro, certo?","daun-TÁUN, RÁIT."],
+    ["B","Yeah. Can you drop me off here?","Isso. Pode me deixar aqui?","kan-iu DRÓP mi ÓF ríêr — 'drop me off' = deixar alguém."]]},
+{t:"Comprar roupa", place:"👕", bg:"#FFE3F1", a:"👩‍💼", b:"🧔",
+ ear:"Vendedor sempre diz 'Can I help you find anything?'. Basta ouvir 'help'.",
+ l:[["A","Hi! Can I help you find anything?","Oi! Posso ajudar a encontrar algo?","kan ai RÉLP iu faind É-ni-thin."],
+    ["B","I'm just looking, thanks.","Só estou olhando, obrigado.","aim djâst LÚ-kin, THENKS — frase de ouro na loja."],
+    ["B","Do you have this in a medium?","Tem esse no tamanho M?","du-iu RÉV dhis in â MÍ-di-âm."],
+    ["A","Let me check.","Deixa eu ver.","LÉ-mi TCHÉK — 'let me' vira 'lémi'."]]},
+{t:"Quanto custa?", place:"🏷️", bg:"#E9F7D9", a:"🧔", b:"👨‍💼",
+ ear:"Números com -teen e -ty confundem. 'Fifteen' tem força no fim; 'fifty' no começo.",
+ l:[["A","How much is this?","Quanto custa isso?","ráu MÂTCH iz dhis — 'much' com A fechado: mâtch."],
+    ["B","It's fifteen dollars.","São quinze dólares.","its fif-TÍN DÓ-lêrz — força no TEEN."],
+    ["A","Fifteen or fifty?","Quinze ou cinquenta?","fif-TÍN or FÍF-ti — compare a força."],
+    ["B","Fifteen. One five.","Quinze. Um, cinco.","fif-TÍN. uân FÁIV."]]},
+{t:"No supermercado", place:"🛒", bg:"#DDF4EC", a:"🧔", b:"👩",
+ ear:"No caixa: 'Paper or plastic?' e 'Do you need a bag?'. Escute a palavra 'bag'.",
+ l:[["A","Excuse me, where can I find the milk?","Com licença, onde fica o leite?","uér kan ai FÁIND dâ MÍLK."],
+    ["B","Aisle five, on the left.","Corredor cinco, à esquerda.","AIL faiv — aisle se fala 'ail', o S é mudo."],
+    ["B","Do you need a bag?","Precisa de sacola?","du-iu NÍ-dâ BÉG — 'need a' vira 'nídâ'."],
+    ["A","No, I'm good, thanks.","Não, tudo certo, obrigado.","nôu, aim GÚD — 'I'm good' = não preciso."]]},
+{t:"Falar do trabalho", place:"💼", bg:"#E1E7FF", a:"👩", b:"🧔",
+ ear:"'What do you do' é a pergunta mais comum. Nativo diz 'uódjudú'.",
+ l:[["A","What do you do?","Com o que você trabalha?","UÓ-dju DÚ — não é 'o que você faz agora'."],
+    ["B","I'm an accountant.","Sou contador.","aim ân â-KÁUN-tânt — 'I'm an' vira 'aimân'."],
+    ["A","Oh, nice. Do you have your own company?","Que legal. Você tem empresa própria?","du-iu rév iór ÔUN KÂM-pâ-ni."],
+    ["B","Yes, I run an accounting firm.","Sim, tenho um escritório de contabilidade.","ai RÂN ân â-KÁUN-tin FÊRM — 'run' = administrar."]]},
+{t:"Atender o telefone", place:"📞", bg:"#FFF0E0", a:"🧔", b:"👩‍💼",
+ ear:"No telefone o som é pior. Peça 'Could you say that again?' sem medo.",
+ l:[["A","Hello, this is Mike.","Alô, aqui é o Mike.","rê-LÔU, DHIS iz máik — no telefone se diz 'this is', não 'I am'."],
+    ["B","Hi Mike, it's Sarah from the bank.","Oi Mike, é a Sarah do banco.","its SÉ-râ frâm dâ BÉNK."],
+    ["A","Sorry, could you say that again?","Desculpe, pode repetir?","kúd-ju SÊI dhét â-GUÉN — 'could you' vira 'kúdju'."],
+    ["B","Sure. It's Sarah, from the bank.","Claro. É a Sarah, do banco.","XUR. its SÉ-râ."]]},
+{t:"Marcar uma reunião", place:"📅", bg:"#E7F0FA", a:"👩‍💼", b:"🧔",
+ ear:"Dias da semana: escute o começo — MON, TUES, WEDS, THURS, FRI.",
+ l:[["A","Are you free on Tuesday?","Você está livre na terça?","âr-iu FRÍ on TÚZ-dêi."],
+    ["B","Tuesday works for me.","Terça funciona para mim.","TÚZ-dêi uêrks fór mi — 'works for me' = está bom."],
+    ["A","How about ten a.m.?","Que tal às dez da manhã?","ráu â-BÁUT tén ei-ÉM."],
+    ["B","Perfect. See you then.","Perfeito. Até lá.","PÊR-fekt. SÍ iu DHÉN."]]},
+{t:"Quando não entender", place:"❓", bg:"#FFF6CC", a:"🧔", b:"🧑",
+ ear:"Estas frases salvam qualquer conversa. Treine até sair automático.",
+ l:[["A","Sorry, I didn't catch that.","Desculpe, não peguei.","ai DÍ-dânt KÉTCH dhét — 'catch' = entender/pegar."],
+    ["A","Can you speak more slowly?","Pode falar mais devagar?","kan-iu SPÍK mór SLÔU-li."],
+    ["B","Sure. No problem.","Claro. Sem problema.","XUR. nôu PRÓ-blâm."],
+    ["A","What does that mean?","O que isso significa?","uót dâz dhét MÍN — 'does' se fala 'dâz'."]]},
+{t:"Falar do tempo", place:"🌦️", bg:"#DCEFFF", a:"👩", b:"🧔",
+ ear:"Conversa de elevador! 'It's freezing' = muito frio. 'It's boiling' = muito quente.",
+ l:[["A","It's so cold today!","Está tão frio hoje!","its SÔU KÔULD tu-DÊI."],
+    ["B","I know! It's freezing.","Pois é! Está congelando.","ai NÔU! its FRÍ-zin — o K de know é mudo."],
+    ["A","Is it gonna rain?","Vai chover?","IZ-it GÂ-nâ RÊIN — gonna = going to."],
+    ["B","I think so. Take an umbrella.","Acho que sim. Leve um guarda-chuva.","ai THINK sôu. têik ân âm-BRÉ-lâ."]]},
+{t:"Fim de semana", place:"🏖️", bg:"#FFEBD1", a:"🧑", b:"🧔",
+ ear:"Passado no -ed: 'stayed' soa 'stêid', uma sílaba só. Não diga 'stêi-ed'.",
+ l:[["A","How was your weekend?","Como foi seu fim de semana?","ráu uâz iór UÍK-énd."],
+    ["B","It was great. I went to the beach.","Foi ótimo. Fui à praia.","ai uént tu dâ BÍTCH — I longo: bíitch."],
+    ["A","Nice! I just stayed home.","Legal! Eu só fiquei em casa.","ai djâst STÊID RÔUM — stayed = uma sílaba."],
+    ["B","Sometimes that's the best.","Às vezes é o melhor.","SÂM-taimz dhéts dâ BÉST."]]},
+{t:"Planos com 'gonna'", place:"🗓️", bg:"#EAF6E0", a:"👩", b:"🧔",
+ ear:"Nativo quase nunca diz 'going to' inteiro. Escute 'gonna' (GÂ-nâ).",
+ l:[["A","What are you gonna do tonight?","O que você vai fazer hoje à noite?","UÓ-dâr-iu GÂ-nâ dú tu-NÁIT."],
+    ["B","I'm gonna watch a movie.","Vou assistir a um filme.","aim GÂ-nâ UÓTCH â MÚ-vi."],
+    ["A","At home or at the theater?","Em casa ou no cinema?","ét RÔUM or ét dâ THÍ-â-dêr."],
+    ["B","At home. I'm tired.","Em casa. Estou cansado.","ét RÔUM. aim TÁI-êrd."]]},
+{t:"Convidar alguém", place:"🎉", bg:"#FCE3FF", a:"🧔", b:"👩",
+ ear:"'Do you wanna' vira 'diúâna' ou 'iâ uâna'. Wanna = want to.",
+ l:[["A","Do you wanna grab lunch?","Quer almoçar?","du-iu UÓ-nâ GRÉB LÂNTCH — 'grab' = pegar algo rápido."],
+    ["B","Sure! Where do you wanna go?","Claro! Onde você quer ir?","UÉR du-iu UÓ-nâ GÔU."],
+    ["A","There's a nice place around the corner.","Tem um lugar legal ali na esquina.","dhérz â NÁIS plêis â-RÁUND dâ KÓR-nêr."],
+    ["B","Sounds good!","Parece ótimo!","SÁUNDZ GÚD — resposta curta e muito natural."]]},
+{t:"Recusar com educação", place:"🙅", bg:"#E5ECEF", a:"👩", b:"🧔",
+ ear:"Recusa educada sempre tem 'I'd love to, but...'. Escute o 'but'.",
+ l:[["A","Wanna come to the party on Friday?","Quer vir à festa na sexta?","UÓ-nâ KÂM tu dâ PÁR-di on FRÁI-dêi."],
+    ["B","I'd love to, but I can't.","Eu adoraria, mas não posso.","aid LÂV tu, bât ai KÉNT — can't com A aberto: kénnt."],
+    ["B","I have to work. Maybe next time?","Tenho que trabalhar. Quem sabe na próxima?","ai RÉF-tâ UÊRK — 'have to' vira 'héftâ'."],
+    ["A","No worries!","Sem problemas!","nôu UÂ-riz — jeito nativo de dizer 'tudo bem'."]]},
+{t:"Na farmácia", place:"💊", bg:"#E0F5F0", a:"👨‍⚕️", b:"🧔",
+ ear:"Escute o nome do remédio e 'twice a day' (2x por dia), 'every six hours'.",
+ l:[["B","Hi. I have a headache.","Oi. Estou com dor de cabeça.","ai RÉV â RÉ-dêik — headache = 'rédêik'."],
+    ["A","You can take this. Two pills a day.","Pode tomar isso. Dois comprimidos por dia.","iu kan TÊIK dhis. tú PÍLZ â DÊI."],
+    ["B","Do I take it with food?","Tomo com comida?","du ai TÊI-kit uith FÚD — 'take it' vira 'têikit'."],
+    ["A","Yes, after meals.","Sim, depois das refeições.","iés, ÉF-têr MÍLZ."]]},
+{t:"Pedir desculpa", place:"🙏", bg:"#FFF0EB", a:"🧔", b:"👩",
+ ear:"'I'm sorry' é para erro; 'Excuse me' é para pedir passagem ou atenção.",
+ l:[["A","Oh, I'm so sorry! I'm late.","Ah, me desculpe! Estou atrasado.","ôu, aim SÔU SÓ-ri! aim LÊIT."],
+    ["B","Don't worry about it.","Não se preocupe.","dôunt UÂ-ri â-BÁU-dit — 'about it' vira 'abáudit'."],
+    ["A","The traffic was terrible.","O trânsito estava horrível.","dâ TRÉ-fik uâz TÉ-râ-bâl."],
+    ["B","It's okay. We just started.","Tudo bem. Acabamos de começar.","uí djâst STÁR-did."]]},
+{t:"Agradecer", place:"🎁", bg:"#FFF5D6", a:"👩", b:"🧔",
+ ear:"Resposta para 'thank you' quase nunca é 'you're welcome'. Ouça: 'No problem', 'Sure', 'Anytime'.",
+ l:[["A","Thank you so much for your help.","Muito obrigada pela ajuda.","THENK iu sôu MÂTCH fór iór RÉLP."],
+    ["B","No problem. Anytime.","De nada. Quando precisar.","nôu PRÓ-blâm. É-ni-taim."],
+    ["A","I really appreciate it.","Eu agradeço muito mesmo.","ai RÍ-li â-PRÍ-xi-êi-dit."],
+    ["B","Happy to help.","Fico feliz em ajudar.","RÉ-pi tu RÉLP."]]},
+{t:"Família", place:"👨‍👩‍👧", bg:"#E8F1FF", a:"👩", b:"🧔",
+ ear:"Escute 'brother' e 'mother': o TH soa quase como um D suave (bródhêr).",
+ l:[["A","Do you have any kids?","Você tem filhos?","du-iu RÉV É-ni KÍDZ — 'kids' é o jeito falado de children."],
+    ["B","No, but I have a big family.","Não, mas tenho uma família grande.","nôu, bât ai RÉV â BÍG FÉ-mi-li."],
+    ["A","Brothers and sisters?","Irmãos e irmãs?","BRÂ-dhêrz ând SÍS-têrz."],
+    ["B","Yes, two brothers.","Sim, dois irmãos.","iés, tú BRÂ-dhêrz."]]},
+{t:"Hobbies", place:"🎸", bg:"#F1E8FF", a:"🧑", b:"🧔",
+ ear:"'What do you like to do' vira 'uódjulaik tudú'. Foque em 'like'.",
+ l:[["A","What do you like to do for fun?","O que você gosta de fazer para se divertir?","UÓ-dju LÁIK tu DÚ fór FÂN."],
+    ["B","I like traveling and reading.","Gosto de viajar e de ler.","ai láik TRÉ-vâ-lin ând RÍ-din."],
+    ["A","Me too! Where did you go last?","Eu também! Para onde foi da última vez?","uér DÍ-dju gôu LÉST — 'did you' vira 'dídju'."],
+    ["B","I went to Chile last year.","Fui ao Chile no ano passado.","ai uént tu TCHÍ-li lést IÍR."]]},
+{t:"Metrô e ônibus", place:"🚇", bg:"#E2ECF5", a:"🧔", b:"👨",
+ ear:"Anúncios do metrô: escute 'next stop' e o nome da estação. Ignore o resto.",
+ l:[["A","Does this train go to Times Square?","Esse trem vai para a Times Square?","dâz dhis TRÊIN gôu tu TÁIMZ SKUÉR."],
+    ["B","Yes. It's three stops from here.","Sim. São três paradas daqui.","its THRÍ STÓPS frâm ríêr."],
+    ["A","How do I pay?","Como eu pago?","RÁU du ai PÊI."],
+    ["B","Just tap your card.","É só encostar o cartão.","djâst TÉP iór KÁRD — 'tap' = encostar."]]},
+{t:"Pagar com cartão", place:"💳", bg:"#E9F5E9", a:"👩‍💼", b:"🧔",
+ ear:"No caixa perguntam 'Cash or card?' e 'Do you want a receipt?' (o P é mudo: rissít).",
+ l:[["A","Cash or card?","Dinheiro ou cartão?","KÉX or KÁRD."],
+    ["B","Card, please.","Cartão, por favor.","KÁRD, PLÍZ."],
+    ["A","Do you want a receipt?","Quer o recibo?","du-iu UÓ-nâ ri-SÍT — o P de receipt é mudo."],
+    ["B","No, thanks. I'm good.","Não, obrigado. Tudo certo.","nôu THENKS. aim GÚD."]]},
+{t:"Despedida", place:"👋", bg:"#FFE6DA", a:"👩", b:"🧔",
+ ear:"Nativo raramente diz 'goodbye'. Escute: 'See you', 'Take care', 'Have a good one'.",
+ l:[["A","Well, I gotta go.","Bom, tenho que ir.","uél, ai GÓ-dâ GÔU — gotta = got to, 'tenho que'."],
+    ["B","Okay. It was nice talking to you.","Ok. Foi bom conversar com você.","it uâz NÁIS TÓ-kin tu iu — o L de talking é mudo."],
+    ["A","You too. Take care!","Você também. Se cuida!","iu TÚ. têik KÉR."],
+    ["B","See you later!","Até mais!","SÍ iu LÊI-dêr — o T vira R fraco: lêider."]]}
+];
+
+/* ---------- VÍDEOS: assistir, ouvir e repetir ---------- */
+var vidDone = store.get("vdone", {});      // {idx: {lineIdx: melhorNota}}
+var vidSubs = store.get("vsubs", "both");  // both | en | none
+var vidCur = 0, vidLine = -1, vidPlaying = false, vidToken = 0, curUtter = null;
+var elVGrid = document.getElementById("vgrid"), elVList = document.getElementById("vid-list-view"),
+    elVPlay = document.getElementById("vid-player-view"), elStage = document.getElementById("stage"),
+    elSubEn = document.getElementById("sub-en"), elSubPt = document.getElementById("sub-pt"),
+    elVProg = document.getElementById("vprog"), elVPlayBtn = document.getElementById("v-play"),
+    elVLines = document.getElementById("vid-lines"), elVEar = document.getElementById("vid-ear"),
+    elVTitle = document.getElementById("vid-title"), elMicWarn = document.getElementById("mic-warn");
+var PLAY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>';
+var PAUSE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4.2" height="14" rx="1.2"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.2"/></svg>';
+var MIC_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg>';
+
+function lineScoreOk(v){ var d = vidDone[v] || {}, n = 0; VIDS[v].l.forEach(function(_, i){ if ((d[i]||0) >= 0.7) n++; }); return n; }
+function vidIsDone(v){ return lineScoreOk(v) === VIDS[v].l.length; }
+function paintVidScore(){
+  var n = 0; VIDS.forEach(function(_, i){ if (vidIsDone(i)) n++; });
+  document.getElementById("score-video").innerHTML = "Concluídos <b>" + n + "</b> de " + VIDS.length;
+}
+function renderVidGrid(){
+  elVGrid.innerHTML = VIDS.map(function(v, i){
+    var ok = lineScoreOk(i), done = ok === v.l.length;
+    return '<button type="button" class="vcard' + (done ? " done" : "") + '" data-v="' + i + '" style="--vbg:' + v.bg + '">' +
+      '<span class="vthumb"><span class="vnum">' + (i+1) + '</span><span class="vplace">' + v.place + '</span>' +
+      '<span class="vppl">' + v.a + v.b + '</span>' + (done ? '<span class="vcheck">✓</span>' : '<span class="vplayic">▶</span>') + '</span>' +
+      '<span class="vname">' + esc(v.t) + '</span>' +
+      '<span class="vmeta">' + (ok ? ok + "/" + v.l.length + " frases" : v.l.length + " frases") + '</span></button>';
+  }).join("");
+  paintVidScore();
+}
+elVGrid.addEventListener("click", function(e){ var b = e.target.closest(".vcard"); if (b) openVid(+b.dataset.v); });
+
+/* vozes: uma para cada personagem */
+function voicePair(){
+  var en = voices.filter(function(v){ return /^en[-_]US/i.test(v.lang); });
+  if (!en.length) en = voices.filter(function(v){ return /^en[-_]/i.test(v.lang); });
+  var a = pickVoice(), b = en.find(function(v){ return a && v.name !== a.name && /Google|Samantha|Aria|Jenny|Natural|Ava|Allison|Zira|Daniel|Guy|Alex|Fred/i.test(v.name); })
+       || en.find(function(v){ return a && v.name !== a.name; }) || a;
+  return {A:a, B:b, same: !a || !b || a.name === b.name};
+}
+function sayLine(text, who, r, onEnd, onWord){
+  if (!synth){ toast("Este navegador não tem voz. Abra no Chrome ou no Safari do celular."); onEnd && onEnd(false); return; }
+  try{
+    synth.cancel();
+    var u = new SpeechSynthesisUtterance(text), vp = voicePair(), v = vp[who || "A"];
+    if (v){ u.voice = v; u.lang = v.lang; } else u.lang = "en-US";
+    u.rate = r || rate;
+    u.pitch = (vp.same && who === "B") ? 1.25 : 1;
+    if (onWord) u.onboundary = function(ev){ if (ev.name === "word" || ev.name === undefined) onWord(ev.charIndex); };
+    var fired = false;
+    u.onend = u.onerror = function(){ if (fired) return; fired = true; onEnd && onEnd(true); };
+    curUtter = u;
+    setTimeout(function(){ try{ synth.speak(u); }catch(e){} }, 60);
+  }catch(e){ toast("Não consegui tocar o áudio agora."); onEnd && onEnd(false); }
+}
+
+/* palco */
+function paintStage(){
+  var v = VIDS[vidCur];
+  elStage.style.setProperty("--vbg", v.bg);
+  elStage.innerHTML =
+    '<div class="sc-place">' + v.place + '</div>' +
+    '<div class="sc-floor"></div>' +
+    '<div class="sc-char sc-a" id="ch-A"><span class="sc-bub">💬</span><span class="sc-face">' + v.a + '</span></div>' +
+    '<div class="sc-char sc-b" id="ch-B"><span class="sc-bub">💬</span><span class="sc-face">' + v.b + '</span></div>' +
+    '<div class="sc-title" id="sc-title"><small>Cena ' + (vidCur+1) + '</small>' + esc(v.t) + '</div>';
+}
+function paintSubs(){
+  var v = VIDS[vidCur], L = v.l[vidLine];
+  elSubEn.hidden = vidSubs === "none"; elSubPt.hidden = vidSubs !== "both";
+  if (!L){ elSubEn.innerHTML = '<span class="sub-hint">Toque em ▶ para assistir</span>'; elSubPt.textContent = ""; return; }
+  var pos = 0;
+  elSubEn.innerHTML = L[1].split(" ").map(function(w){ var s = '<span class="sw" data-c="' + pos + '">' + esc(w) + '</span>'; pos += w.length + 1; return s; }).join(" ");
+  elSubPt.textContent = L[2];
+}
+function hiWord(ci){
+  var sp = elSubEn.querySelectorAll(".sw"), on = null;
+  sp.forEach(function(s){ if (+s.dataset.c <= ci) on = s; s.classList.remove("on"); });
+  if (on) on.classList.add("on");
+}
+function paintProg(){
+  var n = VIDS[vidCur].l.length;
+  elVProg.style.width = (vidLine < 0 ? 0 : ((vidLine + (vidPlaying ? 0.5 : 1)) / n * 100)) + "%";
+  elVPlayBtn.innerHTML = vidPlaying ? PAUSE_SVG : PLAY_SVG;
+  elVPlayBtn.setAttribute("aria-label", vidPlaying ? "Pausar" : "Assistir");
+}
+function setSpeaker(who){
+  ["A","B"].forEach(function(k){ var c = document.getElementById("ch-"+k); if (c) c.classList.toggle("talking", k === who); });
+}
+function playFrom(i){
+  var v = VIDS[vidCur], tok = ++vidToken;
+  if (i >= v.l.length){ stopVid(true); return; }
+  vidPlaying = true; vidLine = i;
+  var t = document.getElementById("sc-title"); if (t) t.classList.add("gone");
+  paintSubs(); paintProg(); setSpeaker(v.l[i][0]);
+  sayLine(v.l[i][1], v.l[i][0], null, function(){
+    if (tok !== vidToken || document.getElementById("tab-video").hidden) return;
+    setSpeaker(null);
+    setTimeout(function(){ if (tok === vidToken && vidPlaying) playFrom(i + 1); }, 650);
+  }, hiWord);
+}
+function stopVid(ended){
+  vidToken++; vidPlaying = false; setSpeaker(null);
+  if (synth) try{ synth.cancel(); }catch(e){}
+  if (ended){ vidLine = VIDS[vidCur].l.length - 1; paintProg(); mood("happy", "Fim da cena! Agora repita as frases abaixo 👇", 1600); }
+  else paintProg();
+}
+elVPlayBtn.onclick = function(){
+  if (vidPlaying){ stopVid(false); return; }
+  var n = VIDS[vidCur].l.length;
+  playFrom(vidLine < 0 || vidLine >= n - 1 ? 0 : vidLine + 1);
+};
+document.getElementById("v-prev").onclick = function(){ var i = Math.max(0, (vidLine < 0 ? 0 : vidLine) - (vidPlaying ? 1 : 0)); playFrom(i); };
+/* "repetir frase" toca só a frase atual */
+document.getElementById("v-again").onclick = function(){
+  var v = VIDS[vidCur], i = Math.max(0, vidLine), tok = ++vidToken;
+  vidPlaying = false; vidLine = i; paintSubs(); paintProg(); setSpeaker(v.l[i][0]);
+  sayLine(v.l[i][1], v.l[i][0], null, function(){ if (tok === vidToken) setSpeaker(null); }, hiWord);
+};
+var subBtns = Array.prototype.slice.call(document.querySelectorAll("#v-subs button"));
+function paintSubBtns(){ subBtns.forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.s === vidSubs ? "true" : "false"); }); }
+subBtns.forEach(function(b){ b.onclick = function(){ vidSubs = b.dataset.s; store.set("vsubs", vidSubs); paintSubBtns(); paintSubs(); }; });
+
+/* ---------- correção de pronúncia ---------- */
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+var micOK = !!SR, rec = null, recLine = -1;
+var CONTR = {"i'm":"i am","it's":"it is","that's":"that is","what's":"what is","where's":"where is","how's":"how is","there's":"there is",
+  "he's":"he is","she's":"she is","you're":"you are","we're":"we are","they're":"they are","i'll":"i will","you'll":"you will",
+  "i'd":"i would","i've":"i have","don't":"do not","didn't":"did not","doesn't":"does not","can't":"can not","cannot":"can not",
+  "won't":"will not","isn't":"is not","wasn't":"was not","let's":"let us","gonna":"going to","wanna":"want to","gotta":"got to",
+  "ok":"okay","yep":"yeah","yes":"yeah"};
+var SAME = {"two":"to","too":"to","2":"to","four":"for","4":"for","right":"right","write":"right","hear":"here","sea":"see","know":"no",
+  "bye":"by","buy":"by","one":"1","won":"1","eight":"ate","8":"ate","ten":"10","five":"5","three":"3","fifteen":"15","fifty":"50",
+  "six":"6","there":"there","their":"there","they're":"there","cheque":"check","grey":"gray","mike's":"mike","meet":"meat","meat":"meat","week":"weak","weeks":"weaks"};
+function nwords(t){
+  var s = String(t).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’`]/g,"'").replace(/\ba\.m\./g,"am").replace(/\bp\.m\./g,"pm");
+  var out = [];
+  s.split(/\s+/).forEach(function(w){
+    w = w.replace(/[^a-z0-9']/g,"").replace(/^'+|'+$/g,"");
+    if (!w) return;
+    (CONTR[w] || w).split(" ").forEach(function(x){ out.push(SAME[x] || x); });
+  });
+  return out;
+}
+function judge(target, got){
+  var orig = target.split(/\s+/), T = [], own = [];
+  orig.forEach(function(w, k){ nwords(w).forEach(function(x){ T.push(x); own.push(k); }); });
+  var G = nwords(got), n = T.length, m = G.length, D = [];
+  for (var i = 0; i <= n; i++){ D[i] = []; for (var j = 0; j <= m; j++) D[i][j] = (i && j) ? (T[i-1] === G[j-1] ? D[i-1][j-1] + 1 : Math.max(D[i-1][j], D[i][j-1])) : 0; }
+  var hit = {}; i = n; j = m;
+  while (i && j){ if (T[i-1] === G[j-1]){ hit[i-1] = 1; i--; j--; } else if (D[i-1][j] >= D[i][j-1]) i--; else j--; }
+  var okW = orig.map(function(){ return true; }), any = orig.map(function(){ return false; });
+  T.forEach(function(_, t){ if (hit[t]) any[own[t]] = true; else okW[own[t]] = false; });
+  orig.forEach(function(_, k){ if (!nwords(orig[k]).length) okW[k] = true; });
+  var good = okW.filter(Boolean).length;
+  return {score: orig.length ? good / orig.length : 0, ok: okW, words: orig};
+}
+function bestOf(target, alts){
+  var best = null;
+  alts.forEach(function(a){ var r = judge(target, a); r.heard = a; if (!best || r.score > best.score) best = r; });
+  return best;
+}
+function saveLineScore(v, i, s){
+  var d = vidDone[v] || (vidDone[v] = {});
+  if (s > (d[i] || 0)){ d[i] = s; store.set("vdone", vidDone); }
+  paintVidScore();
+}
+function showResult(i, res){
+  var box = document.getElementById("vr-" + i), pct = Math.round(res.score * 100), cls, msg;
+  if (res.score >= 0.9){ cls = "ok"; msg = "Perfeito! Um nativo entenderia na hora."; }
+  else if (res.score >= 0.7){ cls = "ok"; msg = "Muito bom! Treine as palavras em vermelho."; }
+  else { cls = "bad"; msg = "Vamos de novo: ouça no modo 🐢 e repita devagar."; }
+  box.className = "feedback " + cls; box.hidden = false;
+  box.innerHTML = '<p class="verdict">' + pct + '% — ' + msg + '</p>' +
+    '<ul class="words">' + res.words.map(function(w, k){ return '<li><button type="button" class="w ' + (res.ok[k] ? "ok" : "bad") + ' wbtn" data-w="' + esc(w.replace(/[.,!?]/g,"")) + '">' + esc(w) + '</button></li>'; }).join("") + '</ul>' +
+    '<p class="heard-line">Eu ouvi: <b>' + esc(res.heard || "—") + '</b></p>' +
+    (res.score < 1 ? '<p class="note">Toque numa palavra vermelha para ouvir só ela, bem devagar.</p>' : "");
+  react(res.score >= 0.7);
+  saveLineScore(vidCur, i, res.score);
+  paintLineBadge(i);
+}
+function paintLineBadge(i){
+  var s = (vidDone[vidCur] || {})[i], el = document.getElementById("vb-" + i);
+  if (!el) return;
+  el.textContent = s == null ? "" : (s >= 0.7 ? "✓ " + Math.round(s*100) + "%" : Math.round(s*100) + "%");
+  el.className = "vline-badge" + (s == null ? "" : (s >= 0.7 ? " ok" : " bad"));
+}
+function micBroken(why){
+  micOK = false;
+  elMicWarn.hidden = false;
+  elMicWarn.innerHTML = "<b>O microfone não está liberado aqui.</b> " + why +
+    (/github\.io$/.test(location.hostname) ? "" : ' Para a correção automática, abra <a href="https://mikedri.github.io/ingles.html" target="_blank" rel="noopener">mikedri.github.io/ingles.html</a> no Chrome do celular.') +
+    " Enquanto isso, use o modo de autoavaliação: ouça, repita em voz alta e diga como foi.";
+  renderVidLines();
+}
+function startRec(i){
+  if (!micOK){ return; }
+  if (rec){ try{ rec.abort(); }catch(e){} rec = null; }
+  if (synth) try{ synth.cancel(); }catch(e){}
+  var target = VIDS[vidCur].l[i][1], btn = document.getElementById("vm-" + i), live = document.getElementById("vl-" + i);
+  try{
+    rec = new SR(); rec.lang = "en-US"; rec.interimResults = true; rec.maxAlternatives = 5; rec.continuous = false;
+  }catch(e){ micBroken("Este navegador não tem reconhecimento de voz."); return; }
+  recLine = i; var finalAlts = null;
+  btn.classList.add("rec"); live.hidden = false; live.textContent = "Ouvindo… fale a frase em inglês";
+  mood("listen", "Estou ouvindo! Fale com calma 👂");
+  rec.onresult = function(e){
+    var r = e.results[e.results.length - 1];
+    if (r.isFinal){ finalAlts = []; for (var k = 0; k < r.length; k++) finalAlts.push(r[k].transcript); }
+    else live.textContent = "Ouvindo… " + r[0].transcript;
+  };
+  rec.onerror = function(e){
+    btn.classList.remove("rec"); live.hidden = true; mood("", "");
+    if (e.error === "not-allowed" || e.error === "service-not-allowed" || e.error === "audio-capture")
+      micBroken("O navegador bloqueou o microfone dentro do app do Claude.");
+    else if (e.error === "no-speech") toast("Não ouvi nada. Toque no microfone e fale logo em seguida.");
+    else if (e.error !== "aborted") toast("Não consegui ouvir agora. Tente de novo.");
+  };
+  rec.onend = function(){
+    btn.classList.remove("rec"); live.hidden = true; tucaEl.classList.remove("listen");
+    if (finalAlts && finalAlts.length) showResult(i, bestOf(target, finalAlts));
+    rec = null;
+  };
+  try{ rec.start(); }catch(e){ btn.classList.remove("rec"); micBroken("O microfone não abriu."); }
+}
+function renderVidLines(){
+  var v = VIDS[vidCur];
+  elVLines.innerHTML = v.l.map(function(L, i){
+    var who = L[0] === "A" ? v.a : v.b;
+    return '<div class="card vline">' +
+      '<div class="vline-top"><span class="vline-who">' + who + '</span><span class="vline-badge" id="vb-' + i + '"></span></div>' +
+      '<p class="en">' + esc(L[1]) + '</p><p class="pt">' + esc(L[2]) + '</p>' +
+      '<p class="vtip"><b>Como falar:</b> ' + esc(L[3]) + '</p>' +
+      '<div class="row vbtns">' +
+        '<button type="button" class="icon-btn" data-act="hear" data-i="' + i + '">' + SPEAKER + ' Ouvir</button>' +
+        '<button type="button" class="icon-btn" data-act="slow" data-i="' + i + '">🐢 Devagar</button>' +
+        (micOK
+          ? '<button type="button" class="btn primary vmic" id="vm-' + i + '" data-act="rec" data-i="' + i + '">' + MIC_SVG + ' Repetir</button>'
+          : '<span class="selfrate"><button type="button" class="btn ghost" data-act="self-ok" data-i="' + i + '">👍 Falei bem</button><button type="button" class="btn ghost" data-act="self-bad" data-i="' + i + '">🔁 Treinar mais</button></span>') +
+      '</div>' +
+      '<p class="vlive" id="vl-' + i + '" hidden></p>' +
+      '<div id="vr-' + i + '" hidden></div></div>';
+  }).join("");
+  v.l.forEach(function(_, i){ paintLineBadge(i); });
+}
+elVLines.addEventListener("click", function(e){
+  var w = e.target.closest(".wbtn");
+  if (w){ sayLine(w.dataset.w, "A", 0.55); return; }
+  var b = e.target.closest("[data-act]"); if (!b) return;
+  var i = +b.dataset.i, L = VIDS[vidCur].l[i];
+  if (b.dataset.act === "hear") sayLine(L[1], L[0], null);
+  else if (b.dataset.act === "slow") sayLine(L[1], L[0], 0.55);
+  else if (b.dataset.act === "rec"){ if (rec && recLine === i){ try{ rec.stop(); }catch(x){} } else startRec(i); }
+  else if (b.dataset.act === "self-ok"){ saveLineScore(vidCur, i, 0.8); paintLineBadge(i); react(true); }
+  else if (b.dataset.act === "self-bad"){ saveLineScore(vidCur, i, 0.3); paintLineBadge(i); mood("", "Ouça no modo 🐢 e fale junto com a voz, ao mesmo tempo."); sayLine(L[1], L[0], 0.55); }
+});
+
+function openVid(i){
+  stopVid(false);
+  vidCur = i; vidLine = -1;
+  elVList.hidden = true; elVPlay.hidden = false;
+  elVTitle.textContent = (i+1) + ". " + VIDS[i].t;
+  elVEar.innerHTML = "<strong>👂 Dica de escuta</strong>" + esc(VIDS[i].ear);
+  paintStage(); paintSubs(); paintProg(); paintSubBtns(); renderVidLines();
+  document.getElementById("v-next").hidden = i >= VIDS.length - 1;
+  store.set("vcur", i);
+  mood("", "Assista a cena primeiro. Depois repita cada frase!");
+  window.scrollTo({top:0});
+}
+function closeVid(){ stopVid(false); if (rec) try{ rec.abort(); }catch(e){} elVPlay.hidden = true; elVList.hidden = false; renderVidGrid(); window.scrollTo({top:0}); }
+document.getElementById("vid-back").onclick = closeVid;
+document.getElementById("v-next").onclick = function(){ if (vidCur < VIDS.length - 1) openVid(vidCur + 1); };
+if (!SR) setTimeout(function(){ if (!micOK) micBroken("Este navegador não tem reconhecimento de voz."); }, 0);
+var tabBtns0 = Array.prototype.slice.call(document.querySelectorAll("nav.tabs button"));
+tabBtns0.forEach(function(b){ b.addEventListener("click", function(){ if (b.dataset.tab !== "video"){ stopVid(false); if (rec) try{ rec.abort(); }catch(e){} } }); });
+renderVidGrid();
+
+/* ---------- abas ---------- */
+var tabBtns = Array.prototype.slice.call(document.querySelectorAll("nav.tabs button"));
+function showTab(name){
+  ["video","prep","build","listen","fut","help"].forEach(function(n){ document.getElementById("tab-"+n).hidden = n !== name; });
+  tabBtns.forEach(function(b){ b.setAttribute("aria-selected", b.dataset.tab === name ? "true" : "false"); });
+  store.set("tab", name);
+  var panel = document.getElementById("tab-"+name), head = panel.querySelector(".section-head");
+  head.parentNode.insertBefore(coach, head.nextSibling);
+  mood("", name === "fut" && futMode !== "gw" ? (futMode === "to" ? TIPS.futto : TIPS.futcb) : TIPS[name]);
+  if (synth) try{ synth.cancel(); }catch(e){}
+  window.scrollTo({top:0});
+}
+tabBtns.forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
+var savedTab = store.get("tab","video"); if (["video","prep","build","listen","fut","help"].indexOf(savedTab) < 0) savedTab = "prep";
+showTab(savedTab);
+})();
+</script>
+</body></html>
