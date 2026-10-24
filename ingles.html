@@ -366,6 +366,14 @@ nav.tabs .inner{grid-template-columns:repeat(7,1fr)}
 .mtip.ear{background:var(--mark); color:var(--mark-ink)}
 .mletra{display:inline-block; margin-top:10px; font-size:.85rem; color:var(--accent); font-weight:700}
 .mdone{margin-top:12px; width:100%}
+.mstep{font-family:inherit; border:2px solid transparent; cursor:pointer}
+.mstep.on{border-color:var(--accent); background:var(--surface)}
+.mplayer{padding:10px 14px 0}
+.mframe{position:relative; width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:#000}
+.mframe iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+.mhint{margin:8px 0 0; font-size:.86rem; background:var(--accent-soft); border-radius:10px; padding:9px 11px}
+.mlinks{margin:6px 0 0; font-size:.8rem; color:var(--muted)}
+.mlinks a{color:var(--accent); font-weight:700}
 .mhow ol{margin:4px 0 0; padding-left:1.2em; color:var(--muted); font-size:.9rem}
 .mhow li{margin:3px 0}
 .mhow b{color:var(--ink)}
@@ -482,7 +490,7 @@ nav.tabs .inner{grid-template-columns:repeat(7,1fr)}
       <button type="button" data-f="m" aria-pressed="false">Médias</button>
     </div>
     <div class="mlist" id="mlist"></div>
-    <p class="note">Os botões abrem o YouTube com vídeos reais da música. Os vídeos são de canais oficiais e de fãs; se um sair do ar, escolha outro da lista que aparece.</p>
+    <p class="note">Os vídeos tocam aqui dentro, direto do canal oficial do artista no YouTube. As legendas vêm do próprio YouTube; se algum vídeo não tocar aqui, use o link “Abrir no YouTube”.</p>
   </section>
 
   <!-- ===== PREPOSIÇÕES ===== -->
@@ -2231,98 +2239,111 @@ renderVidGrid();
    7. MÚSICAS — vídeos reais no YouTube em 3 rodadas
    ========================================================= */
 var SONGS = [
- {t:"Let It Be", a:"The Beatles", l:"f", c:"#F6C177", e:"🎹",
+ {t:"Let It Be", v:"CGj85pVzRJs", a:"The Beatles", l:"f", c:"#F6C177", e:"🎹",
   th:"Um conselho para os momentos difíceis: tenha calma e deixe as coisas acontecerem.",
   w:[["let","deixar"],["trouble","problema"],["wisdom","sabedoria"],["answer","resposta"],["whisper","sussurrar"]],
   pr:"“Let it be” sai como “lé-di-BÍ”: o T no meio de vogais vira um R fraquinho, igual ao “water” americano.",
   ear:"O título é repetido muitas vezes no refrão. Na rodada 3, conte quantas vezes você ouve “let it be”."},
- {t:"Yesterday", a:"The Beatles", l:"f", c:"#C9B6E4", e:"🎸",
+ {t:"Yesterday", v:"wXTJBr9tt8Q", a:"The Beatles", l:"f", c:"#C9B6E4", e:"🎸",
   th:"Saudade de quando a vida era mais simples, antes de uma separação.",
   w:[["yesterday","ontem"],["suddenly","de repente"],["believe","acreditar"],["shadow","sombra"],["hide","esconder"]],
   pr:"Yesterday = “IÉS-têr-dêi”, força no começo. Suddenly = “SÂ-dân-li”.",
   ear:"Só voz e violão, bem devagar. É uma das melhores músicas para começar a rodada “só inglês”."},
- {t:"What a Wonderful World", a:"Louis Armstrong", l:"f", c:"#9DD9A5", e:"🌳",
+ {t:"What a Wonderful World", v:"VqhCQZaH4Vs", a:"Louis Armstrong", l:"f", c:"#9DD9A5", e:"🌳",
   th:"Um homem olha à sua volta e se encanta com coisas simples: árvores, céu, amigos.",
   w:[["trees","árvores"],["sky","céu"],["clouds","nuvens"],["rainbow","arco-íris"],["shaking hands","apertando as mãos"]],
   pr:"Wonderful = “UÂN-dêr-fâl”. World é difícil: “uêrld”, com R e L juntos no fim, quase sem vogal.",
   ear:"Muito lenta e com palavras do dia a dia. Ótima para a primeira semana."},
- {t:"Three Little Birds", a:"Bob Marley", l:"f", c:"#F7D774", e:"🐦",
+ {t:"Three Little Birds", v:"HNBCVM4KbUM", a:"Bob Marley", l:"f", c:"#F7D774", e:"🐦",
   th:"Três passarinhos cantam na janela dizendo: não se preocupe, vai dar tudo certo.",
   w:[["worry","preocupar-se"],["little","pequeno"],["bird","pássaro"],["thing","coisa"],["alright","tudo bem"]],
   pr:"“Every little thing” = “É-vri LÍ-dâl THÍNG”. Little: o T vira R fraco, “lírâl”.",
   ear:"Sotaque jamaicano: o TH vira T, então “thing” soa “ting”. Não se assuste, é normal."},
- {t:"Stand By Me", a:"Ben E. King", l:"f", c:"#8FB8E8", e:"🌙",
+ {t:"Stand By Me", v:"z5i9vT8wGY8", a:"Ben E. King", l:"f", c:"#8FB8E8", e:"🌙",
   th:"Mesmo com a noite escura e com medo, tudo bem se você ficar ao meu lado.",
   w:[["stand by","ficar ao lado, apoiar"],["night","noite"],["dark","escuro"],["moon","lua"],["afraid","com medo"]],
   pr:"“Stand by me” = “sténd-bai-MÍ”. O D de stand quase some.",
   ear:"O título repete o tempo todo. Ritmo lento e voz muito clara."},
- {t:"Count on Me", a:"Bruno Mars", l:"f", c:"#F4A6A0", e:"🤝",
+ {t:"Count on Me", v:"6k8cpUkKK4c", a:"Bruno Mars", l:"f", c:"#F4A6A0", e:"🤝",
   th:"Uma música sobre amizade: pode contar comigo, eu sempre vou estar lá.",
   w:[["count on","contar com"],["friend","amigo"],["ocean","oceano"],["lost","perdido"],["find","encontrar"]],
   pr:"“Count on me” liga tudo: “káun-ón-MÍ”. O T de count se junta ao “on”.",
   ear:"Repare na estrutura “if you… I'll…” (se você… eu vou…). É o WILL de promessa da aba Futuro!"},
- {t:"Perfect", a:"Ed Sheeran", l:"f", c:"#E8B4C8", e:"💃",
+ {t:"Perfect", v:"2Vv-BfVoq4g", a:"Ed Sheeran", l:"f", c:"#E8B4C8", e:"💃",
   th:"Um homem dança com a mulher que ama e diz que ela é perfeita.",
   w:[["darling","querida"],["dance","dançar"],["barefoot","descalço"],["kiss","beijo"],["beautiful","linda"]],
   pr:"Darling = “DÁR-lin”: o G final some. Beautiful = “BIÚ-ri-fâl”.",
   ear:"Lenta, mas ele junta palavras. Na rodada 2, siga a legenda com o dedo."},
- {t:"All of Me", a:"John Legend", l:"f", c:"#B5C7D3", e:"🎹",
+ {t:"All of Me", v:"450p7goxZqg", a:"John Legend", l:"f", c:"#B5C7D3", e:"🎹",
   th:"Uma declaração: eu te dou tudo de mim, com seus defeitos e qualidades.",
   w:[["mind","mente"],["crazy","louco"],["give","dar"],["all","tudo"],["perfect","perfeito"]],
   pr:"“All of me” = “ó-lâv-MÍ”. O “of” vira só “âv” e gruda no all.",
   ear:"Piano e voz. O refrão é curto e repetido — comece por ele."},
- {t:"Someone You Loved", a:"Lewis Capaldi", l:"f", c:"#A9C4E0", e:"💔",
+ {t:"Someone You Loved", v:"zABLecsR5UE", a:"Lewis Capaldi", l:"f", c:"#A9C4E0", e:"💔",
   th:"Tristeza depois de perder alguém que dava segurança.",
   w:[["someone","alguém"],["loved","amou"],["hold","abraçar, segurar"],["fall","cair"],["heal","curar"]],
   pr:"Loved = “lâvd”, uma sílaba só. Nada de “lâ-ved”.",
   ear:"Sotaque escocês leve. O refrão é lento e fácil de pegar."},
- {t:"Yellow", a:"Coldplay", l:"f", c:"#F9E07F", e:"⭐",
+ {t:"Yellow", v:"yKNxeF4KMsY", a:"Coldplay", l:"f", c:"#F9E07F", e:"⭐",
   th:"Olhar as estrelas brilhando e pensar na pessoa amada.",
   w:[["stars","estrelas"],["shine","brilhar"],["yellow","amarelo"],["skin","pele"],["bones","ossos"]],
   pr:"Yellow = “IÉ-lôu”. O L é com a língua no céu da boca, não vira U no meio.",
   ear:"Ele alonga as vogais cantando. Escute o fim das frases: é onde estão as palavras-chave."},
- {t:"Photograph", a:"Ed Sheeran", l:"m", c:"#D6C4A8", e:"📷",
+ {t:"Photograph", v:"nSDgHBxUbVQ", a:"Ed Sheeran", l:"m", c:"#D6C4A8", e:"📷",
   th:"Guardar uma foto no bolso para lembrar de alguém enquanto estão longe.",
   w:[["photograph","fotografia"],["pocket","bolso"],["wait","esperar"],["home","casa, lar"],["heal","curar"]],
   pr:"Photograph = “FÔU-râ-gréf”. Força no começo, o T vira R fraco.",
   ear:"As estrofes são mais rápidas. Na rodada 1, foque só em entender a história."},
- {t:"Fix You", a:"Coldplay", l:"m", c:"#E9C46A", e:"💡",
+ {t:"Fix You", v:"k4V3Mo61fJM", a:"Coldplay", l:"m", c:"#E9C46A", e:"💡",
   th:"Apoiar alguém num momento muito triste: eu vou tentar te ajudar.",
   w:[["fix","consertar"],["try","tentar"],["tired","cansado"],["tears","lágrimas"],["lights","luzes"]],
   pr:"“Fix you” vira “FÍK-xu”: o S de fix se junta ao you.",
   ear:"Começa bem lenta e fica forte no fim. A primeira metade é a melhor para treinar."},
- {t:"Hello", a:"Adele", l:"m", c:"#C7A27C", e:"📞",
+ {t:"Hello", v:"YQHsXMglC9A", a:"Adele", l:"m", c:"#C7A27C", e:"📞",
   th:"Uma ligação, anos depois, para pedir desculpas a um ex-amor.",
   w:[["hello","alô, olá"],["wondering","me perguntando"],["call","ligar"],["sorry","desculpa"],["dream","sonho"]],
   pr:"Wondering = “UÂN-dê-rin”. Sorry = “SÓ-ri”, com R rápido.",
   ear:"Adele canta com força e prende as vogais. Repare: ela usa “I'm” e “I've” o tempo todo."},
- {t:"Someone Like You", a:"Adele", l:"m", c:"#B8A1C9", e:"🎹",
+ {t:"Someone Like You", v:"hLQl3WQQoQ0", a:"Adele", l:"m", c:"#B8A1C9", e:"🎹",
   th:"Descobrir que o ex casou com outra pessoa e tentar aceitar.",
   w:[["someone","alguém"],["married","casado"],["find","encontrar"],["forget","esquecer"],["remember","lembrar"]],
   pr:"“Someone like you” = “SÂM-uân LÁIK iú”.",
   ear:"Só piano. O refrão é claro; as estrofes são mais rápidas — deixe para a rodada 3."},
- {t:"Just the Way You Are", a:"Bruno Mars", l:"m", c:"#F2B5A0", e:"😍",
+ {t:"Just the Way You Are", v:"LjhCEhWiKXk", a:"Bruno Mars", l:"m", c:"#F2B5A0", e:"😍",
   th:"Dizer para alguém que ela é incrível do jeito que é, sem mudar nada.",
   w:[["eyes","olhos"],["hair","cabelo"],["smile","sorriso"],["amazing","incrível"],["change","mudar"]],
   pr:"Amazing = “â-MÊI-zin”. O G final cai, como em quase todo -ing cantado.",
   ear:"As estrofes listam partes do rosto. Tente pegar eyes, hair e smile na rodada 3."},
- {t:"I'm Yours", a:"Jason Mraz", l:"m", c:"#9ED2C6", e:"🌴",
+ {t:"I'm Yours", v:"EkHTsc9PU2A", a:"Jason Mraz", l:"m", c:"#9ED2C6", e:"🌴",
   th:"Uma música leve e feliz: chega de esperar, eu sou seu.",
   w:[["yours","seu"],["wait","esperar"],["hesitate","hesitar"],["free","livre"],["sky","céu"]],
   pr:"Hesitate = “RÉ-zi-têit”: o H tem som de R, e o S de Z.",
   ear:"As estrofes são rápidas, quase faladas. O refrão é lento — comece por ele e deixe o resto para depois."},
- {t:"Thinking Out Loud", a:"Ed Sheeran", l:"m", c:"#DDB892", e:"👴",
+ {t:"Thinking Out Loud", v:"lp-EO5I60KA", a:"Ed Sheeran", l:"m", c:"#DDB892", e:"👴",
   th:"Prometer amor até a velhice, mesmo quando a memória falhar.",
   w:[["think out loud","pensar alto"],["legs","pernas"],["memory","memória"],["fall in love","se apaixonar"],["old","velho"]],
   pr:"“Thinking out loud” = “THÍN-kin áut LÁUD”. Língua entre os dentes no TH.",
   ear:"Ritmo médio e voz clara. Repare em “fall in love”, que aparece no refrão."},
- {t:"Shallow", a:"Lady Gaga e Bradley Cooper", l:"m", c:"#A7B8C8", e:"🌊",
+ {t:"Shallow", v:"bo_efYhYU2A", a:"Lady Gaga e Bradley Cooper", l:"m", c:"#A7B8C8", e:"🌊",
   th:"Um diálogo: os dois perguntam se o outro está feliz e decidem mergulhar fundo.",
   w:[["shallow","raso"],["deep","fundo"],["happy","feliz"],["ground","chão"],["tired","cansado"]],
   pr:"Shallow = “XÉ-lôu”. Deep = “dííp”, com I bem longo.",
   ear:"Começa como uma conversa, com perguntas curtas. Primeiro ele canta, depois ela responde."}
 ];
 function ytUrl(q){ return "https://www.youtube.com/results?search_query=" + encodeURIComponent(q); }
+function embedUrl(id, mode){
+  var p = "?playsinline=1&rel=0&autoplay=1&modestbranding=1&hl=pt-BR";
+  if (mode === "pt") p += "&cc_load_policy=1&cc_lang_pref=pt";
+  else if (mode === "en") p += "&cc_load_policy=1&cc_lang_pref=en";
+  else p += "&cc_load_policy=0";
+  return "https://www.youtube.com/embed/" + id + p;
+}
+var MODE_HINT = {
+  pt:"🇧🇷 Legenda em português ligada. Se aparecer em inglês ou não aparecer, toque em ⚙️ no vídeo → Legendas → Traduzir automaticamente → Português.",
+  en:"🇺🇸 Legenda em inglês ligada. Leia junto e cante baixinho. Se não aparecer, toque em CC no vídeo.",
+  no:"🎧 Sem legenda: só o ouvido. Se aparecer legenda, toque em CC no vídeo para desligar."
+};
+var mOpen = -1, mMode = "pt";
 var musicSeen = store.get("mseen", {});   // {idx: {pt:1, en:1, no:1, done:1}}
 var musicFilter = store.get("mfilter", "all");
 var elMList = document.getElementById("mlist");
@@ -2334,16 +2355,19 @@ function renderMusic(){
   elMList.innerHTML = SONGS.map(function(s, i){
     if (musicFilter !== "all" && s.l !== musicFilter) return "";
     var seen = musicSeen[i] || {}, q = s.t + " " + s.a;
-    return '<div class="mcard' + (seen.done ? " done" : "") + '" style="--mc:' + s.c + '">' +
+    return '<div class="mcard' + (seen.done ? " done" : "") + '" data-i="' + i + '" style="--mc:' + s.c + '">' +
       '<div class="mtop"><span class="mdisc">' + s.e + '</span>' +
         '<div class="minfo"><p class="mname">' + esc(s.t) + '</p><p class="mart">' + esc(s.a) + '</p></div>' +
         '<span class="mlvl ' + s.l + '">' + (s.l === "f" ? "Fácil" : "Média") + '</span></div>' +
       '<p class="mtheme">' + esc(s.th) + '</p>' +
-      '<div class="msteps">' +
-        '<a class="mstep' + (seen.pt ? " seen" : "") + '" data-m="' + i + '" data-k="pt" target="_blank" rel="noopener" href="' + ytUrl(q + " legendado tradução") + '"><span class="ic">🇧🇷</span>1. Com tradução<small>legenda PT</small></a>' +
-        '<a class="mstep' + (seen.en ? " seen" : "") + '" data-m="' + i + '" data-k="en" target="_blank" rel="noopener" href="' + ytUrl(q + " lyrics") + '"><span class="ic">🇺🇸</span>2. Só inglês<small>letra na tela</small></a>' +
-        '<a class="mstep' + (seen.no ? " seen" : "") + '" data-m="' + i + '" data-k="no" target="_blank" rel="noopener" href="' + ytUrl(q + " official video") + '"><span class="ic">🎧</span>3. Sem legenda<small>clipe oficial</small></a>' +
-      '</div>' +
+      (s.v ? '<div class="msteps">' +
+        '<button type="button" class="mstep' + (seen.pt ? " seen" : "") + (mOpen === i && mMode === "pt" ? " on" : "") + '" data-m="' + i + '" data-k="pt"><span class="ic">🇧🇷</span>1. Com tradução<small>legenda PT</small></button>' +
+        '<button type="button" class="mstep' + (seen.en ? " seen" : "") + (mOpen === i && mMode === "en" ? " on" : "") + '" data-m="' + i + '" data-k="en"><span class="ic">🇺🇸</span>2. Só inglês<small>legenda EN</small></button>' +
+        '<button type="button" class="mstep' + (seen.no ? " seen" : "") + (mOpen === i && mMode === "no" ? " on" : "") + '" data-m="' + i + '" data-k="no"><span class="ic">🎧</span>3. Sem legenda<small>só ouvido</small></button>' +
+      '</div>' : '') +
+      (mOpen === i ? '<div class="mplayer"><div class="mframe"><iframe src="' + embedUrl(s.v, mMode) + '" title="' + esc(s.t) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
+        '<p class="mhint">' + MODE_HINT[mMode] + '</p>' +
+        '<p class="mlinks"><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=' + s.v + '">Não carregou? Abrir no YouTube ↗</a> · <a target="_blank" rel="noopener" href="' + ytUrl(q + " legendado tradução") + '">Versões legendadas por fãs ↗</a></p></div>' : '') +
       '<details class="mmore"><summary>Treinar antes de ouvir ▾</summary>' +
         '<p class="eyebrow" style="margin:6px 0 0">Palavras-chave (toque para ouvir)</p>' +
         '<div class="mwords">' + s.w.map(function(x){ return '<button type="button" class="mword" data-say="' + esc(x[0]) + '">' + SPEAKER.replace('<svg ', '<svg width="15" height="15" ') + '<b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></button>'; }).join("") + '</div>' +
@@ -2360,7 +2384,11 @@ elMList.addEventListener("click", function(e){
   var st = e.target.closest(".mstep");
   if (st){
     var i = +st.dataset.m, d = musicSeen[i] || (musicSeen[i] = {});
-    d[st.dataset.k] = 1; store.set("mseen", musicSeen); st.classList.add("seen");
+    d[st.dataset.k] = 1; store.set("mseen", musicSeen);
+    if (synth) try{ synth.cancel(); }catch(x){}
+    mOpen = i; mMode = st.dataset.k; renderMusic();
+    var card = elMList.querySelector('.mcard[data-i="' + i + '"]');
+    if (card) card.scrollIntoView({behavior:"smooth", block:"start"});
     mood("", st.dataset.k === "pt" ? "Primeiro entenda a história. Depois volte para a rodada 2!" : st.dataset.k === "en" ? "Leia junto e cante baixinho. 🎤" : "Agora só ouvido! Quantas palavras você pega?");
     return;
   }
@@ -2380,6 +2408,9 @@ function setMusicFilter(f){
 }
 mfBtns.forEach(function(b){ b.onclick = function(){ setMusicFilter(b.dataset.f); }; });
 setMusicFilter(musicFilter);
+
+function stopMusic(){ if (mOpen >= 0){ mOpen = -1; renderMusic(); } }
+Array.prototype.slice.call(document.querySelectorAll("nav.tabs button")).forEach(function(b){ b.addEventListener("click", function(){ if (b.dataset.tab !== "music") stopMusic(); }); });
 
 /* ---------- abas ---------- */
 var tabBtns = Array.prototype.slice.call(document.querySelectorAll("nav.tabs button"));
