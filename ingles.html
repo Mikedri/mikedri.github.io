@@ -371,6 +371,10 @@ nav.tabs .inner{grid-template-columns:repeat(7,1fr)}
 .mplayer{padding:10px 14px 0}
 .mframe{position:relative; width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:#000}
 .mframe iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+.mblock{display:flex; flex-direction:column; gap:8px; background:var(--mark); color:var(--mark-ink); border-radius:12px; padding:12px}
+.mblock p{margin:0; font-size:.9rem}
+.mblock .btn{text-align:center; text-decoration:none; display:block}
+.mblock .btn.ghost{color:var(--mark-ink); border-color:rgba(0,0,0,.25)}
 .mhint{margin:8px 0 0; font-size:.86rem; background:var(--accent-soft); border-radius:10px; padding:9px 11px}
 .mlinks{margin:6px 0 0; font-size:.8rem; color:var(--muted)}
 .mlinks a{color:var(--accent); font-weight:700}
@@ -2344,6 +2348,8 @@ var MODE_HINT = {
   no:"🎧 Sem legenda: só o ouvido. Se aparecer legenda, toque em CC no vídeo para desligar."
 };
 var mOpen = -1, mMode = "pt";
+var EMBED_OK = /github\.io$/.test(location.hostname) || location.protocol === "file:" && !/noembed/.test(location.search);
+var SITE = "https://mikedri.github.io/ingles.html#musicas";
 var musicSeen = store.get("mseen", {});   // {idx: {pt:1, en:1, no:1, done:1}}
 var musicFilter = store.get("mfilter", "all");
 var elMList = document.getElementById("mlist");
@@ -2365,7 +2371,11 @@ function renderMusic(){
         '<button type="button" class="mstep' + (seen.en ? " seen" : "") + (mOpen === i && mMode === "en" ? " on" : "") + '" data-m="' + i + '" data-k="en"><span class="ic">🇺🇸</span>2. Só inglês<small>legenda EN</small></button>' +
         '<button type="button" class="mstep' + (seen.no ? " seen" : "") + (mOpen === i && mMode === "no" ? " on" : "") + '" data-m="' + i + '" data-k="no"><span class="ic">🎧</span>3. Sem legenda<small>só ouvido</small></button>' +
       '</div>' : '') +
-      (mOpen === i ? '<div class="mplayer"><div class="mframe"><iframe src="' + embedUrl(s.v, mMode) + '" title="' + esc(s.t) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
+      (mOpen === i && !EMBED_OK ? '<div class="mplayer"><div class="mblock"><p><b>Aqui dentro do Claude o YouTube não toca.</b> É um bloqueio de segurança do aplicativo do Claude.</p>' +
+        '<a class="btn primary" target="_blank" rel="noopener" href="' + SITE + '">▶ Abrir no meu site, com o vídeo dentro do app</a>' +
+        '<a class="btn ghost" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=' + s.v + '">Abrir no YouTube</a></div>' +
+        '<p class="mhint">' + MODE_HINT[mMode] + '</p></div>' : '') +
+      (mOpen === i && EMBED_OK ? '<div class="mplayer"><div class="mframe"><iframe src="' + embedUrl(s.v, mMode) + '" title="' + esc(s.t) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
         '<p class="mhint">' + MODE_HINT[mMode] + '</p>' +
         '<p class="mlinks"><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=' + s.v + '">Não carregou? Abrir no YouTube ↗</a> · <a target="_blank" rel="noopener" href="' + ytUrl(q + " legendado tradução") + '">Versões legendadas por fãs ↗</a></p></div>' : '') +
       '<details class="mmore"><summary>Treinar antes de ouvir ▾</summary>' +
@@ -2425,7 +2435,7 @@ function showTab(name){
   window.scrollTo({top:0});
 }
 tabBtns.forEach(function(b){ b.addEventListener("click", function(){ showTab(b.dataset.tab); }); });
-var savedTab = store.get("tab","video"); if (["video","music","prep","build","listen","fut","help"].indexOf(savedTab) < 0) savedTab = "prep";
+var savedTab = store.get("tab","video"); if (/musica/.test(location.hash)) savedTab = "music"; if (["video","music","prep","build","listen","fut","help"].indexOf(savedTab) < 0) savedTab = "prep";
 showTab(savedTab);
 })();
 </script>
