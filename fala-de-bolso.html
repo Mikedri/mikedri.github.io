@@ -1,0 +1,482 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Fala de Bolso</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: uma coluna de bolso — professora no topo, conversa no meio, ação sempre ao alcance do polegar */
+:root{
+  --bg:#EAF1F7; --surface:#FFFFFF; --ink:#13233F; --muted:#5B6A82; --line:#D3DEEA;
+  --accent:#F2B300; --accent-ink:#2A1F00; --teal:#0F7C8C; --teal-soft:#DCEFF1;
+  --good:#1F8A4C; --good-soft:#DDF3E5; --bad:#C2362B; --bad-soft:#FBE3E0; --mid:#B7791F;
+  --display:"Bricolage Grotesque",ui-rounded,"Segoe UI",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:18px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1729; --surface:#17223A; --ink:#E9EFF8; --muted:#9AA8C0; --line:#2A3856;
+  --accent:#F5C333; --accent-ink:#231A00; --teal:#4FC3D2; --teal-soft:#16343D;
+  --good:#5BD18E; --good-soft:#163828; --bad:#FF8A7E; --bad-soft:#3D1D1B; --mid:#F0B45A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1729; --surface:#17223A; --ink:#E9EFF8; --muted:#9AA8C0; --line:#2A3856;
+  --accent:#F5C333; --accent-ink:#231A00; --teal:#4FC3D2; --teal-soft:#16343D;
+  --good:#5BD18E; --good-soft:#163828; --bad:#FF8A7E; --bad-soft:#3D1D1B; --mid:#F0B45A; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 28px;display:flex;flex-direction:column;gap:14px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:baseline;gap:8px}
+.brand h1{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.brand h1 b{color:var(--teal)}
+.stats{display:flex;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* teacher */
+.teacher{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.avatar{width:84px;height:84px;flex:none;border-radius:50%;background:var(--teal-soft)}
+.avatar{overflow:visible;position:relative;transition:box-shadow .2s}.avatar img{width:100%;height:100%;display:block;border-radius:50%;object-fit:cover}.avatar.talking{animation:speak .9s ease-in-out infinite}@keyframes speak{0%,100%{box-shadow:0 0 0 2px var(--teal)}50%{box-shadow:0 0 0 7px var(--teal-soft),0 0 0 3px var(--teal)}}
+.avatar .mouth{transform-origin:60px 83px;transition:transform .1s}
+.avatar.talking .mouth{animation:talk .22s infinite alternate}
+.avatar .lid{animation:blink 5s infinite;transform-origin:center}
+@keyframes talk{from{transform:scaleY(.5)}to{transform:scaleY(1.6)}}
+@keyframes blink{0%,94%,100%{transform:scaleY(0)}96%{transform:scaleY(1)}}
+.avatar.listening{box-shadow:0 0 0 4px var(--accent)}
+.tinfo{min-width:0;flex:1}
+.tinfo h2{font-size:20px}
+.tinfo .role{font-size:13px;color:var(--muted)}
+.status{margin-top:6px;font-size:14px;font-weight:600;color:var(--teal);min-height:20px}
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--surface);border:1px solid var(--line);padding:5px;border-radius:14px}
+.tabs button{border:0;background:transparent;padding:9px 4px;border-radius:10px;font-weight:700;font-size:14px;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+/* scenarios */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.scard{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:4px;min-height:96px}
+.scard:hover{border-color:var(--teal)}
+.scard .t{font-family:var(--display);font-weight:700;font-size:17px}
+.scard .s{font-size:13px;color:var(--muted)}
+.scard .n{margin-top:auto;font-size:12px;font-weight:700;color:var(--teal);letter-spacing:.03em;text-transform:uppercase}
+.scard .done{color:var(--good)}
+.hint{font-size:13px;color:var(--muted)}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.sectionhead h3{font-size:18px}
+/* chat */
+.chat{display:flex;flex-direction:column;gap:10px}
+.msg{max-width:86%;padding:10px 13px;border-radius:16px;font-size:16px}
+.msg .pt{font-size:13px;color:var(--muted);margin-top:4px}
+.msg.t{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start}
+.msg.u{background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:5px;align-self:flex-end}
+.msg.u .pt{color:var(--accent-ink);opacity:.75}
+.msg .row{display:flex;gap:6px;margin-top:6px}
+.mini{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:700}
+.msg.u .mini{border-color:rgba(0,0,0,.25)}
+.fix{align-self:stretch;background:var(--teal-soft);border-radius:14px;padding:10px 13px;font-size:14px}
+.fix b{color:var(--teal)}
+.w-ok{color:var(--good);font-weight:700}
+.w-bad{color:var(--bad);font-weight:700;text-decoration:underline wavy;text-underline-offset:3px}
+.score{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:800;margin-left:6px;font-variant-numeric:tabular-nums}
+.s-good{background:var(--good-soft);color:var(--good)}.s-mid{background:var(--teal-soft);color:var(--mid)}.s-bad{background:var(--bad-soft);color:var(--bad)}
+/* action dock */
+.dock{position:sticky;bottom:0;background:var(--bg);padding-top:10px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px}
+.target{background:var(--surface);border:2px solid var(--ink);border-radius:var(--r);padding:12px 14px}
+.target .lbl{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.target .en{font-family:var(--display);font-size:21px;font-weight:700;line-height:1.25;margin-top:4px}
+.target .pt{font-size:14px;color:var(--muted);margin-top:4px}
+.target .tip{font-size:13px;margin-top:6px;color:var(--teal);font-weight:600}
+.actions{display:flex;gap:8px;align-items:center}
+.mic{flex:1;border:0;border-radius:999px;padding:14px 18px;background:var(--teal);color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;gap:8px}
+.mic.on{background:var(--bad)}
+.mic svg{width:22px;height:22px}
+.ghost{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:12px 14px;font-weight:700;font-size:14px;white-space:nowrap}
+.typebox{display:flex;gap:8px}
+.typebox input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:12px 16px;font:inherit}
+.typebox button{border:0;background:var(--ink);color:var(--bg);border-radius:999px;padding:0 16px;font-weight:800}
+.toggle{display:inline-flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.toggle button{border:0;background:transparent;border-radius:999px;padding:6px 10px;font-size:13px;font-weight:700;color:var(--muted)}
+.toggle button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.back{border:0;background:transparent;font-weight:700;color:var(--teal);padding:4px 0}
+.note{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:10px 12px;font-size:13px;color:var(--muted)}
+.topics{display:flex;gap:6px;flex-wrap:wrap}
+.topics button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:8px}
+.daily .en{font-family:var(--display);font-size:24px;font-weight:700;line-height:1.2}
+.weak{display:flex;flex-wrap:wrap;gap:8px}
+.weak button{border:1px solid var(--line);background:var(--bad-soft);color:var(--bad);border-radius:12px;padding:8px 12px;font-weight:700}
+.weak button small{color:var(--muted);font-weight:600;margin-left:4px}
+.settings{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:14px}
+.settings select,.settings input[type=range]{max-width:180px}
+.summary{text-align:center;align-items:center}
+.summary .big{font-family:var(--display);font-size:44px;font-weight:800;color:var(--teal);font-variant-numeric:tabular-nums}
+.typing{display:inline-flex;gap:4px}.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:dot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,100%{opacity:.3}50%{opacity:1}}
+@media (max-width:380px){.grid{grid-template-columns:1fr}.target .en{font-size:19px}}
+@media (prefers-reduced-motion:reduce){.avatar.talking,.typing i{animation:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><h1>Fala de <b>Bolso</b></h1></div>
+    <div class="stats"><span class="chip" id="xpChip">0 XP</span><span class="chip" id="streakChip">0 dias</span></div>
+  </header>
+
+  <section class="teacher" aria-live="polite">
+    <div class="avatar" id="avatar" aria-hidden="true">
+      <img src="data:image/jpeg;base64,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" alt="">
+    </div>
+    <div class="tinfo">
+      <h2>Emma</h2>
+      <div class="role">Sua professora de conversação · inglês americano</div>
+      <div class="status" id="status">Toque numa situação para começarmos.</div>
+    </div>
+  </section>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="sit">Situações</button>
+    <button role="tab" aria-selected="false" data-tab="free">Conversa livre</button>
+    <button role="tab" aria-selected="false" data-tab="train">Treino</button>
+  </nav>
+
+  <!-- SITUAÇÕES -->
+  <section id="tab-sit">
+    <div id="sitList" style="display:flex;flex-direction:column;gap:12px">
+      <div class="sectionhead">
+        <h3>Diálogos do dia a dia</h3>
+        <div class="toggle" role="group" aria-label="Quem pergunta">
+          <button id="roleA" aria-pressed="true">Ela pergunta</button>
+          <button id="roleB" aria-pressed="false">Eu pergunto</button>
+        </div>
+      </div>
+      <p class="hint" style="margin:0">A Emma fala a fala dela, você responde em voz alta e ela corrige sua pronúncia palavra por palavra. Em "Eu pergunto" os papéis se invertem.</p>
+      <div class="grid" id="grid"></div>
+    </div>
+    <div id="sitPlay" hidden style="display:flex;flex-direction:column;gap:12px">
+      <div class="sectionhead"><button class="back" id="backBtn">‹ Situações</button><span class="chip" id="progChip">1/6</span></div>
+      <div class="chat" id="sitChat"></div>
+      <div class="dock" id="sitDock">
+        <div class="target" id="target">
+          <div class="lbl">Sua vez — fale em voz alta</div>
+          <div class="en" id="tEn"></div>
+          <div class="pt" id="tPt"></div>
+          <div class="tip" id="tTip" hidden></div>
+        </div>
+        <div class="actions">
+          <button class="ghost" id="hearBtn" title="Ouvir a frase">Ouvir</button>
+          <button class="ghost" id="slowBtn" title="Ouvir devagar">Devagar</button>
+          <button class="mic" id="micBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Falar</span></button>
+        </div>
+        <div class="typebox" id="sitType">
+          <input id="sitInput" placeholder="Sem microfone? Use o ditado do teclado aqui" autocomplete="off" autocapitalize="off" lang="en">
+          <button id="sitSend">OK</button>
+        </div>
+        <div class="actions"><button class="ghost" id="skipBtn" style="flex:1">Pular frase</button><button class="ghost" id="replayBtn" style="flex:1">Repetir fala da Emma</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONVERSA LIVRE -->
+  <section id="tab-free" hidden style="display:flex;flex-direction:column;gap:12px">
+    <div class="sectionhead"><h3>Bate-papo com a Emma</h3><button class="mini" id="newChat">Nova conversa</button></div>
+    <div class="topics" id="topics"></div>
+    <div class="note" id="freeNote" hidden></div>
+    <div class="chat" id="freeChat"></div>
+    <div class="dock">
+      <div class="actions">
+        <button class="mic" id="freeMic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Falar com a Emma</span></button>
+      </div>
+      <div class="typebox">
+        <input id="freeInput" placeholder="Escreva ou dite em inglês…" autocomplete="off" lang="en">
+        <button id="freeSend">Enviar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TREINO -->
+  <section id="tab-train" hidden style="display:flex;flex-direction:column;gap:12px">
+    <div class="card daily">
+      <span class="hint" style="font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:11px">Frase do dia</span>
+      <div class="en" id="dEn"></div>
+      <div class="hint" id="dPt"></div>
+      <div class="actions"><button class="ghost" id="dHear">Ouvir</button><button class="ghost" id="dSlow">Devagar</button><button class="mic" id="dMic"><span>Treinar</span></button></div>
+      <div id="dResult"></div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:17px">Palavras para treinar</h3>
+      <p class="hint" style="margin:0">Palavras que você errou nos diálogos. Toque para ouvir devagar e repetir.</p>
+      <div class="weak" id="weak"></div>
+      <div id="wResult"></div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:17px">Ajustes</h3>
+      <div class="settings">
+        <label for="voiceSel">Voz da Emma</label><select id="voiceSel"></select>
+        <label for="rate">Velocidade</label><input type="range" id="rate" min="0.6" max="1.15" step="0.05" value="0.92">
+        <label for="showPt">Mostrar tradução</label><input type="checkbox" id="showPt" checked>
+      </div>
+      <button class="ghost" id="testVoice">Testar voz</button>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ---------- dados ---------- */
+const SCENARIOS=[
+ {id:"coffee",t:"No café",s:"Pedir um café para viagem",l:[
+  ["t","Hi there! What can I get for you today?","Oi! O que vai querer hoje?"],
+  ["u","Hi! Can I get a medium latte, please?","Oi! Pode me ver um latte médio, por favor?","\"Can I get\" soa como \"kenai guét\" na fala rápida."],
+  ["t","Sure. Would you like it hot or iced?","Claro. Quer quente ou gelado?"],
+  ["u","Hot, please. With oat milk, if you have it.","Quente, por favor. Com leite de aveia, se tiver."],
+  ["t","We do. Is that for here or to go?","Temos. É para tomar aqui ou para viagem?"],
+  ["u","To go, please. How much is it?","Para viagem, por favor. Quanto fica?"],
+  ["t","That's five fifty. Can I get a name for the order?","Fica cinco e cinquenta. Qual nome para o pedido?"],
+  ["u","It's Mike. Thank you so much!","É Mike. Muito obrigado!"]]},
+ {id:"meet",t:"Conhecendo alguém",s:"Small talk e apresentação",l:[
+  ["t","Hi, I don't think we've met. I'm Emma.","Oi, acho que não nos conhecemos. Sou a Emma."],
+  ["u","Nice to meet you, Emma. I'm Mike.","Prazer, Emma. Eu sou o Mike."],
+  ["t","Nice to meet you too. Where are you from?","O prazer é meu. De onde você é?"],
+  ["u","I'm from Brazil. I live in São Paulo.","Sou do Brasil. Moro em São Paulo."],
+  ["t","Oh, cool! What do you do for a living?","Que legal! Você trabalha com o quê?"],
+  ["u","I'm an accountant. I have my own firm.","Sou contador. Tenho meu próprio escritório.","\"Accountant\": acento no \"COUN\" — a-KAUN-tant."],
+  ["t","That's impressive. Do you like it?","Que impressionante. Você gosta?"],
+  ["u","Yes, I do. It's busy, but I love it.","Sim, gosto. É corrido, mas eu adoro."]]},
+ {id:"rest",t:"Restaurante",s:"Pedir mesa, prato e a conta",l:[
+  ["t","Good evening! Do you have a reservation?","Boa noite! Tem reserva?"],
+  ["u","No, we don't. Do you have a table for two?","Não temos. Tem mesa para dois?"],
+  ["t","Yes, right this way. Are you ready to order?","Sim, por aqui. Já querem pedir?"],
+  ["u","I'd like the grilled chicken with a salad, please.","Eu queria o frango grelhado com salada, por favor.","\"I'd like\" — junte: \"aid-laik\"."],
+  ["t","Great choice. Anything to drink?","Ótima escolha. Algo para beber?"],
+  ["u","Just a glass of water, please.","Só um copo de água, por favor.","\"Water\" no inglês americano: \"uó-der\"."],
+  ["t","Here you go. How was everything?","Aqui está. Estava tudo bem?"],
+  ["u","It was delicious. Can we get the check, please?","Estava delicioso. Pode trazer a conta, por favor?"]]},
+ {id:"air",t:"Aeroporto",s:"Check-in e imigração",l:[
+  ["t","Good morning. May I see your passport, please?","Bom dia. Posso ver seu passaporte, por favor?"],
+  ["u","Sure, here you go.","Claro, aqui está."],
+  ["t","What's the purpose of your visit?","Qual o motivo da sua viagem?"],
+  ["u","I'm here for an internship program.","Estou aqui para um programa de estágio.","\"Internship\": IN-tern-ship, acento no começo."],
+  ["t","How long are you planning to stay?","Quanto tempo pretende ficar?"],
+  ["u","About one year.","Cerca de um ano."],
+  ["t","Do you have any bags to check?","Tem malas para despachar?"],
+  ["u","Yes, just one. Can I have a window seat?","Sim, só uma. Posso ficar na janela?"]]},
+ {id:"hotel",t:"Hotel",s:"Fazer check-in e pedir ajuda",l:[
+  ["t","Welcome! Checking in?","Bem-vindo! Vai fazer check-in?"],
+  ["u","Yes, I have a reservation under Pellegrini.","Sim, tenho uma reserva no nome Pellegrini."],
+  ["t","Got it. Three nights, right?","Certo. Três noites, correto?"],
+  ["u","That's right. What time is breakfast?","Isso mesmo. Que horas é o café da manhã?","\"Breakfast\": \"BRÉK-fist\", não \"brek-fást\"."],
+  ["t","From seven to ten. Here's your key card.","Das sete às dez. Aqui está seu cartão."],
+  ["u","Thanks. What's the Wi-Fi password?","Obrigado. Qual a senha do Wi-Fi?"],
+  ["t","It's on the back of the card. Enjoy your stay!","Está atrás do cartão. Boa estadia!"],
+  ["u","Thank you. Have a good night.","Obrigado. Boa noite."]]},
+ {id:"dir",t:"Pedindo direções",s:"Achar o caminho na rua",l:[
+  ["t","You look a little lost. Can I help you?","Você parece um pouco perdido. Posso ajudar?"],
+  ["u","Yes, please. How do I get to the subway station?","Sim, por favor. Como chego na estação de metrô?"],
+  ["t","Go straight for two blocks and turn left.","Siga reto por duas quadras e vire à esquerda."],
+  ["u","Is it far from here?","É longe daqui?"],
+  ["t","Not really. It's about a five-minute walk.","Não muito. Uns cinco minutos a pé."],
+  ["u","Great. Thank you for your help!","Ótimo. Obrigado pela ajuda!"]]},
+ {id:"shop",t:"Compras",s:"Loja de roupas e pagamento",l:[
+  ["t","Hi! Are you looking for anything special?","Oi! Procurando algo especial?"],
+  ["u","Yes, I'm looking for a jacket in medium.","Sim, procuro uma jaqueta tamanho médio."],
+  ["t","We have this one in black and blue.","Temos esta em preto e azul."],
+  ["u","Can I try on the blue one?","Posso experimentar a azul?"],
+  ["t","Of course. The fitting room is over there.","Claro. O provador é ali."],
+  ["u","It fits well. I'll take it. Can I pay by card?","Serviu bem. Vou levar. Posso pagar no cartão?","\"I'll take it\": \"ail TEI-kit\"."]]},
+ {id:"work",t:"No trabalho",s:"Reunião e colegas",l:[
+  ["t","Good morning! How was your weekend?","Bom dia! Como foi seu fim de semana?"],
+  ["u","It was great, thanks. I spent time with my family.","Foi ótimo, obrigado. Passei tempo com a família."],
+  ["t","Nice! Are you ready for the meeting at ten?","Legal! Pronto para a reunião das dez?"],
+  ["u","Almost. I need to finish the report first.","Quase. Preciso terminar o relatório antes."],
+  ["t","No problem. Can you send it to me after?","Sem problema. Pode me mandar depois?"],
+  ["u","Sure, I'll email it to you this afternoon.","Claro, mando por e-mail hoje à tarde."],
+  ["t","Perfect. Let me know if you need any help.","Perfeito. Me avise se precisar de ajuda."],
+  ["u","Thanks, I appreciate it.","Obrigado, agradeço.","\"Appreciate\": a-PRI-shi-eit."]]},
+ {id:"pharm",t:"Farmácia",s:"Explicar como se sente",l:[
+  ["t","Hi, how can I help you?","Oi, como posso ajudar?"],
+  ["u","I have a headache and a sore throat.","Estou com dor de cabeça e dor de garganta.","\"Throat\": ponha a língua entre os dentes no \"th\"."],
+  ["t","I'm sorry to hear that. How long have you felt this way?","Sinto muito. Há quanto tempo está assim?"],
+  ["u","Since yesterday. Do I need a prescription?","Desde ontem. Preciso de receita?"],
+  ["t","No, you can take this. Two pills every six hours.","Não, pode tomar este. Dois comprimidos a cada seis horas."],
+  ["u","Okay. Thank you very much.","Certo. Muito obrigado."]]},
+ {id:"ride",t:"Uber / táxi",s:"Corrida pela cidade",l:[
+  ["t","Hi! Are you Mike?","Oi! Você é o Mike?"],
+  ["u","Yes, that's me. Thanks for waiting.","Sim, sou eu. Obrigado por esperar."],
+  ["t","No problem. Downtown, right?","Sem problema. Centro, certo?"],
+  ["u","Yes. How long will it take?","Sim. Quanto tempo vai levar?"],
+  ["t","About twenty minutes with this traffic.","Uns vinte minutos com esse trânsito."],
+  ["u","Okay. Could you turn on the air conditioning?","Tudo bem. Pode ligar o ar-condicionado?"],
+  ["t","Sure thing. Here we are!","Claro. Chegamos!"],
+  ["u","Thanks a lot. Have a nice day!","Valeu. Tenha um bom dia!"]]}
+];
+const TOPICS=[["Meu dia","Let's talk about my day today."],["Trabalho","I want to practice talking about my work."],["Viagem","Let's talk about travel. I'm planning to live in the US."],["Comida","Let's talk about food and restaurants."],["Fim de semana","Let's talk about weekend plans."],["Família","I'd like to talk about my family."]];
+
+/* ---------- estado ---------- */
+const LS={get(k,d){try{const v=localStorage.getItem("fdb_"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("fdb_"+k,JSON.stringify(v))}catch(e){}}};
+let st=LS.get("state",{xp:0,streak:0,last:"",weak:{},done:{}});
+const $=id=>document.getElementById(id);
+function save(){LS.set("state",st);renderStats()}
+function today(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function addXP(n){st.xp+=n;const t=today();if(st.last!==t){const y=new Date();y.setDate(y.getDate()-1);const ys=y.getFullYear()+"-"+(y.getMonth()+1)+"-"+y.getDate();st.streak=(st.last===ys)?st.streak+1:1;st.last=t}save()}
+function renderStats(){$("xpChip").textContent=st.xp+" XP";$("streakChip").textContent=st.streak+(st.streak===1?" dia":" dias")}
+const setStatus=t=>$("status").textContent=t;
+
+/* ---------- voz da Emma ---------- */
+const synth=window.speechSynthesis;let voices=[],voice=null;
+const PREF=["Samantha","Ava","Allison","Susan","Zoe","Nicky","Google US English","Microsoft Aria","Microsoft Jenny","Microsoft Zira","Aria","Jenny","Zira","Victoria","Karen","Tessa","Moira","Serena"];
+function loadVoices(){if(!synth)return;voices=synth.getVoices().filter(v=>/^en[-_]/i.test(v.lang));
+  const saved=LS.get("voice","");voice=voices.find(v=>v.name===saved)||null;
+  if(!voice){for(const p of PREF){voice=voices.find(v=>v.name.includes(p)&&/en[-_]US/i.test(v.lang))||voices.find(v=>v.name.includes(p));if(voice)break}}
+  if(!voice)voice=voices.find(v=>/female|woman/i.test(v.name))||voices.find(v=>/en[-_]US/i.test(v.lang))||voices[0]||null;
+  const sel=$("voiceSel");sel.innerHTML="";voices.forEach(v=>{const o=document.createElement("option");o.value=v.name;o.textContent=v.name.replace(/\(.*\)/,"").trim()+" · "+v.lang;if(voice&&v.name===voice.name)o.selected=true;sel.append(o)});
+  if(!voices.length){const o=document.createElement("option");o.textContent="Voz padrão do aparelho";sel.append(o)}}
+if(synth){loadVoices();synth.onvoiceschanged=loadVoices}
+function speak(text,slow){return new Promise(res=>{if(!synth){res();return}stopListen();synth.cancel();
+  const u=new SpeechSynthesisUtterance(text);u.lang="en-US";if(voice)u.voice=voice;u.pitch=1.08;
+  u.rate=slow?0.62:parseFloat($("rate").value);const av=$("avatar");
+  u.onstart=()=>av.classList.add("talking");const end=()=>{av.classList.remove("talking");res()};u.onend=end;u.onerror=end;
+  synth.speak(u);setTimeout(()=>{if(!synth.speaking){av.classList.remove("talking")}},12000)})}
+
+/* ---------- reconhecimento de fala ---------- */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,srBroken=false;
+function stopListen(){if(rec){try{rec.abort()}catch(e){}rec=null}document.querySelectorAll(".mic.on").forEach(b=>b.classList.remove("on"));$("avatar").classList.remove("listening")}
+function listen(btn){return new Promise((resolve,reject)=>{
+  if(!SR||srBroken){reject("nosr");return}
+  if(synth)synth.cancel();
+  const r=new SR();rec=r;r.lang="en-US";r.interimResults=true;r.maxAlternatives=4;r.continuous=false;
+  let alts=[];btn.classList.add("on");$("avatar").classList.add("listening");setStatus("Estou ouvindo… pode falar.");
+  r.onresult=e=>{const res=e.results[e.results.length-1];const a=[];for(let i=0;i<res.length;i++)a.push(res[i].transcript);if(res.isFinal)alts=a;else setStatus("“"+a[0]+"”")};
+  r.onerror=e=>{btn.classList.remove("on");$("avatar").classList.remove("listening");if(e.error==="not-allowed"||e.error==="service-not-allowed"||e.error==="audio-capture"){srBroken=true;reject("nosr")}else if(e.error==="no-speech"){reject("nospeech")}else reject(e.error)};
+  r.onend=()=>{btn.classList.remove("on");$("avatar").classList.remove("listening");rec=null;if(alts.length)resolve(alts);else reject("nospeech")};
+  try{r.start()}catch(e){srBroken=true;reject("nosr")}
+})}
+function micHelp(){setStatus("Microfone indisponível aqui. Use o microfone do teclado na caixa de texto abaixo.")}
+
+/* ---------- comparação de pronúncia ---------- */
+const NUM={"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten","20":"twenty"};
+function words(s){return s.toLowerCase().replace(/[’']/g,"").replace(/[^a-z0-9ãçéáíóú\s-]/g," ").replace(/-/g," ").split(/\s+/).filter(Boolean).map(w=>NUM[w]||w)}
+function align(target,heard){const A=words(target),B=words(heard);const n=A.length,m=B.length;const dp=Array.from({length:n+1},()=>new Array(m+1).fill(0));
+  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)dp[i][j]=A[i]===B[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+  const ok=new Array(n).fill(false);let i=0,j=0;while(i<n&&j<m){if(A[i]===B[j]){ok[i]=true;i++;j++}else if(dp[i+1][j]>=dp[i][j+1])i++;else j++}
+  const hit=ok.filter(Boolean).length;return{ok,score:n?Math.round(hit/n*100):0}}
+function markup(target,ok){const toks=target.split(/\s+/);let k=0;return toks.map(t=>{const has=words(t).length>0;if(!has)return esc(t);const c=ok[k++]?"w-ok":"w-bad";return `<span class="${c}">${esc(t)}</span>`}).join(" ")}
+function missedWords(target,ok){const W=words(target);return W.filter((w,i)=>!ok[i])}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function scoreClass(s){return s>=85?"s-good":s>=60?"s-mid":"s-bad"}
+function best(target,alts){let b=null;for(const a of alts){const r=align(target,a);if(!b||r.score>b.score)b={...r,heard:a}}return b}
+function addWeak(list){list.forEach(w=>{if(w.length>2)st.weak[w]=(st.weak[w]||0)+1});save();renderWeak()}
+
+/* ---------- abas ---------- */
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  ["sit","free","train"].forEach(t=>$("tab-"+t).hidden=t!==b.dataset.tab);stopListen();if(synth)synth.cancel();
+  if(b.dataset.tab==="free")startFreeIfEmpty();if(b.dataset.tab==="train"){renderDaily();renderWeak()}});
+
+/* ---------- situações ---------- */
+let swap=false,cur=null,idx=0,scores=[];
+$("roleA").onclick=()=>{swap=false;$("roleA").setAttribute("aria-pressed","true");$("roleB").setAttribute("aria-pressed","false")};
+$("roleB").onclick=()=>{swap=true;$("roleB").setAttribute("aria-pressed","true");$("roleA").setAttribute("aria-pressed","false")};
+function renderGrid(){$("grid").innerHTML="";SCENARIOS.forEach(s=>{const b=document.createElement("button");b.className="scard";const d=st.done[s.id];
+  b.innerHTML=`<span class="t">${esc(s.t)}</span><span class="s">${esc(s.s)}</span><span class="n ${d?"done":""}">${d?"Feito · "+d+"%":s.l.length+" falas"}</span>`;b.onclick=()=>openSit(s);$("grid").append(b)})}
+function who(line){const w=line[0];return swap?(w==="t"?"u":"t"):w}
+function showPt(){return $("showPt").checked}
+function bubble(chat,side,en,pt,extra){const d=document.createElement("div");d.className="msg "+side;d.innerHTML=`<div class="en">${en}</div>${pt&&showPt()?`<div class="pt">${esc(pt)}</div>`:""}${extra||""}`;chat.append(d);d.scrollIntoView({block:"nearest",behavior:"smooth"});return d}
+function openSit(s){cur=s;idx=0;scores=[];$("sitList").hidden=true;$("sitPlay").hidden=false;$("sitChat").innerHTML="";
+  setStatus(swap?"Hoje você pergunta e eu respondo. Vamos lá!":"Vamos praticar: "+s.t+".");step()}
+$("backBtn").onclick=()=>{stopListen();if(synth)synth.cancel();$("sitPlay").hidden=true;$("sitList").hidden=false;renderGrid();setStatus("Escolha outra situação quando quiser.")};
+async function step(){$("progChip").textContent=Math.min(idx+1,cur.l.length)+"/"+cur.l.length;
+  if(idx>=cur.l.length){finishSit();return}
+  const line=cur.l[idx];
+  if(who(line)==="t"){$("sitDock").hidden=true;const b=bubble($("sitChat"),"t",esc(line[1]),line[2],`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
+    const [h,sl]=b.querySelectorAll(".mini");h.onclick=()=>speak(line[1]);sl.onclick=()=>speak(line[1],true);
+    setStatus("Emma está falando…");await speak(line[1]);idx++;step()}
+  else{$("sitDock").hidden=false;$("tEn").textContent=line[1];$("tPt").textContent=showPt()?line[2]:"";$("tPt").hidden=!showPt();
+    $("tTip").hidden=!line[3];$("tTip").textContent=line[3]?"Dica: "+line[3]:"";$("sitInput").value="";
+    setStatus(SR&&!srBroken?"Sua vez! Toque em Falar e diga a frase.":"Sua vez! Use o microfone do teclado na caixa abaixo.");
+    $("target").scrollIntoView({block:"nearest",behavior:"smooth"})}}
+async function grade(alts){const line=cur.l[idx];const r=best(line[1],alts);scores.push(r.score);
+  const miss=missedWords(line[1],r.ok);if(miss.length)addWeak(miss);
+  bubble($("sitChat"),"u",markup(line[1],r.ok)+`<span class="score ${scoreClass(r.score)}">${r.score}%</span>`,"",`<div class="pt">Entendi: “${esc(r.heard)}”</div>`);
+  if(r.score>=85){addXP(10);const fb=["Perfect!","Great job!","Excellent pronunciation!","Nice! That sounded natural."][Math.floor(Math.random()*4)];setStatus(fb+" Muito bem!");await speak(fb);idx++;step()}
+  else{addXP(3);const f=document.createElement("div");f.className="fix";
+    f.innerHTML=r.score>=60?`<b>Quase!</b> Treine as palavras em vermelho: ${miss.map(esc).join(", ")}. Ouça e tente de novo, ou siga em frente.`:`<b>Vamos de novo.</b> Ouça com atenção e repita no mesmo ritmo.`;
+    const row=document.createElement("div");row.className="row";const a=document.createElement("button");a.className="mini";a.textContent="Tentar de novo";const c=document.createElement("button");c.className="mini";c.textContent="Seguir";
+    a.onclick=()=>{row.remove()};c.onclick=()=>{row.remove();idx++;step()};row.append(a,c);f.append(row);$("sitChat").append(f);f.scrollIntoView({block:"nearest",behavior:"smooth"});
+    setStatus(r.score>=60?"Quase lá! Repare nas palavras em vermelho.":"Escute e tente outra vez.");
+    await speak(r.score>=60?"Almost! Listen: "+miss.slice(0,3).join(", ")+".":"Let's try again. Listen to me.");
+    await speak(r.score>=60?miss.slice(0,3).join(". "):line[1],true)}}
+$("micBtn").onclick=async()=>{if(rec){stopListen();return}try{const alts=await listen($("micBtn"));grade(alts)}catch(e){if(e==="nosr"){micHelp();$("sitInput").focus()}else setStatus("Não ouvi nada. Toque em Falar e tente de novo.")}};
+$("sitSend").onclick=()=>{const v=$("sitInput").value.trim();if(v)grade([v])};
+$("sitInput").onkeydown=e=>{if(e.key==="Enter")$("sitSend").click()};
+$("hearBtn").onclick=()=>speak(cur.l[idx][1]);$("slowBtn").onclick=()=>speak(cur.l[idx][1],true);
+$("skipBtn").onclick=()=>{scores.push(0);idx++;step()};
+$("replayBtn").onclick=()=>{const prev=[...cur.l.slice(0,idx)].reverse().find(l=>who(l)==="t");if(prev)speak(prev[1])};
+async function finishSit(){$("sitDock").hidden=true;const avg=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0;
+  st.done[cur.id]=Math.max(avg,st.done[cur.id]||0);addXP(20);
+  const c=document.createElement("div");c.className="card summary";c.innerHTML=`<span class="hint">Diálogo concluído</span><div class="big">${avg}%</div><div>de acerto na pronúncia · +20 XP</div>`;
+  const row=document.createElement("div");row.className="actions";const a=document.createElement("button");a.className="ghost";a.textContent="Refazer";a.onclick=()=>openSit(cur);
+  const b=document.createElement("button");b.className="ghost";b.textContent="Inverter papéis";b.onclick=()=>{swap=!swap;$("roleA").setAttribute("aria-pressed",!swap);$("roleB").setAttribute("aria-pressed",swap);openSit(cur)};
+  const d=document.createElement("button");d.className="mic";d.textContent="Outra situação";d.onclick=()=>$("backBtn").click();row.append(a,b,d);c.append(row);$("sitChat").append(c);c.scrollIntoView({block:"nearest",behavior:"smooth"});
+  setStatus("Great work today!");await speak(avg>=85?"Great work! Your pronunciation was excellent.":"Good job! Practice the red words and try again.")}
+
+/* ---------- conversa livre (Claude) ---------- */
+let sample=null,sampleReady=false,turns=[],busy=false;
+const RULES=`You are Emma, a warm, upbeat female English teacher from California, chatting by voice with an adult Brazilian learner (Portuguese speaker, beginner-to-intermediate level). This is a spoken, everyday-life conversation, like two people talking.
+Rules:
+- Keep replies short: 1-2 natural sentences, then ONE simple follow-up question so the conversation keeps going. Sometimes answer questions the student asks you about your own (fictional) life, so it feels two-way.
+- Use simple, common vocabulary and contractions. No lists, no emojis.
+- The student's messages come from speech recognition, so strange words may be mispronunciations. If a word looks misheard, say which word they probably meant in pronunciation_tip, with a simple sound hint written for a Portuguese speaker.
+- If the student's sentence has a grammar or word-choice mistake, put the natural corrected sentence in "correction" and a very short explanation in Brazilian Portuguese in "explain_pt". If it is fine, leave both empty.
+- If the student writes in Portuguese, help them say it in English in "correction" and continue.
+Reply with ONLY a JSON object: {"reply": string (English), "reply_pt": string (Portuguese translation of reply), "correction": string, "explain_pt": string, "pronunciation_tip": string (Portuguese, or empty)}`;
+(async()=>{try{if(window.claude&&claude.use){sample=await claude.use("sample")}}catch(e){sample=null}sampleReady=true;updateFreeNote()})();
+function updateFreeNote(){const n=$("freeNote");if(!sampleReady){n.hidden=false;n.textContent="Conectando a Emma…";return}
+  if(!sample){n.hidden=false;n.textContent="A conversa livre usa o Claude e funciona quando o app é aberto dentro do Claude. As Situações e o Treino funcionam em qualquer navegador.";$("freeMic").disabled=true;$("freeSend").disabled=true}else n.hidden=true}
+TOPICS.forEach(([pt,en])=>{const b=document.createElement("button");b.textContent=pt;b.onclick=()=>sendFree(en);$("topics").append(b)});
+function startFreeIfEmpty(){updateFreeNote();if($("freeChat").children.length)return;const g="Hi! I'm Emma. How's your day going so far?";
+  const b=bubble($("freeChat"),"t",esc(g),"Oi! Eu sou a Emma. Como está sendo seu dia até agora?",`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
+  const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(g);s.onclick=()=>speak(g,true);turns=[{role:"assistant",content:g}];speak(g)}
+$("newChat").onclick=()=>{$("freeChat").innerHTML="";turns=[];startFreeIfEmpty()};
+async function sendFree(text){if(busy||!text.trim())return;if(!sample){updateFreeNote();return}busy=true;
+  bubble($("freeChat"),"u",esc(text),"");turns.push({role:"user",content:text});
+  const wait=bubble($("freeChat"),"t",'<span class="typing"><i></i><i></i><i></i></span>',"");setStatus("Emma está pensando…");
+  const hist=turns.slice(-14);const input=[{role:"user",content:RULES+"\n\nThe conversation starts now. Remember: reply with only the JSON object."},...hist];
+  if(input[1]&&input[1].role==="assistant")input.splice(1,0,{role:"user",content:"(start)"});
+  try{const j=await sample.json(input,{modelTier:"quick",cache:false});wait.remove();
+    const reply=String(j.reply||"").trim()||"Sorry, could you say that again?";
+    if(j.correction||j.pronunciation_tip){const f=document.createElement("div");f.className="fix";
+      f.innerHTML=(j.correction?`<div><b>Mais natural:</b> ${esc(j.correction)} <button class="mini">Ouvir</button></div>${j.explain_pt?`<div class="hint">${esc(j.explain_pt)}</div>`:""}`:"")+(j.pronunciation_tip?`<div style="margin-top:4px"><b>Pronúncia:</b> ${esc(j.pronunciation_tip)}</div>`:"");
+      const hb=f.querySelector(".mini");if(hb)hb.onclick=()=>speak(j.correction,true);$("freeChat").append(f)}
+    const b=bubble($("freeChat"),"t",esc(reply),j.reply_pt||"",`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
+    const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(reply);s.onclick=()=>speak(reply,true);
+    turns.push({role:"assistant",content:reply});addXP(5);setStatus("Sua vez de responder.");await speak(reply)}
+  catch(e){wait.remove();turns.pop();const code=e&&e.code;
+    if(code==="not_granted"||code==="sampling_disabled"||code==="not_declared"){sample=null;updateFreeNote()}
+    else setStatus(code==="rate_limited"?"Muitas mensagens seguidas. Espere um pouco e tente de novo.":"Não consegui responder agora. Tente enviar de novo.")}
+  finally{busy=false}}
+$("freeSend").onclick=()=>{const v=$("freeInput").value;$("freeInput").value="";sendFree(v)};
+$("freeInput").onkeydown=e=>{if(e.key==="Enter")$("freeSend").click()};
+$("freeMic").onclick=async()=>{if(rec){stopListen();return}try{const alts=await listen($("freeMic"));sendFree(alts[0])}catch(e){if(e==="nosr"){micHelp();$("freeInput").focus()}else setStatus("Não ouvi nada. Toque e tente de novo.")}};
+
+/* ---------- treino ---------- */
+const ALL=SCENARIOS.flatMap(s=>s.l.filter(l=>l[0]==="u"));
+function daily(){const d=new Date();const n=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);return ALL[n%ALL.length]}
+function renderDaily(){const p=daily();$("dEn").textContent=p[1];$("dPt").textContent=p[2]}
+$("dHear").onclick=()=>speak(daily()[1]);$("dSlow").onclick=()=>speak(daily()[1],true);
+$("dMic").onclick=async()=>{const p=daily();try{const alts=await listen($("dMic"));const r=best(p[1],alts);
+  $("dResult").innerHTML=`<div class="fix">${markup(p[1],r.ok)} <span class="score ${scoreClass(r.score)}">${r.score}%</span></div>`;if(r.score>=85){addXP(10);speak("Perfect!")}else{addWeak(missedWords(p[1],r.ok));speak("Almost. Listen again.").then(()=>speak(p[1],true))}}
+  catch(e){if(e==="nosr")$("dResult").innerHTML='<div class="note">Microfone indisponível aqui. Treine pelos diálogos usando o ditado do teclado.</div>'}};
+function renderWeak(){const el=$("weak");el.innerHTML="";const list=Object.entries(st.weak).sort((a,b)=>b[1]-a[1]).slice(0,24);
+  if(!list.length){el.innerHTML='<span class="hint">Nenhuma ainda. As palavras que você errar nos diálogos aparecem aqui.</span>';return}
+  list.forEach(([w,c])=>{const b=document.createElement("button");b.innerHTML=`${esc(w)}<small>×${c}</small>`;b.onclick=async()=>{await speak(w,true);
+    try{const alts=await listen(b);const ok=alts.some(a=>words(a).includes(w));$("wResult").innerHTML=`<div class="fix">${ok?`<b>Acertou “${esc(w)}”!</b>`:`Ouvi “${esc(alts[0])}”. Tente de novo.`}</div>`;
+      if(ok){addXP(5);st.weak[w]--;if(st.weak[w]<=0)delete st.weak[w];save();renderWeak();speak("Good!")}}catch(e){}};el.append(b)})}
+$("voiceSel").onchange=e=>{voice=voices.find(v=>v.name===e.target.value)||voice;LS.set("voice",e.target.value)};
+$("rate").onchange=e=>LS.set("rate",e.target.value);
+$("showPt").onchange=e=>LS.set("showPt",e.target.checked);
+$("testVoice").onclick=()=>speak("Hi! I'm Emma, your English teacher. Let's practice together!");
+(()=>{const r=LS.get("rate",null);if(r)$("rate").value=r;const s=LS.get("showPt",null);if(s!==null)$("showPt").checked=s})();
+
+if(!SR)$("sitInput").placeholder="Toque aqui e use o microfone do teclado";
+renderStats();renderGrid();renderDaily();renderWeak();
+</script>
+
+</body></html>
