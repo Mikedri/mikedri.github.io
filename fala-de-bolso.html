@@ -334,7 +334,7 @@ function speak(text,slow){return new Promise(res=>{if(!synth){res();return}stopL
   const u=new SpeechSynthesisUtterance(text);u.lang="en-US";if(voice)u.voice=voice;u.pitch=1.08;
   u.rate=slow?0.62:parseFloat($("rate").value);const av=$("avatar");
   u.onstart=()=>av.classList.add("talking");const end=()=>{av.classList.remove("talking");res()};u.onend=end;u.onerror=end;
-  synth.speak(u);setTimeout(()=>{if(!synth.speaking){av.classList.remove("talking")}},12000)})}
+  synth.speak(u);const chk=setInterval(()=>{if(!synth.speaking&&!synth.pending){clearInterval(chk);end()}},700);setTimeout(()=>{clearInterval(chk);end()},Math.max(8000,text.length*150))})}
 
 /* ---------- reconhecimento de fala ---------- */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,srBroken=false,srFails=0,lastErr="";
@@ -349,7 +349,7 @@ function listen(btn){return new Promise((resolve,reject)=>{
   r.onend=()=>{btn.classList.remove("on");$("avatar").classList.remove("listening");rec=null;if(!alts.length&&interim.length)alts=interim;if(alts.length){srFails=0;resolve(alts)}else reject("nospeech")};
   try{r.start()}catch(e){lastErr="start "+(e&&e.name||"");rec=null;btn.classList.remove("on");$("avatar").classList.remove("listening");srFails++;if(srFails>=3){srBroken=true;reject("nosr")}else reject("retry")}
 })}
-function micHelp(){setStatus("Microfone indisponível (código: "+(lastErr||"sem suporte")+"). Use o microfone do teclado na caixa de texto.");
+function micHelp(){if(typeof keyboardMode==="function")keyboardMode();setStatus("Microfone indisponível (código: "+(lastErr||"sem suporte")+"). Use o microfone do teclado na caixa de texto.");
   ["sitInput","freeInput"].forEach(id=>{const i=$(id);if(i)i.placeholder="Toque aqui e aperte o 🎤 do teclado para falar"});
   if(!$("dictHelp")){const n=document.createElement("div");n.id="dictHelp";n.className="note";n.innerHTML="<b>Como falar com a Emma aqui:</b> toque na caixa de texto, aperte o <b>microfone do teclado</b> do celular (ditado), fale em inglês e toque em Enviar. No iPhone, se o microfone não aparecer no teclado: Ajustes › Geral › Teclado › Ativar Ditado. No computador Windows, use <b>Win + H</b>.";const f=$("freeInput");f.closest(".typebox").before(n);const s=n.cloneNode(true);s.id="dictHelp2";$("sitInput").closest(".typebox").before(s)}}
 
@@ -431,14 +431,50 @@ Rules:
 Reply with ONLY a JSON object: {"reply": string (English), "reply_pt": string (Portuguese translation of reply), "correction": string, "explain_pt": string, "pronunciation_tip": string (Portuguese, or empty)}`;
 (async()=>{try{if(window.claude&&claude.use){sample=await claude.use("sample")}}catch(e){sample=null}sampleReady=true;updateFreeNote()})();
 function updateFreeNote(){const n=$("freeNote");if(!sampleReady){n.hidden=false;n.textContent="Conectando a Emma…";return}
-  if(!sample){n.hidden=false;n.textContent="A Emma ainda não tem permissão para responder aqui. Fale ou escreva e toque em Enviar: o app pede a permissão de novo. Se aparecer um aviso de permissão, escolha Permitir."}else n.hidden=true}
+  if(!sample){n.hidden=false;n.textContent=(window.claude?"A Emma não conseguiu se conectar ao Claude, então está no modo guiado: ela faz perguntas, reage e corrige erros comuns.":"Modo guiado: fora do Claude, a Emma faz perguntas do dia a dia, reage às suas respostas e corrige erros comuns. Escolha um tema acima ou responda à pergunta dela.")}else n.hidden=true}
 async function ensureSample(){if(sample)return sample;try{if(window.claude&&claude.use){sample=await claude.use("sample")}}catch(e){sample=null}sampleReady=true;return sample}
-TOPICS.forEach(([pt,en])=>{const b=document.createElement("button");b.textContent=pt;b.onclick=()=>sendFree(en);$("topics").append(b)});
+TOPICS.forEach(([pt,en],i)=>{const b=document.createElement("button");b.textContent=pt;b.onclick=async()=>{if(!sample)await ensureSample();if(!sample){updateFreeNote();offlineTopic(i)}else sendFree(en)};$("topics").append(b)});
 function startFreeIfEmpty(){updateFreeNote();if($("freeChat").children.length)return;const g="Hi! I'm Emma. How's your day going so far?";
   const b=bubble($("freeChat"),"t",esc(g),"Oi! Eu sou a Emma. Como está sendo seu dia até agora?",`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
   const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(g);s.onclick=()=>speak(g,true);turns=[{role:"assistant",content:g}];speak(g)}
 $("newChat").onclick=()=>{$("freeChat").innerHTML="";turns=[];startFreeIfEmpty()};
-async function sendFree(text){if(busy||!text.trim())return;if(!sample)await ensureSample();if(!sample){updateFreeNote();$("freeInput").value=text;setStatus("Ouvi: “"+text+"” — mas a Emma não conseguiu se conectar. Toque em Enviar para tentar de novo.");return}$("freeNote").hidden=true;busy=true;
+/* ---------- Emma sem Claude (modo guiado, funciona em qualquer navegador) ---------- */
+const OFF_Q=[
+ [["What did you do this morning?","O que você fez hoje de manhã?"],["What time did you wake up today?","Que horas você acordou hoje?"],["What did you have for breakfast?","O que você tomou no café da manhã?"],["What's the best part of your day so far?","Qual a melhor parte do seu dia até agora?"],["What are you going to do tonight?","O que você vai fazer hoje à noite?"],["Are you tired or full of energy today?","Você está cansado ou cheio de energia hoje?"]],
+ [["What do you do for work?","Com o que você trabalha?"],["What does a normal workday look like for you?","Como é um dia normal de trabalho para você?"],["What do you like most about your job?","Do que você mais gosta no seu trabalho?"],["How many people work with you?","Quantas pessoas trabalham com você?"],["What is the hardest part of your job?","Qual a parte mais difícil do seu trabalho?"],["How do you usually get to work?","Como você costuma ir para o trabalho?"]],
+ [["Where would you like to travel next?","Para onde você gostaria de viajar na próxima vez?"],["Why do you want to live in the US?","Por que você quer morar nos Estados Unidos?"],["Which city would you like to live in?","Em qual cidade você gostaria de morar?"],["What will you miss most about Brazil?","Do que você vai sentir mais falta do Brasil?"],["What was your favorite trip?","Qual foi a sua viagem favorita?"],["Do you prefer the beach or the mountains?","Você prefere praia ou montanha?"]],
+ [["What's your favorite food?","Qual é a sua comida favorita?"],["Do you like to cook?","Você gosta de cozinhar?"],["What's a typical Brazilian dish you love?","Qual prato típico brasileiro você adora?"],["What did you eat for lunch today?","O que você comeu no almoço hoje?"],["Do you prefer coffee or tea?","Você prefere café ou chá?"],["What's your favorite restaurant?","Qual é o seu restaurante favorito?"]],
+ [["What are your plans for the weekend?","Quais são seus planos para o fim de semana?"],["What did you do last weekend?","O que você fez no último fim de semana?"],["Do you like to go out or stay home on weekends?","Você gosta de sair ou ficar em casa no fim de semana?"],["Do you play any sports?","Você pratica algum esporte?"],["What's your favorite way to relax?","Qual o seu jeito favorito de relaxar?"],["Do you like watching movies?","Você gosta de assistir filmes?"]],
+ [["Tell me about your family.","Me fale sobre a sua família."],["Do you have brothers or sisters?","Você tem irmãos ou irmãs?"],["Who are you closest to in your family?","De quem você é mais próximo na sua família?"],["Does your family live near you?","Sua família mora perto de você?"],["What do you like to do with your family?","O que você gosta de fazer com a sua família?"],["Do you have any pets?","Você tem algum animal de estimação?"]]
+];
+const OFF_ACK=[["That's interesting!","Que interessante!"],["Oh, nice!","Ah, legal!"],["I see.","Entendi."],["Cool, thanks for sharing!","Legal, obrigada por contar!"],["Really? That's great.","Sério? Que ótimo."],["Got it.","Entendi."]];
+const OFF_FIX=[
+ [/\bi have (\d+) years( old)?\b/i,m=>"I'm "+m[1]+" years old.","Idade em inglês usa \"to be\": I'm 30 years old."],
+ [/\bi am agree\b/i,()=>"I agree.","\"Agree\" já é verbo: diga só I agree."],
+ [/\b(he|she|it) have\b/i,m=>m[1]+" has","Com he/she/it, \"have\" vira \"has\"."],
+ [/\b(he|she|it) don'?t\b/i,m=>m[1]+" doesn't","Com he/she/it, use \"doesn't\"."],
+ [/\bpeople is\b/i,()=>"people are","\"People\" é plural: people are."],
+ [/\bi like very much\b/i,()=>"I really like …","Em inglês: I really like it (não \"I like very much\")."],
+ [/\bmake a question\b/i,()=>"ask a question","Pergunta se \"ask\", não \"make\"."],
+ [/\bi am with (hunger|hungry|sleep|sleepy|cold)\b/i,m=>"I'm "+({hunger:"hungry",sleep:"sleepy"}[m[1].toLowerCase()]||m[1]),"Fome, sono e frio usam \"I'm\": I'm hungry, I'm sleepy, I'm cold."],
+ [/\bexplain me\b/i,()=>"explain to me","O certo é explain to me (ou: can you explain…)."],
+ [/\bi didn'?t went\b/i,()=>"I didn't go","Depois de didn't, o verbo volta ao normal: I didn't go."]
+];
+let offTopic=0,offIdx=0;
+function offNext(){const q=OFF_Q[offTopic][offIdx%OFF_Q[offTopic].length];offIdx++;if(offIdx>=OFF_Q[offTopic].length){offIdx=0;offTopic=(offTopic+1)%OFF_Q.length}return q}
+function emmaSay(en,pt){const b=bubble($("freeChat"),"t",esc(en),pt,`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
+  const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(en);s.onclick=()=>speak(en,true);return speak(en)}
+function offlineTopic(i){if(busy)return;offTopic=i;offIdx=0;const q=offNext();setStatus("Responda em voz alta.");emmaSay("Sure! "+q[0],"Claro! "+q[1])}
+async function offlineChat(text){busy=true;try{
+  bubble($("freeChat"),"u",esc(text),"");
+  const fixes=[];for(const [re,fix,why] of OFF_FIX){const m=text.match(re);if(m)fixes.push([fix(m),why])}
+  const n=words(text).length;
+  if(fixes.length||n<3){const f=document.createElement("div");f.className="fix";
+    f.innerHTML=fixes.map(([c,w])=>`<div><b>Mais natural:</b> ${esc(c)}</div><div class="hint">${esc(w)}</div>`).join("")+(n<3?`<div><b>Dica:</b> tente responder com uma frase completa, por exemplo começando com "I…".</div>`:"");
+    $("freeChat").append(f)}
+  addXP(5);const a=OFF_ACK[Math.floor(Math.random()*OFF_ACK.length)];const q=offNext();
+  setStatus("Sua vez de responder.");await emmaSay(a[0]+" "+q[0],a[1]+" "+q[1])}finally{busy=false}}
+async function sendFree(text){if(busy||!text.trim())return;if(!sample)await ensureSample();if(!sample){updateFreeNote();return offlineChat(text)}$("freeNote").hidden=true;busy=true;
   bubble($("freeChat"),"u",esc(text),"");turns.push({role:"user",content:text});
   const wait=bubble($("freeChat"),"t",'<span class="typing"><i></i><i></i><i></i></span>',"");setStatus("Emma está pensando…");
   const hist=turns.slice(-14);const input=[{role:"user",content:RULES+"\n\nThe conversation starts now. Remember: reply with only the JSON object."},...hist];
@@ -481,7 +517,8 @@ $("showPt").onchange=e=>LS.set("showPt",e.target.checked);
 $("testVoice").onclick=()=>speak("Hi! I'm Emma, your English teacher. Let's practice together!");
 (()=>{const r=LS.get("rate",null);if(r)$("rate").value=r;const s=LS.get("showPt",null);if(s!==null)$("showPt").checked=s})();
 
-if(!SR)$("sitInput").placeholder="Toque aqui e use o microfone do teclado";
+function keyboardMode(){[["micBtn","sitInput","Falar pelo teclado"],["freeMic","freeInput","Falar com a Emma pelo teclado"]].forEach(([b,i,t])=>{const btn=$(b);btn.querySelector("span").textContent=t;btn.onclick=()=>{$(i).focus();setStatus("Agora aperte o microfone do teclado e fale em inglês.")}})}
+if(!SR){$("sitInput").placeholder="Toque aqui e use o microfone do teclado";keyboardMode()}
 renderStats();renderGrid();renderDaily();renderWeak();
 </script>
 
