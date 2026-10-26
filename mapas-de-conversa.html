@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#18233a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mapas EN">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Mapas de Conversa em Inglês</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: trilha por nível (abas A1–C2) → lista de mapas do nível → mapa mental vertical (nó central, tronco, ramos coloridos) + mini exercício */
+:root{
+  --paper:#eef2f7; --grid:#dbe3ee; --ink:#18233a; --muted:#566079; --card:#ffffff; --line:#9aa7bf;
+  --b1:#ffd84d; --b2:#7fd6b0; --b3:#ff9f8a; --b4:#8cc4ff; --b5:#c9a7ff; --b6:#ffb84d; --b7:#f48fb1;
+  --ok:#1f7a4d; --no:#b3261e; --onc:#18233a;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11172a; --grid:#1b2440; --ink:#e8ecf6; --muted:#a3adc6; --card:#1a2238; --line:#4a5678;
+  --b1:#e6c13a; --b2:#5fbf98; --b3:#e8846f; --b4:#6aa9ea; --b5:#a98ae6; --b6:#e8a23a; --b7:#d9739a;
+  --ok:#6fd6a2; --no:#ff8a80; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#11172a; --grid:#1b2440; --ink:#e8ecf6; --muted:#a3adc6; --card:#1a2238; --line:#4a5678;
+  --b1:#e6c13a; --b2:#5fbf98; --b3:#e8846f; --b4:#6aa9ea; --b5:#a98ae6; --b6:#e8a23a; --b7:#d9739a;
+  --ok:#6fd6a2; --no:#ff8a80; color-scheme:dark }
+body{background:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px; color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5}
+.wrap{max-width:1040px; margin:0 auto; padding-block:20px 48px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+header h1{font-family:var(--display); font-weight:800; font-size:clamp(1.6rem,5vw,2.3rem); margin:0; line-height:1.1; text-wrap:balance}
+header p{margin:6px 0 0; color:var(--muted); max-width:62ch}
+.prog{margin-top:10px; font-size:.9rem; color:var(--muted); font-variant-numeric:tabular-nums}
+.bar{height:8px; background:var(--card); border-radius:99px; overflow:hidden; margin-top:4px; max-width:360px; border:1px solid var(--line)}
+.bar i{display:block; height:100%; background:var(--b2); width:0}
+
+.levels{display:flex; gap:8px; overflow-x:auto; margin-top:18px; padding:4px 2px 8px}
+.lv{flex:0 0 auto; font-family:var(--display); font-weight:800; font-size:1rem; border:2px solid var(--ink); background:var(--card); color:var(--ink);
+  border-radius:12px; padding:6px 14px; cursor:pointer; text-align:left; line-height:1.1}
+.lv small{display:block; font-family:var(--body); font-weight:400; font-size:.72rem; color:var(--muted)}
+.lv[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+.lv[aria-pressed="true"] small{color:var(--paper); opacity:.8}
+.lv:focus-visible,.mp:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--b4); outline-offset:2px}
+.goal{margin:10px 0 0; font-size:.95rem; color:var(--muted)}
+.goal b{color:var(--ink)}
+.maps{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+.mp{border:2px solid var(--line); background:var(--card); color:var(--ink); border-radius:999px; padding:5px 12px; font-size:.9rem; cursor:pointer; font-family:var(--body)}
+.mp[aria-current="true"]{border-color:var(--ink); font-weight:700}
+.mp .ck{color:var(--ok); font-weight:700}
+
+.stage{margin-top:22px}
+.core{margin:0 auto; max-width:560px; background:var(--ink); color:var(--paper); border-radius:28px; padding:20px 22px; text-align:center}
+.core .n{font-family:var(--display); font-weight:600; font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; opacity:.75}
+.core h2{font-family:var(--display); font-weight:800; font-size:clamp(1.7rem,5.5vw,2.6rem); line-height:1.05; margin:4px 0 0; text-wrap:balance}
+.core p{margin:10px 0 0; font-size:.98rem; opacity:.9}
+.core b{background:var(--b1); color:var(--onc); padding:0 6px; border-radius:6px}
+.trunk{width:4px; height:26px; background:var(--line); margin:0 auto; border-radius:2px}
+.branches{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr)); gap:18px; border-top:4px solid var(--line); padding-top:22px}
+.br{position:relative; background:var(--card); border-radius:16px; padding:15px 17px 17px; min-width:0; border:2px solid var(--c); box-shadow:4px 4px 0 var(--c)}
+.br::before{content:""; position:absolute; top:-26px; left:28px; width:4px; height:24px; background:var(--line); border-radius:2px}
+.br h3{font-family:var(--display); font-weight:800; font-size:1.12rem; margin:0 0 10px; display:flex; align-items:center; gap:10px}
+.br h3 span{flex:0 0 auto; display:inline-grid; place-items:center; width:27px; height:27px; border-radius:50%; background:var(--c); color:var(--onc); font-size:.88rem}
+.br ul{list-style:none; margin:0; padding:0; display:grid; gap:9px}
+.br li{padding-left:14px; position:relative}
+.br li::before{content:""; position:absolute; left:0; top:.6em; width:6px; height:6px; border-radius:50%; background:var(--c)}
+.en{font-style:italic; font-weight:700}
+.pt{color:var(--muted); font-size:.9rem; display:block}
+.hl{background:var(--c); color:var(--onc); padding:0 4px; border-radius:4px; font-style:normal}
+.no{color:var(--no); text-decoration:line-through; text-decoration-thickness:2px}
+
+.ex{margin-top:30px; background:var(--card); border-radius:20px; padding:18px 20px; border:2px dashed var(--line)}
+.ex h3{font-family:var(--display); font-weight:800; font-size:1.3rem; margin:0 0 2px}
+.ex > p{margin:0 0 12px; color:var(--muted); font-size:.92rem}
+.ex ol{margin:0; padding-left:22px; display:grid; gap:12px}
+summary{cursor:pointer; color:var(--muted); font-size:.88rem; font-weight:700; width:max-content; border-radius:4px}
+details[open] summary{color:var(--ok)}
+.ans{margin-top:4px; padding:6px 10px; border-radius:8px; background:var(--paper)}
+.ans b{color:var(--ok)}
+.actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
+.btn{font-family:var(--display); font-weight:800; font-size:1rem; border-radius:12px; padding:9px 16px; cursor:pointer; border:2px solid var(--ink); background:var(--card); color:var(--ink)}
+.btn.primary{background:var(--ink); color:var(--paper)}
+.btn.done{border-color:var(--ok); color:var(--ok)}
+footer{margin-top:26px; color:var(--muted); font-size:.85rem; max-width:62ch}
+.vid{margin-top:30px; background:var(--card); border-radius:20px; padding:18px 20px; border:2px solid var(--ink); box-shadow:4px 4px 0 var(--ink)}
+.vid h3{font-family:var(--display); font-weight:800; font-size:1.3rem; margin:0 0 2px}
+.vid > p{margin:0 0 12px; color:var(--muted); font-size:.92rem}
+.player{position:relative; width:100%; max-width:100%; aspect-ratio:16/9; border-radius:14px; overflow:hidden; background:#000; border:0; padding:0; cursor:pointer; display:block}
+.player img{width:100%; height:100%; object-fit:cover; display:block; opacity:.85}
+.player .play{position:absolute; inset:0; display:grid; place-items:center}
+.player .play i{width:68px; height:68px; border-radius:50%; background:var(--b1); display:grid; place-items:center; box-shadow:0 4px 18px rgba(0,0,0,.4)}
+.player .play i::after{content:""; margin-left:6px; border-left:22px solid var(--onc); border-top:14px solid transparent; border-bottom:14px solid transparent}
+.player iframe{width:100%; height:100%; border:0; display:block}
+.vmeta{margin-top:10px; display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; font-size:.9rem}
+.vmeta b{font-family:var(--display)}
+.vmeta a{color:var(--ink); font-weight:700}
+.linkcard{display:flex; gap:12px; align-items:center; text-decoration:none; color:var(--ink); border:2px solid var(--line); border-radius:14px; padding:12px 14px}
+.linkcard .yt{flex:0 0 auto; width:44px; height:32px; border-radius:9px; background:var(--b3); display:grid; place-items:center}
+.linkcard .yt::after{content:""; margin-left:3px; border-left:12px solid var(--onc); border-top:8px solid transparent; border-bottom:8px solid transparent}
+.linkcard span{min-width:0}
+.linkcard small{display:block; color:var(--muted)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Mapas de Conversa em Inglês</h1>
+    <p>Trilha do A1 ao C2 para entender nativos e conversar em viagens e pela internet. Um mapa por dia: leia o centro, percorra os ramos e faça o exercício em voz alta.</p>
+    <div class="prog" id="prog"></div>
+    <div class="bar"><i id="barfill"></i></div>
+  </header>
+  <nav class="levels" id="levels" aria-label="Níveis"></nav>
+  <p class="goal" id="goal"></p>
+  <div class="maps" id="maps" role="list"></div>
+  <main class="stage" id="stage"></main>
+  <footer>Dica: depois de cada mapa, procure no YouTube um vídeo curto de nativos falando sobre o mesmo tema e tente reconhecer as frases. Ouvir é o que destrava a conversa.</footer>
+</div>
+
+<script>
+// [texto] = destaque colorido · ~texto~ = forma errada riscada
+const LEVELS = [
+{id:"a1", name:"A1", sub:"Primeiros passos", goal:"Cumprimentar, se apresentar, perguntar o básico e pedir para repetir sem travar.", maps:[
+ {t:"Cumprimentos", c:"Nativo quase nunca diz <b>How are you?</b> esperando uma resposta longa. É só um “oi”.", br:[
+  ["Chegando",[["[Hey!] / [Hi!]","o mais comum, em qualquer situação"],["[How's it going?]","= como vai? Resposta: Good, you?"],["[What's up?]","= e aí? Resposta: Not much. You?"],["Good morning / Good evening","mais formal (hotel, recepção)"]]],
+  ["Respondendo",[["[Good, thanks. You?]","sempre devolva a pergunta"],["Pretty good / Not bad","bem / nada mal"],["~I'm fine, thank you, and you?~","correto, mas soa livro escolar"]]],
+  ["Saindo",[["[See you!] / [See ya!]","até mais"],["[Take care!]","se cuida"],["[Have a good one!]","tenha um bom dia/noite (muito usado em lojas)"],["Talk to you later / TTYL","no chat"]]]],
+ ex:[["Alguém diz “What's up?”. Uma resposta natural:","Not much. You?"],["Atendente diz “Have a good one!”. Você responde:","You too! (ou Thanks, you too!)"],["Como dizer “se cuida” ao se despedir?","Take care!"]]},
+ {t:"Me apresentar", c:"Quatro frases resolvem: <b>nome, de onde é, onde mora, o que faz</b>.", br:[
+  ["Dizendo",[["My name's Mike. / I'm Mike.","os dois funcionam"],["[I'm from Brazil.]","from = de (origem)"],["I live in São Paulo.","live in + cidade"],["I'm an accountant.","profissão leva a/an"]]],
+  ["Perguntando",[["[Where are you from?]","de onde você é?"],["[What do you do?]","= o que você faz (trabalho)"],["Where do you live?","onde você mora?"],["How long are you here for?","quanto tempo vai ficar aqui?"]]],
+  ["Fechando",[["[Nice to meet you.]","prazer em conhecer"],["Nice to meet you too.","resposta"],["~I have 40 years.~ → [I'm 40.]","idade usa o verbo to be"]]]],
+ ex:[["Pergunte de onde a pessoa é.","Where are you from?"],["Diga sua idade (40) do jeito certo.","I'm 40. (I'm forty years old)"],["Responda a “Nice to meet you”.","Nice to meet you too."]]},
+ {t:"Verbo To Be", c:"<b>am / is / are</b> = ser e estar ao mesmo tempo.", br:[
+  ["Afirmativa",[["I [am] / I'm","eu sou/estou"],["you / we / they [are] → you're","vocês, nós, eles"],["he / she / it [is] → he's","ele, ela, coisa"]]],
+  ["Negativa",[["I'm [not] tired.","não estou cansado"],["She [isn't] here.","isn't = is not"],["They [aren't] ready.","aren't = are not"]]],
+  ["Pergunta",[["[Are] you OK?","inverte: verbo antes"],["[Is] it far?","é longe?"],["Yes, I am. / No, it isn't.","respostas curtas"]]],
+  ["Usos úteis",[["I'm hungry / thirsty / cold","fome, sede, frio usam to be"],["I'm lost.","estou perdido"],["It's expensive.","é caro"]]]],
+ ex:[["“Estou com fome” em inglês:","I'm hungry."],["Pergunte “É longe?”","Is it far?"],["Negativa de “They are ready”:","They aren't ready."]]},
+ {t:"Perguntas básicas", c:"Com seis palavras de pergunta você pede quase tudo numa viagem.", br:[
+  ["As seis",[["[What]","o quê / qual"],["[Where]","onde"],["[When]","quando"],["[Who]","quem"],["[Why]","por quê"],["[How]","como"]]],
+  ["Combinações",[["[How much] is this?","quanto custa?"],["[How long] does it take?","quanto tempo leva?"],["[What time] does it open?","que horas abre?"],["[Which] one?","qual (entre opções)"]]],
+  ["Em viagem",[["Where's the bathroom?","EUA: bathroom / restroom"],["What's the Wi-Fi password?","senha do Wi-Fi"],["When does the train leave?","quando o trem sai?"]]]],
+ ex:[["“Quanto custa isso?”","How much is this?"],["“Que horas fecha?”","What time does it close?"],["“Quanto tempo leva até o centro?”","How long does it take to get downtown?"]]},
+ {t:"Números, preços e horas", c:"O maior susto é ouvir <b>fifteen</b> e entender <b>fifty</b>. Preste atenção na sílaba forte.", br:[
+  ["Teen x ty",[["fif[TEEN] = 15","força no fim, T bem claro"],["[FIF]ty = 50","força no começo, “fifdy”"],["Na dúvida: [Fifteen, one-five?]","pergunte assim"]]],
+  ["Preços",[["$12.50 = twelve fifty","ninguém fala “dollars and cents”"],["$4.99 = four ninety-nine",""],["a buck = 1 dólar","gíria muito comum"],["Is tax included?","nos EUA o imposto vem à parte"]]],
+  ["Horas",[["It's ten thirty.","10:30, jeito mais comum"],["quarter past six","6:15"],["half past = :30","mais britânico"],["at noon / at midnight","meio-dia / meia-noite"]]]],
+ ex:[["Como se fala $8.75 no dia a dia?","eight seventy-five"],["Onde fica a força em “fifty”?","No começo: FIFty"],["“São 7:30” do jeito mais comum:","It's seven thirty."]]},
+ {t:"Frases de sobrevivência", c:"Não entender é normal. O segredo é <b>pedir de novo sem medo</b>.", br:[
+  ["Não entendi",[["[Sorry?] / [Pardon?]","o “hã?” educado"],["[Could you say that again?]","pode repetir?"],["[Could you speak a bit slower?]","mais devagar"],["Sorry, my English isn't great.","as pessoas desaceleram"]]],
+  ["Palavras",[["[What does] “X” [mean]?","o que significa X?"],["[How do you say] “X” in English?","como se diz?"],["Can you spell that?","pode soletrar?"]]],
+  ["Emergência",[["I need help.","preciso de ajuda"],["Can you call a taxi for me?",""],["I lost my passport.","perdi meu passaporte"]]]],
+ ex:[["Peça para a pessoa falar mais devagar.","Could you speak a bit slower?"],["Pergunte o que significa “awesome”.","What does “awesome” mean?"],["O “hã?” educado:","Sorry? / Pardon?"]]}
+]},
+{id:"a2", name:"A2", sub:"Dia a dia e viagem", goal:"Resolver aeroporto, hotel, restaurante e direções, e falar do que você fez.", maps:[
+ {t:"Simple Present e rotina", c:"Hábitos e verdades: <b>I work</b>, <b>she works</b>. O S da 3ª pessoa é o detalhe que entrega o estrangeiro.", br:[
+  ["Formação",[["I / you / we / they [work]",""],["he / she / it [works]","+s na 3ª pessoa"],["~She work~ → She [works]","erro mais comum"]]],
+  ["Negativa e pergunta",[["I [don't] drink coffee.","do not"],["He [doesn't] live here.","does not, verbo sem s"],["[Do] you like it? / [Does] she know?",""]]],
+  ["Frequência",[["always · usually · often","sempre · geralmente · frequentemente"],["sometimes · rarely · never",""],["I usually wake up at 7.","antes do verbo"]]]],
+ ex:[["Corrija: “He live in Boston.”","He lives in Boston."],["Pergunte se ela fala português.","Does she speak Portuguese?"],["“Eu geralmente acordo às 6.”","I usually wake up at 6."]]},
+ {t:"Restaurante e café", c:"Nos EUA se pede com <b>Can I get...?</b> e a gorjeta (15–20%) é esperada.", br:[
+  ["Pedindo",[["[Can I get] a latte?","jeito natural de pedir"],["[I'll have] the burger.","no restaurante"],["What do you recommend?",""],["No ice, please.","refri vem lotado de gelo"]]],
+  ["Vai ouvir",[["[For here or to go?]","comer aqui ou levar"],["[Anything else?]","mais alguma coisa?"],["How would you like it?","ponto da carne / do ovo"],["Are you still working on that?","ainda está comendo?"]]],
+  ["Pagando",[["[Can I get the check?]","EUA: check · UK: bill"],["Can we split it?","dividir"],["Keep the change.","fica com o troco"]]]],
+ ex:[["Atendente pergunta “For here or to go?”. Você vai levar:","To go, please."],["Peça a conta nos EUA.","Can I get the check, please?"],["Peça um café sem açúcar.","Can I get a coffee with no sugar?"]]},
+ {t:"Aeroporto e hotel", c:"Frases curtas e previsíveis. Treine as respostas da imigração.", br:[
+  ["Imigração",[["[What's the purpose of your visit?]","Tourism / Visiting friends / Studying"],["How long will you stay?","For two weeks."],["Where are you staying?","At a hotel in..."]]],
+  ["Aeroporto",[["boarding pass","cartão de embarque"],["gate · aisle seat · window seat","portão · corredor · janela"],["My flight was delayed / canceled.","atrasado / cancelado"],["Where's baggage claim?","esteira de bagagem"]]],
+  ["Hotel",[["[I have a reservation under] Pellegrini.","reserva no nome de"],["What time is check-out?",""],["Could I get a late check-out?",""],["The AC isn't working.","AC = ar-condicionado"]]]],
+ ex:[["Responda: “What's the purpose of your visit?” (turismo)","Tourism. / I'm here on vacation."],["Diga que tem reserva no seu nome.","I have a reservation under (seu sobrenome)."],["“Meu voo atrasou.”","My flight was delayed."]]},
+ {t:"Direções e transporte", c:"Pergunte <b>How do I get to...?</b> e escute as palavras-chave: left, right, straight, blocks.", br:[
+  ["Perguntando",[["[How do I get to] the museum?",""],["[Is it within walking distance?]","dá para ir a pé?"],["Excuse me, is this the way to...?",""]]],
+  ["Entendendo",[["go straight · turn left · turn right",""],["[two blocks] down","dois quarteirões"],["on the corner · across the street","na esquina · do outro lado"],["You can't miss it.","não tem erro"]]],
+  ["Transporte",[["Does this bus go to...?",""],["Which stop do I get off at?","em que ponto desço?"],["subway (EUA) · tube (Londres)","metrô"],["get an Uber / grab a cab","chamar carro"]]]],
+ ex:[["Pergunte se dá para ir a pé.","Is it within walking distance?"],["“Vire à direita e siga reto dois quarteirões”:","Turn right and go straight for two blocks."],["Pergunte em que ponto descer.","Which stop do I get off at?"]]},
+ {t:"Passado simples", c:"Para contar o que fez: <b>I went, I saw, I had</b>. Negativa e pergunta usam <b>did</b>.", br:[
+  ["Regulares",[["work → [worked]","+ed"],["visit → visited · stay → stayed",""],["Som: worked = “workt”","não fale “worked-ed”"]]],
+  ["Irregulares top",[["go → [went] · have → [had]",""],["see → saw · get → got",""],["eat → ate · buy → bought",""],["was / were","passado de to be"]]],
+  ["Did",[["I [didn't] like it.","verbo volta ao normal"],["[Did] you go? Yes, I did.",""],["~Did you went?~ → Did you go?",""]]]],
+ ex:[["“Eu fui a Nova York ano passado.”","I went to New York last year."],["Corrija: “Did you saw it?”","Did you see it?"],["Negativa de “I bought it”:","I didn't buy it."]]},
+ {t:"Planos: going to e will", c:"<b>going to</b> = plano já decidido. <b>will</b> = decisão na hora ou promessa.", br:[
+  ["Going to",[["I'm [going to] visit my cousin.","plano"],["Na fala: [gonna]","I'm gonna visit..."],["What are you gonna do tonight?",""]]],
+  ["Will",[["[I'll] have the fish.","decidiu agora"],["I'll call you later.","promessa"],["It'll be fine.","previsão / consolo"]]],
+  ["Futuro com -ing",[["I'm [leaving] tomorrow.","compromisso marcado"],["We're meeting at 8.",""]]]],
+ ex:[["Plano decidido: “vou viajar em julho”.","I'm going to travel in July. (I'm gonna...)"],["No restaurante, decidindo agora: “vou querer a salada”.","I'll have the salad."],["“Eu vou embora amanhã” (já marcado):","I'm leaving tomorrow."]]},
+ {t:"Pedidos educados", c:"Quanto mais longo, mais educado: <b>Can → Could → Would you mind</b>.", br:[
+  ["Can / Could",[["[Can I] sit here?","informal"],["[Could you] take a picture of us?","mais gentil"],["Could I have some water?",""]]],
+  ["Would you mind",[["[Would you mind] closing the window?","+ verbo -ing"],["Resposta “pode”: Not at all.","mind = se importar"]]],
+  ["Respostas",[["Sure! / Of course! / No problem.","sim"],["Sorry, I can't.","não"],["Go ahead.","fique à vontade"]]]],
+ ex:[["Peça para tirarem uma foto de vocês.","Could you take a picture of us?"],["Alguém pergunta “Would you mind if I sit here?”. Você deixa:","Not at all. / Go ahead."],["Peça educadamente um copo d'água.","Could I have a glass of water, please?"]]}
+]},
+{id:"b1", name:"B1", sub:"Conversar de verdade", goal:"Manter um papo, dar opinião, contar histórias e pedir esclarecimento.", maps:[
+ {t:"Present Perfect", c:"<b>have / has + particípio</b>. Liga o passado ao agora: o “quando” não importa.", br:[
+  ["Usos",[["[I've been] to Boston.","experiência de vida"],["[I've lived] here for 5 years.","começou e continua"],["[I've lost] my keys.","efeito agora"],["She's [just] left.","acabou de"]]],
+  ["Palavras-chave",[["ever · never","alguma vez · nunca"],["already · yet","já · ainda (fim da frase)"],["since 2020 · for 3 years","ponto x duração"]]],
+  ["x Passado simples",[["~I've seen him yesterday.~","tempo definido → passado"],["I [saw] him yesterday.",""],["[Have you ever] tried sushi?","pergunta clássica de conversa"]]],
+  ["Erro de brasileiro",[["~I live here for 5 years.~","“moro há 5 anos”"],["[I've lived] here for 5 years.",""]]]],
+ ex:[["“Moro aqui há 3 anos.”","I've lived here for 3 years."],["Pergunte se a pessoa já foi ao Brasil.","Have you ever been to Brazil?"],["since ou for: “___ Monday”","since"]]},
+ {t:"Small talk", c:"Conversa leve com estranhos. A regra: <b>responda + devolva uma pergunta</b>.", br:[
+  ["Puxando assunto",[["[How was your weekend?]",""],["Crazy weather today, huh?","clima é clássico"],["Is this your first time here?",""],["What brings you to Miami?","o que te traz aqui?"]]],
+  ["Mantendo vivo",[["[Oh really? How come?]","é mesmo? por quê?"],["[That sounds fun!]",""],["What was that like?","como foi?"],["Same here. / Me too.",""]]],
+  ["Evite no começo",[["salário, religião, política","tema de quem já é amigo"],["“Are you married?” logo de cara","soa invasivo"]]],
+  ["Saindo bem",[["[Well, it was great talking to you.]",""],["I'll let you go.","encerra com educação"]]]],
+ ex:[["Alguém diz “I just got back from Hawaii”. Mantenha o papo:","Oh really? How was it? / That sounds amazing!"],["Encerre a conversa com educação.","Well, it was great talking to you!"],["Pergunte o que trouxe a pessoa à cidade.","What brings you to (city)?"]]},
+ {t:"Opinião, concordar e discordar", c:"Nativos raramente dizem “you're wrong”. Eles <b>suavizam</b>.", br:[
+  ["Opinar",[["[I think] / [I feel like]...",""],["If you ask me...","na minha opinião"],["To be honest...","sinceramente"]]],
+  ["Concordar",[["[Totally.] / [Exactly.]",""],["I couldn't agree more.","concordo plenamente"],["That's a good point.",""],["Fair enough.","justo, faz sentido"]]],
+  ["Discordar",[["[I see your point, but]...","entendo, mas..."],["I'm not so sure about that.",""],["I kind of disagree.","kind of suaviza"],["~You're wrong.~","soa agressivo"]]]],
+ ex:[["Discorde com educação.","I see your point, but... / I'm not so sure about that."],["“Faz sentido” em 2 palavras:","Fair enough."],["Concorde totalmente.","I couldn't agree more. / Totally!"]]},
+ {t:"Contar histórias", c:"Cenário com <b>was/were + -ing</b>, ação com passado simples, e conectores para amarrar.", br:[
+  ["Cenário x ação",[["I [was walking] home [when] it started to rain.",""],["We were having dinner when he called.",""]]],
+  ["Conectores",[["[So]... [then]... [after that]...","então, depois"],["[Suddenly]...","de repente"],["[Anyway]...","enfim (volta ao ponto)"],["[In the end]...","no fim"]]],
+  ["Do jeito nativo",[["So [I was like], “What?”","= aí eu falei"],["And [she was like], “No way!”","= aí ela disse"],["You won't believe what happened.","gancho"]]]],
+ ex:[["“Eu estava dormindo quando o telefone tocou.”","I was sleeping when the phone rang."],["O que significa “and he was like, ‘Seriously?’”","“e aí ele falou: sério?”"],["Conector para voltar ao assunto:","Anyway..."]]},
+ {t:"Esclarecer e ganhar tempo", c:"Pensar em voz alta é normal. Silêncio total é o que trava.", br:[
+  ["Pedir esclarecimento",[["[What do you mean?]",""],["[You mean]... ?","confirma o que entendeu"],["Sorry, I didn't catch that.","não peguei"],["Wait, so...?","espera, então...?"]]],
+  ["Ganhar tempo",[["[Well]... / [Let me think]...",""],["[How can I put it]...","como posso dizer"],["It's like... um...","normal ter pausa"],["Good question.",""]]],
+  ["Contornar palavra",[["[It's a thing you use to]...","descreve"],["What's the word...?",""],["the thing for...","quando esquecer o nome"]]]],
+ ex:[["“Não peguei o que você falou.”","Sorry, I didn't catch that."],["Esqueceu “abridor de garrafas”. Como contornar?","It's a thing you use to open bottles."],["Ganhe tempo antes de responder.","Well... let me think. / Good question."]]},
+ {t:"Comparar", c:"Curtos: <b>-er / -est</b>. Longos: <b>more / the most</b>.", br:[
+  ["Curtos",[["cheap → [cheaper] → [the cheapest]",""],["big → bigger · hot → hotter","dobra a consoante"],["good → better → the best","irregular"],["bad → worse → the worst",""]]],
+  ["Longos",[["expensive → [more] expensive",""],["the [most] beautiful",""]]],
+  ["Igualdade",[["[as] big [as]","tão grande quanto"],["not as good as","não tão bom quanto"],["way better","muito melhor (informal)"]]]],
+ ex:[["“Aqui é mais barato.”","It's cheaper here."],["“O melhor restaurante da cidade.”","The best restaurant in town."],["“Não é tão caro quanto Londres.”","It's not as expensive as London."]]},
+ {t:"Used to", c:"Para hábitos do passado que <b>não acontecem mais</b>.", br:[
+  ["Formação",[["I [used to] play soccer.","eu jogava"],["Fala: “yoost-tu”","o d some"],["Did you use to...?","sem d na pergunta"]]],
+  ["x Be used to",[["I'm [used to] the cold.","= estou acostumado"],["I'm getting used to it.","me acostumando"]]],
+  ["Na conversa",[["I used to live in...","ótimo para falar de você"],["This place used to be a factory.",""]]]],
+ ex:[["“Eu morava no interior.”","I used to live in the countryside."],["“Estou acostumado com comida apimentada.”","I'm used to spicy food."],["Pergunte se a pessoa fumava.","Did you use to smoke?"]]}
+]},
+{id:"b2", name:"B2", sub:"Soar natural", goal:"Falar como nativo fala: phrasal verbs, conectores da fala, hipóteses e planos com amigos.", maps:[
+ {t:"Phrasal verbs do dia a dia", c:"Nativo diz <b>find out</b>, não “discover”. Esses são os que mais aparecem.", br:[
+  ["Rotina",[["[wake up] · [get up]","acordar · levantar"],["[hang out]","sair, ficar junto"],["[eat out]","comer fora"],["[dress up]","se arrumar"]]],
+  ["Resolver",[["[figure out]","descobrir como, entender"],["[find out]","descobrir uma informação"],["[sort out]","resolver"],["[look up]","pesquisar (no Google)"]]],
+  ["Situações",[["[run out of] cash","ficar sem"],["[pick up]","buscar alguém / pegar"],["[show up]","aparecer"],["[give up]","desistir"]]],
+  ["Viagem",[["check in / check out",""],["[get on / get off] the bus","subir / descer"],["[set off]","partir"]]]],
+ ex:[["“Ficamos sem gasolina.”","We ran out of gas."],["“Não consigo entender esse mapa.”","I can't figure out this map."],["“Ele não apareceu.”","He didn't show up."]]},
+ {t:"Muletas da fala", c:"Palavras que nativos usam o tempo todo e quase não têm significado. Reconhecer ajuda muito a entender.", br:[
+  ["As mais comuns",[["[like]","tipo (It was, like, huge)"],["[I mean]","quer dizer"],["[you know]","sabe?"],["[kind of / sort of]","meio que"]]],
+  ["Mudar de rumo",[["[Actually]...","na verdade (≠ atualmente!)"],["[By the way]...","aliás"],["[Anyway]...","enfim"],["[Basically]...","resumindo"]]],
+  ["Falsos amigos",[["actually = na verdade","atualmente = currently"],["pretend = fingir","pretender = intend"],["push = empurrar",""]]]],
+ ex:[["O que significa “Actually, I'm from Chile”?","Na verdade, sou do Chile."],["“Aliás, você viu o jogo?”","By the way, did you see the game?"],["Como se diz “atualmente moro em SP”?","I currently live in São Paulo."]]},
+ {t:"Hipóteses (if)", c:"Para imaginar, sonhar e lamentar. O passado aqui não é passado, é <b>distância da realidade</b>.", br:[
+  ["Real (1ª)",[["[If] it rains, [we'll] stay in.","possível"]]],
+  ["Imaginário (2ª)",[["[If I had] more time, [I'd] travel more.","não tenho"],["If I were you, I'd...","conselho clássico"],["What would you do if...?","pergunta ótima pra conversa"]]],
+  ["Lamento (3ª)",[["[If I'd known], [I would've] come.","se eu soubesse, teria vindo"],["Fala: “would've” = “woulda”",""]]],
+  ["Wish",[["[I wish] I spoke better.","queria falar melhor"],["I wish I'd stayed longer.","queria ter ficado mais"]]]],
+ ex:[["“Se eu fosse você, eu iria.”","If I were you, I'd go."],["“Se eu soubesse, teria te ligado.”","If I'd known, I would've called you."],["“Queria ter mais tempo.”","I wish I had more time."]]},
+ {t:"Contar o que disseram", c:"Na conversa real nativo usa muito <b>said</b> e <b>told me</b>.", br:[
+  ["Said x told",[["She [said] she was tired.","said sem pessoa"],["She [told me] she was tired.","told + pessoa"],["~She said me~","erro comum"]]],
+  ["Pedidos",[["He [told me to] wait.","mandou esperar"],["She [asked me to] help.","pediu"]]],
+  ["Perguntas",[["He [asked if] I was OK.",""],["She asked where I was from.","ordem normal"]]]],
+ ex:[["Corrija: “He said me to come.”","He told me to come."],["“Ela perguntou se eu estava bem.”","She asked if I was OK."],["“Ele disse que estava atrasado.”","He said he was late."]]},
+ {t:"Convites e planos com amigos", c:"Informal e curto. Aprenda a aceitar, recusar e remarcar sem constrangimento.", br:[
+  ["Convidar",[["[Wanna grab] a coffee?","grab = pegar rápido"],["Are you free Saturday?",""],["Let's hang out sometime.","às vezes é só educação"]]],
+  ["Aceitar",[["[I'm down!]","topo!"],["[Sounds good!] / Count me in!",""],["Sure, what time?",""]]],
+  ["Recusar / remarcar",[["[Can I take a rain check?]","fica pra próxima"],["I'm swamped this week.","estou atolado"],["I'll let you know.","te aviso"]]]],
+ ex:[["Aceite um convite do jeito bem informal.","I'm down! / Count me in!"],["“Fica para a próxima.”","Can I take a rain check?"],["Convide para um café.","Wanna grab a coffee?"]]},
+ {t:"Resolver problemas na viagem", c:"Reclamar com educação funciona muito melhor. Comece com <b>There seems to be a problem</b>.", br:[
+  ["Abrindo",[["[There seems to be a problem with]...",""],["I think there's been a mistake.",""],["I was wondering if you could help me.",""]]],
+  ["Casos",[["[I was charged twice.]","cobrança dupla"],["My luggage didn't arrive.",""],["This isn't what I ordered.",""],["The room is really noisy.",""]]],
+  ["Pedindo solução",[["Could I get a refund?","reembolso"],["Is there anything you can do?",""],["Could I speak to a manager?","último recurso"]]]],
+ ex:[["“Fui cobrado duas vezes.”","I was charged twice."],["Abra uma reclamação com educação.","There seems to be a problem with my room."],["“Isto não é o que eu pedi.”","This isn't what I ordered."]]}
+]},
+{id:"c1", name:"C1", sub:"Entender nativos", goal:"Pegar a fala rápida, as gírias, as reações e o inglês da internet.", maps:[
+ {t:"Fala conectada", c:"Nativo cola as palavras. Você conhece o vocabulário, mas não reconhece o <b>som</b>.", br:[
+  ["Reduções",[["going to → [gonna]","I'm gonna"],["want to → [wanna]","wanna go?"],["have to → [hafta] · got to → [gotta]",""],["kind of → [kinda] · let me → [lemme]",""]]],
+  ["Perguntas coladas",[["Did you → [didja] / [dʒə]","Didja eat?"],["What are you → [whatcha]","Whatcha doing?"],["Don't you → [doncha]",""]]],
+  ["T americano",[["water → “wadder”","T entre vogais vira D rápido"],["better → “bedder” · a lot of → “a lodda”",""],["can't → T some no fim","diferencie pela vogal longa"]]],
+  ["Ligação",[["turn it off → “tur-ni-doff”","consoante gruda na vogal"],["Check it out → “che-ki-dout”",""]]]],
+ ex:[["O que é “Whatcha doing?”","What are you doing?"],["“I hafta go” por extenso:","I have to go."],["Como soa “a lot of” na fala americana?","“a lodda”"]]},
+ {t:"Gírias que você vai ouvir", c:"Gírias estáveis, que todo mundo usa. Ouça antes de usar.", br:[
+  ["Positivas",[["[awesome] · [cool]","incrível · legal"],["[legit]","de verdade, muito bom"],["[chill]","tranquilo / relaxar"],["sick! (jovem)","muito bom"]]],
+  ["Negativas",[["[sketchy]","suspeito, duvidoso"],["[bummer]","que pena"],["[broke]","sem dinheiro"],["gross","nojento"]]],
+  ["Pessoas",[["dude / man / bro","cara"],["guys","pessoal (qualquer gênero)"],["y'all","vocês (Sul dos EUA)"],["mate","Reino Unido / Austrália"]]],
+  ["Ações",[["[grab] food","pegar comida"],["crash at a friend's","dormir na casa de"],["give me a ride","dar carona"]]]],
+ ex:[["“Esse bairro parece suspeito.”","This neighborhood looks sketchy."],["Amigo diz “That's a bummer”. O que ele quis dizer?","Que pena / que chato."],["“Estou sem grana.”","I'm broke."]]},
+ {t:"Expressões idiomáticas", c:"As que aparecem em série, podcast e conversa toda semana.", br:[
+  ["Fácil e difícil",[["[piece of cake]","moleza"],["[a pain in the neck]","um saco"],["no big deal","nada demais"]]],
+  ["Social",[["[break the ice]","quebrar o gelo"],["[on the fence]","em cima do muro"],["[my bad]","foi mal"],["just kidding","brincadeira"]]],
+  ["Tempo e energia",[["[call it a day]","encerrar por hoje"],["[hit the road]","pegar a estrada / ir embora"],["[under the weather]","meio doente"],["beat / exhausted","morto de cansado"]]]],
+ ex:[["“Foi mal.”","My bad."],["“Vamos encerrar por hoje.”","Let's call it a day."],["“Estou meio doente hoje.”","I'm a bit under the weather today."]]},
+ {t:"Reações curtas", c:"Metade da conversa nativa são reações de uma ou duas palavras.", br:[
+  ["Surpresa",[["[No way!]","não acredito"],["[Seriously?]",""],["Get out!","sai daqui! (surpresa boa)"],["Oh wow.",""]]],
+  ["Acordo",[["[Sounds good.]","combinado"],["[You bet.]","com certeza"],["Fair enough.",""],["Same. / Me too.",""]]],
+  ["Empatia",[["[I hear you.]","te entendo"],["That sucks.","que droga"],["Ouch.","ai, essa doeu"],["Good for you!","que bom pra você"]]],
+  ["Agradecimento",[["No worries. / You're good.","de nada / tranquilo"],["Don't mention it.",""],["Appreciate it.","valeu"]]]],
+ ex:[["Amigo conta que perdeu o voo. Reaja:","Oh no, that sucks. / Ouch."],["Alguém agradece. Resposta bem casual:","No worries!"],["“Combinado.”","Sounds good."]]},
+ {t:"Inglês da internet", c:"Chat, comentário e rede social têm código próprio.", br:[
+  ["Abreviações",[["[lol] · [lmao]","risada"],["[idk]","I don't know"],["[tbh]","to be honest"],["[ngl]","not gonna lie"],["[imo]","in my opinion"]]],
+  ["No chat",[["[brb]","be right back"],["[omw]","on my way"],["[btw]","by the way"],["np · ty","no problem · thank you"]]],
+  ["Tom",[["ok. com ponto","pode soar seco"],["TUDO EM MAIÚSCULA","= gritando"],["haha / lol","suaviza a frase"]]]],
+ ex:[["O que significa “ngl that was great”?","Not gonna lie, that was great."],["Escreva “a caminho” no chat.","omw"],["O que é “idk tbh”?","I don't know, to be honest."]]},
+ {t:"Suavizar e ser educado", c:"Nativo coloca “almofadas” nas frases. Sem elas, o inglês soa duro.", br:[
+  ["Almofadas",[["[just]","Can I just ask...?"],["[a bit / a little]","It's a bit cold."],["[kind of]","I'm kind of busy."],["[maybe]","Maybe we could..."]]],
+  ["Pedidos indiretos",[["[I was wondering if]...","queria saber se..."],["Would it be possible to...?",""],["Do you happen to know...?","você por acaso sabe?"]]],
+  ["Recusar sem ofender",[["I'd love to, but...","adoraria, mas..."],["I'm not really into...","não curto muito"],["Thanks, I'm good.","= não, obrigado"]]]],
+ ex:[["Peça informação de forma indireta: “onde fica a estação?”","Do you happen to know where the station is?"],["Recuse comida: “não, obrigado”.","Thanks, I'm good."],["Suavize: “I'm busy.”","I'm kind of busy right now."]]}
+]},
+{id:"c2", name:"C2", sub:"Entrelinhas", goal:"Captar ironia, humor, sotaques e o que o nativo quer dizer sem dizer.", maps:[
+ {t:"Ironia e sarcasmo", c:"A frase diz uma coisa e o <b>tom</b> diz o contrário.", br:[
+  ["Clássicos",[["“[Oh, great.]”","= que ótimo... (é ruim)"],["“[Thanks a lot.]”","pode ser bronca"],["“Nice weather, huh?” na chuva",""],["“Yeah, right.”","= até parece"]]],
+  ["Pistas",[["tom arrastado e plano",""],["exagero óbvio",""],["contexto contradiz a frase",""]]],
+  ["Respondendo",[["Ha, tell me about it.","nem me fale"],["I know, right?","pois é"]]]],
+ ex:[["Alguém diz “Yeah, right” para sua história. O que quer dizer?","Que não acredita (até parece)."],["Responda a uma reclamação com “nem me fale”.","Tell me about it."],["“Oh, great” depois de uma má notícia é:","Sarcasmo (= que droga)."]]},
+ {t:"Understatement", c:"Dizer menos para significar mais. Muito forte no inglês britânico.", br:[
+  ["Para cima",[["[not bad]","= bom"],["[pretty good]","= muito bom"],["I wouldn't say no.","= quero sim"]]],
+  ["Para baixo",[["[not ideal]","= ruim"],["[a bit of a problem]","= problema sério"],["I'm not a huge fan.","= não gosto"]]],
+  ["Britânico",[["[Quite good]","pode ser só ok"],["“With all due respect...”","= vou discordar forte"],["“Interesting...”","nem sempre é elogio"]]]],
+ ex:[["Britânico diz “That's not ideal”. Significa:","Que é ruim / um problema."],["“I'm not a huge fan of jazz” quer dizer:","Não gosto muito de jazz."],["Oferecem sobremesa e você quer. Resposta leve:","I wouldn't say no!"]]},
+ {t:"Humor e trocadilhos", c:"Muito humor em inglês vive de <b>duplo sentido</b> e de autodepreciação.", br:[
+  ["Trocadilhos",[["“I'm reading a book on anti-gravity. It's impossible to put down.”","put down = largar / pousar"],["dad jokes","piada de tiozão"]]],
+  ["Autodepreciação",[["“I'm great at cooking. Microwave cooking.”","rir de si"],["Responder com leveza: Ha, same.",""]]],
+  ["Provocação amigável",[["[roast]","zoar alguém (com carinho)"],["[teasing]","brincar implicando"],["I'm just messing with you.","tô só te zoando"]]]],
+ ex:[["“I'm just messing with you” significa:","Tô só te zoando."],["Explique o trocadilho do livro de antigravidade.","Put down = largar (não consegue parar de ler) e pousar (não cai)."],["O que é uma “dad joke”?","Piada boba de trocadilho, “de tiozão”."]]},
+ {t:"Americano x britânico", c:"Mesmo idioma, palavras diferentes. Saber os dois evita confusão.", br:[
+  ["Vocabulário",[["apartment · [flat]","apartamento"],["check · [bill]","conta"],["elevator · [lift]","elevador"],["cookie · [biscuit]","biscoito"],["fall · autumn","outono"]]],
+  ["Viagem",[["subway · underground / tube","metrô"],["line · queue","fila"],["restroom · toilet / loo","banheiro"],["first floor = térreo (EUA)","UK: ground floor"]]],
+  ["Som",[["car: R forte (EUA) x R mudo (UK)",""],["water: “wadder” x “wo-tuh”",""],["can't: “kænt” x “kaant”",""]]]],
+ ex:[["Em Londres, “fila” é:","queue"],["Nos EUA, o “first floor” é:","O térreo."],["Como se pede a conta no Reino Unido?","Could I have the bill, please?"]]},
+ {t:"Sotaques", c:"Você vai ouvir muito além do inglês de curso. Conhecer as marcas ajuda a não se perder.", br:[
+  ["EUA",[["General American","padrão de TV"],["Sul: y'all, vogais esticadas",""],["Nova York: fala rápida, “cawfee”",""]]],
+  ["Reino Unido e Irlanda",[["Londres: T engolido (“wa'er”)",""],["Escócia: R vibrado",""],["Irlanda: “ye” = you",""]]],
+  ["Outros",[["Austrália: “mate”, “no worries”",""],["Índia: ritmo silábico, R batido",""],["Não nativos: o inglês mais falado do mundo","normal ouvir sotaque"]]]],
+ ex:[["“Y'all” é marca de qual região?","Sul dos EUA."],["Onde é comum ouvir “no worries, mate”?","Austrália."],["Qual sotaque é o padrão de TV americana?","General American."]]},
+ {t:"Formal x informal", c:"O mesmo pedido muda conforme <b>com quem</b> você fala. Trocar de registro é sinal de fluência.", br:[
+  ["Escada do pedido",[["Gimme that.","íntimo"],["Can you pass me that?","casual"],["Could you pass me that?","neutro"],["Would you mind passing me that?","formal"]]],
+  ["Pares",[["help · assist",""],["get · receive",""],["ask · inquire",""],["sorry · I apologize",""]]],
+  ["Quando usar",[["amigos, chat: informal",""],["recepção, imigração, desconhecidos: neutro",""],["e-mail para empresa: formal",""]]]],
+ ex:[["Torne formal: “Can you help me?”","Would you mind helping me? / Could you assist me?"],["Torne informal: “I apologize for the delay.”","Sorry I'm late!"],["Que registro usar na imigração?","Neutro e educado."]]}
+]}
+];
+
+const VIDEOS = {"a1-0": {"id": "JlcQxy6G4x8", "title": "Greetings - Aprenda Cumprimentos em Inglês (Formal e Informal)", "channel": "Aniger Capano", "q": "cumprimentos e despedidas em inglês informal how's it going what's up see you take care"}, "a1-1": {"id": "rUJqAmCehQE", "title": "Como se Apresentar em Inglês: Do Iniciante ao Avançado (Sem Gramática!)", "channel": "TALKNTALK Idiomas", "q": "como se apresentar em inglês nome idade de onde você é onde mora iniciantes"}, "a1-2": {"id": "wHJa3zm0VYU", "title": "A ÚNICA aula de Verbo TO BE que você precisa assistir (Completa)", "channel": "Sonia Sánchez", "q": "verbo to be aula completa iniciantes"}, "a1-3": {"id": "Ja8WbuXzxNA", "title": "WH QUESTIONS: Aula de inglês para iniciantes", "channel": "English in Brazil by Carina Fragozo", "q": "question words em inglês what where when who why how much aula iniciantes"}, "a1-4": {"id": "L0QPUk2Fa4c", "title": "OS NÚMEROS EM INGLÊS | Aula completa", "channel": "Mairo Vergara", "q": "números em inglês preços e horas diferença fifteen fifty"}, "a1-5": {"id": "yFpz76-euTA", "title": "Como Pedir Para Repetir ou Confirmar Algo em Inglês", "channel": "English by Thaisa", "q": "como pedir para repetir em inglês falar mais devagar what does it mean"}, "a2-0": {"id": "-pZduxJNLAw", "title": "DO OU DOES? COMO USAR O PRESENTE SIMPLES EM INGLÊS [Aula completa]", "channel": "Entendendo Inglês", "q": "simple present do does terceira pessoa aula inglês"}, "a2-1": {"id": "z6aYyaNrGc4", "title": "COMIDA em INGLÊS: Como PEDIR no RESTAURANTE! - Inglês Básico", "channel": "Professora Idiomas", "q": "inglês no restaurante pedir comida for here or to go pedir a conta"}, "a2-2": {"id": "h0Yz4StSGJc", "title": "INGLÊS NO AEROPORTO, AVIÃO E IMIGRAÇÃO: aprenda a 'se virar' | Survival English #2", "channel": "English in Brazil by Carina Fragozo", "q": "inglês no aeroporto imigração e hotel frases para viagem"}, "a2-3": {"id": "fSB4xbGe4Us", "title": "COMO PEDIR E DAR DIREÇÕES EM INGLÊS", "channel": "Thieme Yoshino", "q": "como pedir e entender direções em inglês na rua transporte"}, "a2-4": {"id": "AeoBqp50-04", "title": "Aprenda TUDO sobre o SIMPLE PAST da forma fácil", "channel": "Teacher Elza", "q": "simple past passado simples verbos regulares e irregulares did aula"}, "a2-5": {"id": "-3XDGql_eAM", "title": "GOING TO X WILL | Qual a diferença?", "channel": "Gêmeas do Inglês", "q": "going to x will diferença futuro em inglês aula"}, "a2-6": {"id": "4lD-ANYsCbo", "title": "Seja Educado Nos EUA - DO YOU MIND & WOULD YOU MIND", "channel": "Teacher Allie", "q": "pedidos educados em inglês can could would you mind"}, "b1-0": {"id": "mVthzdF-p40", "title": "Como usar o PRESENT PERFECT em inglês", "channel": "Gêmeas do Inglês", "q": "present perfect since for ever never explicação em português"}, "b1-1": {"id": "WHEkyqN0tO8", "title": "Small Talk em Inglês Parte 1 | Aula de Inglês para Conversa do Dia a Dia", "channel": "Amanda, Sua Professora Americana", "q": "small talk em inglês como puxar conversa aula"}, "b1-2": {"id": "0ReUkVwxQiU", "title": "Aprenda a Concordar e Discordar em uma Conversation em Inglês", "channel": "Método Inglês Sem Vergonha", "q": "como dar opinião concordar e discordar em inglês aula"}, "b1-3": {"id": "YqaJ2dPLRwY", "title": "Aula de Inglês: PAST CONTINUOUS: Aprenda com 3 PASSOS Simples", "channel": "Teacher Elza", "q": "como contar histórias em inglês past continuous conectores I was like"}, "b1-4": {"id": "AJRUHLiIUCs", "title": "7 MANEIRAS DE FALAR \"NÃO ENTENDI\" EM INGLÊS", "channel": "SmallAdvantages", "q": "como ganhar tempo ao falar inglês what do you mean"}, "b1-5": {"id": "UcQeFtrAVis", "title": "Os comparativos e superlativos em inglês", "channel": "Teacher Elza", "q": "comparativos e superlativos em inglês aula"}, "b1-6": {"id": "Z5DVwBWmKZE", "title": "USED TO / BE USED TO / GET USED TO - Aprenda as diferenças", "channel": "Let's Go English (by Fernanda Deren)", "q": "used to be used to get used to diferença aula"}, "b2-0": {"id": "cLy4EK4UKw8", "title": "Aprenda usar os 20 PHRASAL VERBS mais úteis do inglês - Boa pronúncia americana - AULA DE INGLÊS", "channel": "Let's Go English - by Fernanda Deren", "q": "phrasal verbs mais usados no dia a dia hang out figure out find out run out of show up"}, "b2-1": {"id": "vUfuqF7GKGM", "title": "TOP 8 FILLERS - Como fazer seu inglês parecer ser melhor do que é", "channel": "Alura Língua", "q": "fillers em inglês like you know I mean actually basically falso cognato"}, "b2-2": {"id": "nuPzhjBhb8U", "title": "ENTENDA TUDO sobre as CONDITIONALS em INGLÊS [If Clauses]", "channel": "Cintya Sabino", "q": "second conditional third conditional I wish aula de inglês em português"}, "b2-3": {"id": "Su0GugBYnc4", "title": "Você NÃO SABIA a diferença entre TELL e SAY (até esse vídeo!)", "channel": "Teacher Francis", "q": "reported speech discurso indireto said e told aula de inglês"}, "b2-4": {"id": "wU1E_Nvi8gQ", "title": "Como Convidar Alguém para Sair em Inglês e Como Responder", "channel": "American English Online", "q": "como convidar aceitar e recusar convite em inglês informal wanna I'm down rain check"}, "b2-5": {"id": "t0wnT6KLjsQ", "title": "Inglês no Hotel: Como Pedir Serviço de Quarto e Resolver Problemas com Confiança! | Aula Completa", "channel": "Kelli Maia Academy", "q": "como reclamar e resolver problemas no hotel em inglês viagem frases"}, "c1-0": {"id": "rI-dnlGpqDI", "title": "VEJA: Você NÃO entende nativos por causa disso: gonna, wanna, gotta", "channel": "Método Inglês Sem Vergonha", "q": "connected speech inglês gonna wanna gotta flap t como nativos falam"}, "c1-1": {"id": "17X1B8PlogE", "title": "50 GÍRIAS EM INGLÊS MAIS USADAS PELOS AMERICANOS", "channel": "Thieme Yoshino", "q": "gírias americanas mais usadas cool legit sketchy bummer dude"}, "c1-2": {"id": "msdqx43tfG8", "title": "AS 30 EXPRESSÕES IDIOMÁTICAS EM INGLÊS MAIS COMUNS", "channel": "Thieme Yoshino", "q": "expressões idiomáticas em inglês mais usadas piece of cake break the ice"}, "c1-3": {"id": "KgB3oAO0ih0", "title": "Expressões MUITO ÚTEIS para conversar em inglês", "channel": "English in Brazil by Carina Fragozo", "q": "reações em inglês no way seriously you bet that sucks no worries"}, "c1-4": {"id": "kr9tDRfPzWQ", "title": "35 abreviações de internet MAIS COMUNS em inglês", "channel": "English in Brazil by Carina Fragozo", "q": "abreviações da internet em inglês lol idk tbh ngl brb omw"}, "c1-5": {"id": "8jQbp0y14-w", "title": "Being polite - soften your language", "channel": "BBC Learning English", "q": "como ser educado em inglês I was wondering if would it be possible suavizar"}, "c2-0": {"id": "IAyB3FMynr0", "title": "How to Use Sarcasm in English | How to Show Sarcasm in American English", "channel": "Fluent American", "q": "sarcasmo em inglês como identificar pelo tom aula"}, "c2-1": {"id": "owzPL9jaSU8", "title": "What English people SAY vs What English people MEAN!", "channel": "English with Lucy", "q": "o que os britânicos realmente querem dizer british understatement inglês"}, "c2-2": {"id": "PFjfahvXHkk", "title": "5 PIADAS QUE SÓ FUNCIONAM EM INGLÊS", "channel": "SmallAdvantages", "q": "trocadilhos em inglês puns piadas explicadas"}, "c2-3": {"id": "m_YmXAQbujI", "title": "AMERICAN VS. BRITISH ENGLISH - What are the differences?", "channel": "Dicas de Inglês by Diou", "q": "diferenças inglês americano e britânico vocabulário e pronúncia"}, "c2-4": {"id": "66aG5P0kQpU", "title": "ONE language, THREE accents - UK vs. USA vs. AUS English!", "channel": "English with Lucy", "q": "sotaques do inglês americano britânico australiano aula"}, "c2-5": {"id": "UNHC0GMaS4M", "title": "DIFERENÇAS do inglês FORMAL e INFORMAL", "channel": "Feelen", "q": "inglês formal e informal diferenças aula"}};
+const IS_APP = true;
+function videoBlock(k){
+  const v=VIDEOS[k]; if(!v) return "";
+  const q="https://www.youtube.com/results?search_query="+encodeURIComponent(v.q||"");
+  if(!v.id){
+    return `<section class="vid"><h3>Aula em vídeo</h3><p>Abra a busca e escolha uma aula curta sobre o tema.</p>
+      <a class="linkcard" href="${q}" target="_blank" rel="noopener"><i class="yt"></i><span><b>Buscar aula no YouTube</b><small>${esc(v.q||"")}</small></span></a></section>`;
+  }
+  const watch="https://www.youtube.com/watch?v="+v.id;
+  if(IS_APP){
+    return `<section class="vid"><h3>Aula em vídeo</h3><p>Assista antes do mapa ou depois, para fixar.</p>
+      <button class="player" data-vid="${v.id}" aria-label="Tocar aula: ${esc(v.title)}">
+        <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i></i></span></button>
+      <div class="vmeta"><span><b>${esc(v.title)}</b> · ${esc(v.channel||"")}</span><a href="${watch}" target="_blank" rel="noopener">Abrir no YouTube</a><a href="${q}" target="_blank" rel="noopener">Outras aulas</a></div></section>`;
+  }
+  return `<section class="vid"><h3>Aula em vídeo</h3><p>No app instalado o vídeo toca aqui dentro. Nesta página ele abre no YouTube.</p>
+    <a class="linkcard" href="${watch}" target="_blank" rel="noopener"><i class="yt"></i><span><b>${esc(v.title)}</b><small>${esc(v.channel||"")}</small></span></a></section>`;
+}
+const COLORS=["--b1","--b2","--b3","--b4","--b5","--b6","--b7"];
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const fmt=s=>esc(s).replace(/\[(.+?)\]/g,'<span class="hl">$1</span>').replace(/~(.+?)~/g,'<span class="no">$1</span>');
+let done={}; try{done=JSON.parse(localStorage.getItem("mapas-done")||"{}")}catch(e){done={}}
+const save=()=>{try{localStorage.setItem("mapas-done",JSON.stringify(done))}catch(e){}};
+let lv=0, mi=0;
+try{const s=JSON.parse(localStorage.getItem("mapas-pos")||"null"); if(s){lv=s.lv||0; mi=s.mi||0}}catch(e){}
+const h=(location.hash||"").slice(1); const hi=LEVELS.findIndex(l=>l.id===h); if(hi>=0 && hi!==lv){lv=hi; mi=0}
+const key=(l,m)=>LEVELS[l].id+"-"+m;
+const total=LEVELS.reduce((a,l)=>a+l.maps.length,0);
+
+function renderProg(){
+  const n=Object.keys(done).filter(k=>done[k]).length;
+  document.getElementById("prog").textContent=n+" de "+total+" mapas revisados";
+  document.getElementById("barfill").style.width=(n/total*100)+"%";
+}
+function render(){
+  const L=LEVELS[lv]; if(mi>=L.maps.length) mi=0;
+  try{localStorage.setItem("mapas-pos",JSON.stringify({lv,mi}))}catch(e){}
+  document.getElementById("levels").innerHTML=LEVELS.map((l,i)=>{
+    const c=l.maps.filter((_,j)=>done[key(i,j)]).length;
+    return `<button class="lv" aria-pressed="${i===lv}" data-l="${i}">${l.name}<small>${l.sub} · ${c}/${l.maps.length}</small></button>`}).join("");
+  document.getElementById("goal").innerHTML="<b>Objetivo do "+L.name+":</b> "+esc(L.goal);
+  document.getElementById("maps").innerHTML=L.maps.map((m,j)=>
+    `<button class="mp" role="listitem" aria-current="${j===mi}" data-m="${j}">${done[key(lv,j)]?'<span class="ck">✓</span> ':''}${j+1}. ${esc(m.t)}</button>`).join("");
+  const M=L.maps[mi]; const k=key(lv,mi);
+  const last = lv===LEVELS.length-1 && mi===L.maps.length-1;
+  document.getElementById("stage").innerHTML=`
+    <div class="core"><div class="n">${L.name} · mapa ${mi+1} de ${L.maps.length}</div><h2>${esc(M.t)}</h2><p>${M.c}</p></div>
+    <div class="trunk"></div>
+    <div class="branches">${M.br.map((b,i)=>`
+      <section class="br" style="--c:var(${COLORS[i%COLORS.length]})"><h3><span>${i+1}</span>${esc(b[0])}</h3>
+      <ul>${b[1].map(it=>`<li><span class="en">${fmt(it[0])}</span>${it[1]?`<span class="pt">${fmt(it[1])}</span>`:""}</li>`).join("")}</ul></section>`).join("")}
+    </div>
+    ${videoBlock(k)}
+    <section class="ex"><h3>Mini exercício</h3><p>Responda em voz alta antes de abrir.</p>
+      <ol>${M.ex.map(e=>`<li>${esc(e[0])}<details><summary>ver resposta</summary><div class="ans"><b>${esc(e[1])}</b></div></details></li>`).join("")}</ol>
+      <div class="actions">
+        <button class="btn ${done[k]?'done':''}" id="mark">${done[k]?'✓ Revisado':'Marcar como revisado'}</button>
+        ${last?'':'<button class="btn primary" id="next">Próximo mapa →</button>'}
+      </div>
+    </section>`;
+  renderProg();
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.vid){
+    const f=document.createElement("iframe");
+    f.src="https://www.youtube.com/embed/"+t.dataset.vid+"?autoplay=1&playsinline=1&rel=0&modestbranding=1";
+    f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen=true; f.title="Aula em vídeo";
+    const box=document.createElement("div"); box.className="player"; box.style.cursor="default"; box.appendChild(f);
+    t.replaceWith(box); return;
+  }
+  if(t.dataset.l!==undefined){lv=+t.dataset.l; mi=0; try{history.replaceState(null,"","#"+LEVELS[lv].id)}catch(_){ } render()}
+  else if(t.dataset.m!==undefined){mi=+t.dataset.m; render(); document.getElementById("stage").scrollIntoView({behavior:"smooth",block:"start"})}
+  else if(t.id==="mark"){const k=key(lv,mi); done[k]=!done[k]; save(); render()}
+  else if(t.id==="next"){
+    if(mi<LEVELS[lv].maps.length-1) mi++; else {lv++; mi=0}
+    render(); document.getElementById("stage").scrollIntoView({behavior:"smooth",block:"start"})}
+});
+window.addEventListener("hashchange",()=>{const i=LEVELS.findIndex(l=>l.id===location.hash.slice(1)); if(i>=0){lv=i; mi=0; render()}});
+render();
+</script>
+<style>@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}</style>
+
+</body>
+</html>
