@@ -187,7 +187,7 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
         <button class="mic" id="freeMic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Falar com a Emma</span></button>
       </div>
       <div class="typebox">
-        <input id="freeInput" placeholder="Escreva ou dite em inglês…" autocomplete="off" lang="en">
+        <input id="freeInput" placeholder="Escreva ou dite em inglês…" autocomplete="off" autocapitalize="off" lang="en">
         <button id="freeSend">Enviar</button>
       </div>
     </div>
@@ -337,19 +337,21 @@ function speak(text,slow){return new Promise(res=>{if(!synth){res();return}stopL
   synth.speak(u);setTimeout(()=>{if(!synth.speaking){av.classList.remove("talking")}},12000)})}
 
 /* ---------- reconhecimento de fala ---------- */
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,srBroken=false;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,srBroken=false,srFails=0,lastErr="";
 function stopListen(){if(rec){try{rec.abort()}catch(e){}rec=null}document.querySelectorAll(".mic.on").forEach(b=>b.classList.remove("on"));$("avatar").classList.remove("listening")}
 function listen(btn){return new Promise((resolve,reject)=>{
   if(!SR||srBroken){reject("nosr");return}
   if(synth)synth.cancel();
   const r=new SR();rec=r;r.lang="en-US";r.interimResults=true;r.maxAlternatives=4;r.continuous=false;
-  let alts=[];btn.classList.add("on");$("avatar").classList.add("listening");setStatus("Estou ouvindo… pode falar.");
-  r.onresult=e=>{const res=e.results[e.results.length-1];const a=[];for(let i=0;i<res.length;i++)a.push(res[i].transcript);if(res.isFinal)alts=a;else setStatus("“"+a[0]+"”")};
-  r.onerror=e=>{btn.classList.remove("on");$("avatar").classList.remove("listening");if(e.error==="not-allowed"||e.error==="service-not-allowed"||e.error==="audio-capture"){srBroken=true;reject("nosr")}else if(e.error==="no-speech"){reject("nospeech")}else reject(e.error)};
-  r.onend=()=>{btn.classList.remove("on");$("avatar").classList.remove("listening");rec=null;if(alts.length)resolve(alts);else reject("nospeech")};
-  try{r.start()}catch(e){srBroken=true;reject("nosr")}
+  let alts=[],interim=[];btn.classList.add("on");$("avatar").classList.add("listening");setStatus("Estou ouvindo… pode falar.");
+  r.onresult=e=>{const res=e.results[e.results.length-1];const a=[];for(let i=0;i<res.length;i++)a.push(res[i].transcript);if(res.isFinal)alts=a;else{interim=a;setStatus("“"+a[0]+"”")}};
+  r.onerror=e=>{btn.classList.remove("on");$("avatar").classList.remove("listening");rec=null;lastErr=e.error;if(e.error==="not-allowed"||e.error==="service-not-allowed"||e.error==="audio-capture"){srFails++;if(srFails>=3){srBroken=true;reject("nosr")}else reject("retry")}else if(e.error==="no-speech"){reject("nospeech")}else if(e.error==="aborted"){reject("retry")}else reject(e.error)};
+  r.onend=()=>{btn.classList.remove("on");$("avatar").classList.remove("listening");rec=null;if(!alts.length&&interim.length)alts=interim;if(alts.length){srFails=0;resolve(alts)}else reject("nospeech")};
+  try{r.start()}catch(e){lastErr="start "+(e&&e.name||"");rec=null;btn.classList.remove("on");$("avatar").classList.remove("listening");srFails++;if(srFails>=3){srBroken=true;reject("nosr")}else reject("retry")}
 })}
-function micHelp(){setStatus("Microfone indisponível aqui. Use o microfone do teclado na caixa de texto abaixo.")}
+function micHelp(){setStatus("Microfone indisponível (código: "+(lastErr||"sem suporte")+"). Use o microfone do teclado na caixa de texto.");
+  ["sitInput","freeInput"].forEach(id=>{const i=$(id);if(i)i.placeholder="Toque aqui e aperte o 🎤 do teclado para falar"});
+  if(!$("dictHelp")){const n=document.createElement("div");n.id="dictHelp";n.className="note";n.innerHTML="<b>Como falar com a Emma aqui:</b> toque na caixa de texto, aperte o <b>microfone do teclado</b> do celular (ditado), fale em inglês e toque em Enviar. No iPhone, se o microfone não aparecer no teclado: Ajustes › Geral › Teclado › Ativar Ditado. No computador Windows, use <b>Win + H</b>.";const f=$("freeInput");f.closest(".typebox").before(n);const s=n.cloneNode(true);s.id="dictHelp2";$("sitInput").closest(".typebox").before(s)}}
 
 /* ---------- comparação de pronúncia ---------- */
 const NUM={"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten","20":"twenty"};
@@ -403,7 +405,7 @@ async function grade(alts){const line=cur.l[idx];const r=best(line[1],alts);scor
     setStatus(r.score>=60?"Quase lá! Repare nas palavras em vermelho.":"Escute e tente outra vez.");
     await speak(r.score>=60?"Almost! Listen: "+miss.slice(0,3).join(", ")+".":"Let's try again. Listen to me.");
     await speak(r.score>=60?miss.slice(0,3).join(". "):line[1],true)}}
-$("micBtn").onclick=async()=>{if(rec){stopListen();return}try{const alts=await listen($("micBtn"));grade(alts)}catch(e){if(e==="nosr"){micHelp();$("sitInput").focus()}else setStatus("Não ouvi nada. Toque em Falar e tente de novo.")}};
+$("micBtn").onclick=async()=>{if(rec){stopListen();return}try{const alts=await listen($("micBtn"));grade(alts)}catch(e){if(e==="nosr"){micHelp();$("sitInput").focus()}else if(e==="retry")setStatus("O microfone não abriu ("+lastErr+"). Toque em Falar de novo.");else setStatus("Não ouvi nada. Toque em Falar e tente de novo.")}};
 $("sitSend").onclick=()=>{const v=$("sitInput").value.trim();if(v)grade([v])};
 $("sitInput").onkeydown=e=>{if(e.key==="Enter")$("sitSend").click()};
 $("hearBtn").onclick=()=>speak(cur.l[idx][1]);$("slowBtn").onclick=()=>speak(cur.l[idx][1],true);
@@ -429,18 +431,20 @@ Rules:
 Reply with ONLY a JSON object: {"reply": string (English), "reply_pt": string (Portuguese translation of reply), "correction": string, "explain_pt": string, "pronunciation_tip": string (Portuguese, or empty)}`;
 (async()=>{try{if(window.claude&&claude.use){sample=await claude.use("sample")}}catch(e){sample=null}sampleReady=true;updateFreeNote()})();
 function updateFreeNote(){const n=$("freeNote");if(!sampleReady){n.hidden=false;n.textContent="Conectando a Emma…";return}
-  if(!sample){n.hidden=false;n.textContent="A conversa livre usa o Claude e funciona quando o app é aberto dentro do Claude. As Situações e o Treino funcionam em qualquer navegador.";$("freeMic").disabled=true;$("freeSend").disabled=true}else n.hidden=true}
+  if(!sample){n.hidden=false;n.textContent="A Emma ainda não tem permissão para responder aqui. Fale ou escreva e toque em Enviar: o app pede a permissão de novo. Se aparecer um aviso de permissão, escolha Permitir."}else n.hidden=true}
+async function ensureSample(){if(sample)return sample;try{if(window.claude&&claude.use){sample=await claude.use("sample")}}catch(e){sample=null}sampleReady=true;return sample}
 TOPICS.forEach(([pt,en])=>{const b=document.createElement("button");b.textContent=pt;b.onclick=()=>sendFree(en);$("topics").append(b)});
 function startFreeIfEmpty(){updateFreeNote();if($("freeChat").children.length)return;const g="Hi! I'm Emma. How's your day going so far?";
   const b=bubble($("freeChat"),"t",esc(g),"Oi! Eu sou a Emma. Como está sendo seu dia até agora?",`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
   const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(g);s.onclick=()=>speak(g,true);turns=[{role:"assistant",content:g}];speak(g)}
 $("newChat").onclick=()=>{$("freeChat").innerHTML="";turns=[];startFreeIfEmpty()};
-async function sendFree(text){if(busy||!text.trim())return;if(!sample){updateFreeNote();return}busy=true;
+async function sendFree(text){if(busy||!text.trim())return;if(!sample)await ensureSample();if(!sample){updateFreeNote();$("freeInput").value=text;setStatus("Ouvi: “"+text+"” — mas a Emma não conseguiu se conectar. Toque em Enviar para tentar de novo.");return}$("freeNote").hidden=true;busy=true;
   bubble($("freeChat"),"u",esc(text),"");turns.push({role:"user",content:text});
   const wait=bubble($("freeChat"),"t",'<span class="typing"><i></i><i></i><i></i></span>',"");setStatus("Emma está pensando…");
   const hist=turns.slice(-14);const input=[{role:"user",content:RULES+"\n\nThe conversation starts now. Remember: reply with only the JSON object."},...hist];
   if(input[1]&&input[1].role==="assistant")input.splice(1,0,{role:"user",content:"(start)"});
-  try{const j=await sample.json(input,{modelTier:"quick",cache:false});wait.remove();
+  const ac=new AbortController();const to=setTimeout(()=>ac.abort(),45000);
+  try{const j=await sample.json(input,{modelTier:"quick",cache:false,signal:ac.signal});clearTimeout(to);wait.remove();
     const reply=String(j.reply||"").trim()||"Sorry, could you say that again?";
     if(j.correction||j.pronunciation_tip){const f=document.createElement("div");f.className="fix";
       f.innerHTML=(j.correction?`<div><b>Mais natural:</b> ${esc(j.correction)} <button class="mini">Ouvir</button></div>${j.explain_pt?`<div class="hint">${esc(j.explain_pt)}</div>`:""}`:"")+(j.pronunciation_tip?`<div style="margin-top:4px"><b>Pronúncia:</b> ${esc(j.pronunciation_tip)}</div>`:"");
@@ -449,12 +453,14 @@ async function sendFree(text){if(busy||!text.trim())return;if(!sample){updateFre
     const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(reply);s.onclick=()=>speak(reply,true);
     turns.push({role:"assistant",content:reply});addXP(5);setStatus("Sua vez de responder.");await speak(reply)}
   catch(e){wait.remove();turns.pop();const code=e&&e.code;
-    if(code==="not_granted"||code==="sampling_disabled"||code==="not_declared"){sample=null;updateFreeNote()}
-    else setStatus(code==="rate_limited"?"Muitas mensagens seguidas. Espere um pouco e tente de novo.":"Não consegui responder agora. Tente enviar de novo.")}
-  finally{busy=false}}
+    $("freeInput").value=text;
+    if(code==="not_granted"||code==="sampling_disabled"||code==="not_declared"){updateFreeNote();setStatus("A Emma precisa da sua permissão para responder ("+code+"). Toque em Enviar e escolha Permitir.")}
+    else if(code==="cancelled"||ac.signal.aborted)setStatus("A Emma demorou demais para responder. Toque em Enviar para tentar de novo.");
+    else setStatus(code?"Erro: "+code+". Toque em Enviar para tentar de novo.":code==="rate_limited"?"Muitas mensagens seguidas. Espere um pouco e tente de novo.":"Não consegui responder agora. Tente enviar de novo.")}
+  finally{clearTimeout(to);busy=false}}
 $("freeSend").onclick=()=>{const v=$("freeInput").value;$("freeInput").value="";sendFree(v)};
 $("freeInput").onkeydown=e=>{if(e.key==="Enter")$("freeSend").click()};
-$("freeMic").onclick=async()=>{if(rec){stopListen();return}try{const alts=await listen($("freeMic"));sendFree(alts[0])}catch(e){if(e==="nosr"){micHelp();$("freeInput").focus()}else setStatus("Não ouvi nada. Toque e tente de novo.")}};
+$("freeMic").onclick=async()=>{if(rec){stopListen();return}if(busy){setStatus("Espere a Emma terminar de responder.");return}try{const alts=await listen($("freeMic"));sendFree(alts[0])}catch(e){if(e==="nosr"){micHelp();$("freeInput").focus()}else if(e==="retry")setStatus("O microfone não abriu ("+lastErr+"). Toque em Falar com a Emma de novo.");else setStatus("Não ouvi nada ("+e+"). Toque e tente de novo.")}};
 
 /* ---------- treino ---------- */
 const ALL=SCENARIOS.flatMap(s=>s.l.filter(l=>l[0]==="u"));
