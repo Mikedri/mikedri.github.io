@@ -427,9 +427,14 @@ Rules:
 - Keep replies short: 1-2 natural sentences, then ONE simple follow-up question so the conversation keeps going. Sometimes answer questions the student asks you about your own (fictional) life, so it feels two-way.
 - Use simple, common vocabulary and contractions. No lists, no emojis.
 - The student's messages come from speech recognition, so strange words may be mispronunciations. If a word looks misheard, say which word they probably meant in pronunciation_tip, with a simple sound hint written for a Portuguese speaker.
-- If the student's sentence has a grammar or word-choice mistake, put the natural corrected sentence in "correction" and a very short explanation in Brazilian Portuguese in "explain_pt". If it is fine, leave both empty.
-- If the student writes in Portuguese, help them say it in English in "correction" and continue.
-Reply with ONLY a JSON object: {"reply": string (English), "reply_pt": string (Portuguese translation of reply), "correction": string, "explain_pt": string, "pronunciation_tip": string (Portuguese, or empty)}`;
+- You are also the student's teacher. For EVERY student message, evaluate the student's own sentence:
+  * "is_correct": true only if the sentence is grammatically correct AND sounds natural.
+  * "correction": if not correct, the corrected version of exactly what they meant (keep their idea, fix it). Empty if correct.
+  * "explain_pt": a short, friendly explanation in Brazilian Portuguese of what was wrong (or, if correct, a quick compliment). Max 2 short sentences.
+  * "native": how an American native speaker would naturally and simply say the same idea in casual conversation (use contractions, common words). Always fill this, even if the sentence was correct.
+  * "native_pt": Portuguese translation of "native".
+- If the student writes in Portuguese, put the English version in "correction" and "native", set is_correct false, and continue.
+Reply with ONLY a JSON object: {"reply": string (English), "reply_pt": string (Portuguese translation of reply), "is_correct": boolean, "correction": string, "explain_pt": string, "native": string, "native_pt": string, "pronunciation_tip": string (Portuguese, or empty)}`;
 (async()=>{try{if(window.claude&&claude.use){sample=await claude.use("sample")}}catch(e){sample=null}sampleReady=true;updateFreeNote()})();
 function updateFreeNote(){const n=$("freeNote");if(!sampleReady){n.hidden=false;n.textContent="Conectando a Emma…";return}
   if(!sample){n.hidden=false;n.textContent=(window.claude?"A Emma não conseguiu se conectar ao Claude, então está no modo guiado: ela faz perguntas, reage e corrige erros comuns.":"Modo guiado: fora do Claude, a Emma faz perguntas do dia a dia, reage às suas respostas e corrige erros comuns. Escolha um tema acima ou responda à pergunta dela.")}else n.hidden=true}
@@ -438,16 +443,47 @@ TOPICS.forEach(([pt,en],i)=>{const b=document.createElement("button");b.textCont
 function startFreeIfEmpty(){updateFreeNote();if($("freeChat").children.length)return;const g="Hi! I'm Emma. How's your day going so far?";
   const b=bubble($("freeChat"),"t",esc(g),"Oi! Eu sou a Emma. Como está sendo seu dia até agora?",`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
   const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(g);s.onclick=()=>speak(g,true);turns=[{role:"assistant",content:g}];speak(g)}
-$("newChat").onclick=()=>{$("freeChat").innerHTML="";turns=[];startFreeIfEmpty()};
+$("newChat").onclick=()=>{$("freeChat").innerHTML="";turns=[];offLast=OFF_GREET;startFreeIfEmpty()};
 /* ---------- Emma sem Claude (modo guiado, funciona em qualquer navegador) ---------- */
 const OFF_Q=[
- [["What did you do this morning?","O que você fez hoje de manhã?"],["What time did you wake up today?","Que horas você acordou hoje?"],["What did you have for breakfast?","O que você tomou no café da manhã?"],["What's the best part of your day so far?","Qual a melhor parte do seu dia até agora?"],["What are you going to do tonight?","O que você vai fazer hoje à noite?"],["Are you tired or full of energy today?","Você está cansado ou cheio de energia hoje?"]],
- [["What do you do for work?","Com o que você trabalha?"],["What does a normal workday look like for you?","Como é um dia normal de trabalho para você?"],["What do you like most about your job?","Do que você mais gosta no seu trabalho?"],["How many people work with you?","Quantas pessoas trabalham com você?"],["What is the hardest part of your job?","Qual a parte mais difícil do seu trabalho?"],["How do you usually get to work?","Como você costuma ir para o trabalho?"]],
- [["Where would you like to travel next?","Para onde você gostaria de viajar na próxima vez?"],["Why do you want to live in the US?","Por que você quer morar nos Estados Unidos?"],["Which city would you like to live in?","Em qual cidade você gostaria de morar?"],["What will you miss most about Brazil?","Do que você vai sentir mais falta do Brasil?"],["What was your favorite trip?","Qual foi a sua viagem favorita?"],["Do you prefer the beach or the mountains?","Você prefere praia ou montanha?"]],
- [["What's your favorite food?","Qual é a sua comida favorita?"],["Do you like to cook?","Você gosta de cozinhar?"],["What's a typical Brazilian dish you love?","Qual prato típico brasileiro você adora?"],["What did you eat for lunch today?","O que você comeu no almoço hoje?"],["Do you prefer coffee or tea?","Você prefere café ou chá?"],["What's your favorite restaurant?","Qual é o seu restaurante favorito?"]],
- [["What are your plans for the weekend?","Quais são seus planos para o fim de semana?"],["What did you do last weekend?","O que você fez no último fim de semana?"],["Do you like to go out or stay home on weekends?","Você gosta de sair ou ficar em casa no fim de semana?"],["Do you play any sports?","Você pratica algum esporte?"],["What's your favorite way to relax?","Qual o seu jeito favorito de relaxar?"],["Do you like watching movies?","Você gosta de assistir filmes?"]],
- [["Tell me about your family.","Me fale sobre a sua família."],["Do you have brothers or sisters?","Você tem irmãos ou irmãs?"],["Who are you closest to in your family?","De quem você é mais próximo na sua família?"],["Does your family live near you?","Sua família mora perto de você?"],["What do you like to do with your family?","O que você gosta de fazer com a sua família?"],["Do you have any pets?","Você tem algum animal de estimação?"]]
+ [["What did you do this morning?","O que você fez hoje de manhã?","I worked from home and answered a lot of emails.","Trabalhei de casa e respondi muitos e-mails."],
+  ["What time did you wake up today?","Que horas você acordou hoje?","I woke up at seven, but I stayed in bed for a few more minutes.","Acordei às sete, mas fiquei mais uns minutinhos na cama."],
+  ["What did you have for breakfast?","O que você tomou no café da manhã?","Just coffee and some toast. I was in a hurry.","Só café e uma torrada. Eu estava com pressa."],
+  ["What's the best part of your day so far?","Qual a melhor parte do seu dia até agora?","Honestly, my first cup of coffee.","Sinceramente, minha primeira xícara de café."],
+  ["What are you going to do tonight?","O que você vai fazer hoje à noite?","I'm going to stay home and watch a movie.","Vou ficar em casa e assistir um filme."],
+  ["Are you tired or full of energy today?","Você está cansado ou cheio de energia hoje?","I'm a little tired. I didn't sleep very well.","Estou um pouco cansado. Não dormi muito bem."]],
+ [["What do you do for work?","Com o que você trabalha?","I'm an accountant. I run my own firm.","Sou contador. Tenho meu próprio escritório."],
+  ["What does a normal workday look like for you?","Como é um dia normal de trabalho para você?","I usually start at eight, check my emails, and meet with clients.","Normalmente começo às oito, vejo os e-mails e me reúno com clientes."],
+  ["What do you like most about your job?","Do que você mais gosta no seu trabalho?","I like helping people solve their problems.","Gosto de ajudar as pessoas a resolver os problemas delas."],
+  ["How many people work with you?","Quantas pessoas trabalham com você?","There are about twenty people on my team.","Tem umas vinte pessoas na minha equipe."],
+  ["What is the hardest part of your job?","Qual a parte mais difícil do seu trabalho?","The deadlines. Everything is always urgent.","Os prazos. Tudo é sempre urgente."],
+  ["How do you usually get to work?","Como você costuma ir para o trabalho?","I usually drive. It takes about twenty minutes.","Normalmente vou de carro. Leva uns vinte minutos."]],
+ [["Where would you like to travel next?","Para onde você gostaria de viajar na próxima vez?","I'd love to go to New York next year.","Eu adoraria ir para Nova York no ano que vem."],
+  ["Why do you want to live in the US?","Por que você quer morar nos Estados Unidos?","I want to improve my English and get some international experience.","Quero melhorar meu inglês e ter experiência internacional."],
+  ["Which city would you like to live in?","Em qual cidade você gostaria de morar?","I think I'd like to live in Miami. I love the weather there.","Acho que gostaria de morar em Miami. Adoro o clima de lá."],
+  ["What will you miss most about Brazil?","Do que você vai sentir mais falta do Brasil?","I'll definitely miss my family and the food.","Com certeza vou sentir falta da minha família e da comida."],
+  ["What was your favorite trip?","Qual foi a sua viagem favorita?","My favorite trip was to Portugal. It was amazing.","Minha viagem favorita foi para Portugal. Foi incrível."],
+  ["Do you prefer the beach or the mountains?","Você prefere praia ou montanha?","I'm more of a beach person.","Sou mais de praia."]],
+ [["What's your favorite food?","Qual é a sua comida favorita?","I love pizza. I could eat it every day.","Adoro pizza. Comeria todo dia."],
+  ["Do you like to cook?","Você gosta de cozinhar?","Not really. I'm not a good cook.","Não muito. Não cozinho bem."],
+  ["What's a typical Brazilian dish you love?","Qual prato típico brasileiro você adora?","I love feijoada. It's perfect on a Saturday.","Adoro feijoada. É perfeita num sábado."],
+  ["What did you eat for lunch today?","O que você comeu no almoço hoje?","I had rice, beans, and some chicken.","Comi arroz, feijão e um pouco de frango."],
+  ["Do you prefer coffee or tea?","Você prefere café ou chá?","Coffee, for sure. I drink like three cups a day.","Café, com certeza. Tomo umas três xícaras por dia."],
+  ["What's your favorite restaurant?","Qual é o seu restaurante favorito?","There's a small Italian place near my house that I really like.","Tem um italiano pequeno perto de casa que eu gosto muito."]],
+ [["What are your plans for the weekend?","Quais são seus planos para o fim de semana?","I don't have any big plans. I just want to relax.","Não tenho grandes planos. Só quero descansar."],
+  ["What did you do last weekend?","O que você fez no último fim de semana?","I went out to dinner with some friends.","Saí para jantar com uns amigos."],
+  ["Do you like to go out or stay home on weekends?","Você gosta de sair ou ficar em casa no fim de semana?","It depends. Sometimes I go out, but I usually stay home.","Depende. Às vezes saio, mas normalmente fico em casa."],
+  ["Do you play any sports?","Você pratica algum esporte?","I play soccer with my friends once a week.","Jogo futebol com meus amigos uma vez por semana."],
+  ["What's your favorite way to relax?","Qual o seu jeito favorito de relaxar?","I like listening to music and taking a long walk.","Gosto de ouvir música e fazer uma caminhada longa."],
+  ["Do you like watching movies?","Você gosta de assistir filmes?","Yeah, I love action movies.","Sim, adoro filmes de ação."]],
+ [["Tell me about your family.","Me fale sobre a sua família.","I have a big family. We're really close.","Tenho uma família grande. Somos bem unidos."],
+  ["Do you have brothers or sisters?","Você tem irmãos ou irmãs?","Yes, I have one brother and one sister.","Sim, tenho um irmão e uma irmã."],
+  ["Who are you closest to in your family?","De quem você é mais próximo na sua família?","I'm really close to my mom.","Sou muito próximo da minha mãe."],
+  ["Does your family live near you?","Sua família mora perto de você?","Yes, most of them live in the same city.","Sim, a maioria mora na mesma cidade."],
+  ["What do you like to do with your family?","O que você gosta de fazer com a sua família?","We like to have lunch together on Sundays.","Gostamos de almoçar juntos aos domingos."],
+  ["Do you have any pets?","Você tem algum animal de estimação?","Yes, I have a dog. His name is Max.","Sim, tenho um cachorro. O nome dele é Max."]]
 ];
+const OFF_GREET=["How's your day going so far?","Como está sendo seu dia até agora?","It's going pretty well, thanks! How about you?","Está indo bem, obrigado! E o seu?"];
 const OFF_ACK=[["That's interesting!","Que interessante!"],["Oh, nice!","Ah, legal!"],["I see.","Entendi."],["Cool, thanks for sharing!","Legal, obrigada por contar!"],["Really? That's great.","Sério? Que ótimo."],["Got it.","Entendi."]];
 const OFF_FIX=[
  [/\bi have (\d+) years( old)?\b/i,m=>"I'm "+m[1]+" years old.","Idade em inglês usa \"to be\": I'm 30 years old."],
@@ -462,19 +498,56 @@ const OFF_FIX=[
  [/\bi didn'?t went\b/i,()=>"I didn't go","Depois de didn't, o verbo volta ao normal: I didn't go."]
 ];
 let offTopic=0,offIdx=0;
-function offNext(){const q=OFF_Q[offTopic][offIdx%OFF_Q[offTopic].length];offIdx++;if(offIdx>=OFF_Q[offTopic].length){offIdx=0;offTopic=(offTopic+1)%OFF_Q.length}return q}
 function emmaSay(en,pt){const b=bubble($("freeChat"),"t",esc(en),pt,`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
   const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(en);s.onclick=()=>speak(en,true);return speak(en)}
 function offlineTopic(i){if(busy)return;offTopic=i;offIdx=0;const q=offNext();setStatus("Responda em voz alta.");emmaSay("Sure! "+q[0],"Claro! "+q[1])}
+let offLast=OFF_GREET;
+function offNext(){const q=OFF_Q[offTopic][offIdx%OFF_Q[offTopic].length];offIdx++;if(offIdx>=OFF_Q[offTopic].length){offIdx=0;offTopic=(offTopic+1)%OFF_Q.length}offLast=q;return q}
+/* verificação gramatical gratuita (LanguageTool) — funciona no navegador; se falhar, fica só com as regras locais */
+async function grammarCheck(text){try{const ac=new AbortController();const t=setTimeout(()=>ac.abort(),6000);
+  const r=await fetch("https://api.languagetool.org/v2/check",{method:"POST",signal:ac.signal,headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({text,language:"en-US",motherTongue:"pt-BR",level:"default"})});
+  clearTimeout(t);if(!r.ok)return null;const j=await r.json();
+  const ms=(j.matches||[]).filter(m=>m.replacements&&m.replacements.length&&!/WHITESPACE|UPPERCASE_SENTENCE_START|PUNCTUATION|COMMA|EN_QUOTES|DASH/i.test(m.rule&&m.rule.id||""));
+  let fixed=text;[...ms].sort((a,b)=>b.offset-a.offset).forEach(m=>{fixed=fixed.slice(0,m.offset)+m.replacements[0].value+fixed.slice(m.offset+m.length)});
+  return{fixed,notes:ms.map(m=>({wrong:text.substr(m.offset,m.length),right:m.replacements[0].value,msg:m.shortMessage||m.message}))}}catch(e){return null}}
+const CONTRACT=[[/\bI am\b/,"I'm"],[/\bdo not\b/i,"don't"],[/\bdid not\b/i,"didn't"],[/\bit is\b/i,"it's"],[/\bI will\b/,"I'll"],[/\bI would\b/,"I'd"],[/\bcan not\b|\bcannot\b/i,"can't"],[/\bthat is\b/i,"that's"],[/\bwe are\b/i,"we're"],[/\bthey are\b/i,"they're"]];
+function cap(s){s=s.trim();return s.charAt(0).toUpperCase()+s.slice(1)}
+function trainBtn(target,host){const b=document.createElement("button");b.className="mini";b.textContent="Repetir em voz alta";
+  b.onclick=async()=>{try{const alts=await listen(b);const r=best(target,alts);const d=document.createElement("div");d.style.marginTop="6px";
+    d.innerHTML=markup(target,r.ok)+` <span class="score ${scoreClass(r.score)}">${r.score}%</span>`;host.append(d);
+    if(r.score>=85){addXP(5);speak("Perfect! You sound like a native.")}else{addWeak(missedWords(target,r.ok));speak("Almost. Listen again.").then(()=>speak(target,true))}}
+    catch(e){setStatus(e==="nosr"?"Microfone indisponível. Use o ditado do teclado.":"Não ouvi. Toque em Repetir em voz alta e fale.")}};return b}
+function renderFeedback(fb){/* fb: {ok, said, corrected, notes:[{t}], native, nativePt, tip} */
+  const f=document.createElement("div");f.className="fix";
+  let h=fb.ok?`<div><b style="color:var(--good)">✓ Frase correta!</b> Você disse certinho.</div>`
+            :`<div><b>Quase! O certo é:</b></div><div style="font-weight:700;font-size:16px;margin:2px 0">${esc(fb.corrected)}</div>`;
+  if(fb.notes&&fb.notes.length)h+=`<ul style="margin:4px 0 0;padding-left:18px">${fb.notes.map(n=>`<li class="hint" style="color:var(--ink)">${n}</li>`).join("")}</ul>`;
+  if(fb.native)h+=`<div style="margin-top:8px"><b>${fb.nativeLabel||"Como um nativo diria:"}</b></div><div style="font-weight:700;font-size:16px">${esc(fb.native)}</div>${fb.nativePt?`<div class="hint">${esc(fb.nativePt)}</div>`:""}`;
+  if(fb.tip)h+=`<div style="margin-top:6px"><b>Pronúncia:</b> ${esc(fb.tip)}</div>`;
+  f.innerHTML=h;const row=document.createElement("div");row.className="row";row.style.flexWrap="wrap";
+  const say=fb.ok?(fb.native||fb.said):fb.corrected;
+  if(!fb.ok){const a=document.createElement("button");a.className="mini";a.textContent="Ouvir correção";a.onclick=()=>speak(fb.corrected,true);row.append(a)}
+  if(fb.native){const a=document.createElement("button");a.className="mini";a.textContent="Ouvir nativo";a.onclick=()=>speak(fb.native,true);row.append(a)}
+  row.append(trainBtn(fb.native||say,f));f.append(row);$("freeChat").append(f);f.scrollIntoView({block:"nearest",behavior:"smooth"});return f}
 async function offlineChat(text){busy=true;try{
-  bubble($("freeChat"),"u",esc(text),"");
-  const fixes=[];for(const [re,fix,why] of OFF_FIX){const m=text.match(re);if(m)fixes.push([fix(m),why])}
-  const n=words(text).length;
-  if(fixes.length||n<3){const f=document.createElement("div");f.className="fix";
-    f.innerHTML=fixes.map(([c,w])=>`<div><b>Mais natural:</b> ${esc(c)}</div><div class="hint">${esc(w)}</div>`).join("")+(n<3?`<div><b>Dica:</b> tente responder com uma frase completa, por exemplo começando com "I…".</div>`:"");
-    $("freeChat").append(f)}
-  addXP(5);const a=OFF_ACK[Math.floor(Math.random()*OFF_ACK.length)];const q=offNext();
-  setStatus("Sua vez de responder.");await emmaSay(a[0]+" "+q[0],a[1]+" "+q[1])}finally{busy=false}}
+  bubble($("freeChat"),"u",esc(text),"");setStatus("Emma está corrigindo…");
+  const wait=bubble($("freeChat"),"t",'<span class="typing"><i></i><i></i><i></i></span>',"");
+  const g=await grammarCheck(text);wait.remove();
+  let fixed=g?g.fixed:text;const notes=[];
+  if(g)g.notes.forEach(n=>notes.push(`<b>${esc(n.wrong)}</b> → <b>${esc(n.right)}</b>: ${esc(n.msg)}`));
+  for(const [re,fix,why] of OFF_FIX){const m=fixed.match(re);if(m){fixed=fixed.replace(re,fix(m).replace(/\.$/,""));notes.push(esc(why))}}
+  fixed=cap(fixed);if(!/[.!?]$/.test(fixed))fixed+=".";
+  const changed=words(fixed).join(" ")!==words(text).join(" ");
+  let casual=fixed;CONTRACT.forEach(([re,r])=>{casual=casual.replace(re,r)});
+  if(casual!==fixed)notes.push(`Na fala, nativos usam contrações: <b>${esc(casual)}</b>`);
+  const n=words(text).length;if(n<3)notes.push("Tente responder com uma frase completa, começando com \"I…\".");
+  const q=offLast;renderFeedback({ok:!changed&&n>=3,said:text,corrected:changed?casual:fixed,notes,native:q&&q[2],nativePt:q&&q[3],nativeLabel:"Um nativo poderia responder assim:"});
+  addXP(changed?3:8);
+  const praise=changed?"Almost! A better way to say it is: "+casual:(n<3?"Try to answer with a full sentence.":["Great sentence!","Perfect, that's correct!","Nice! That was correct."][Math.floor(Math.random()*3)]);
+  await speak(praise);
+  if(q&&q[2]){await speak("A native speaker could answer: "+q[2])}
+  const a=OFF_ACK[Math.floor(Math.random()*OFF_ACK.length)];const nq=offNext();
+  setStatus("Sua vez de responder.");await emmaSay(a[0]+" "+nq[0],a[1]+" "+nq[1])}finally{busy=false}}
 async function sendFree(text){if(busy||!text.trim())return;if(!sample)await ensureSample();if(!sample){updateFreeNote();return offlineChat(text)}$("freeNote").hidden=true;busy=true;
   bubble($("freeChat"),"u",esc(text),"");turns.push({role:"user",content:text});
   const wait=bubble($("freeChat"),"t",'<span class="typing"><i></i><i></i><i></i></span>',"");setStatus("Emma está pensando…");
@@ -483,9 +556,9 @@ async function sendFree(text){if(busy||!text.trim())return;if(!sample)await ensu
   const ac=new AbortController();const to=setTimeout(()=>ac.abort(),45000);
   try{const j=await sample.json(input,{modelTier:"quick",cache:false,signal:ac.signal});clearTimeout(to);wait.remove();
     const reply=String(j.reply||"").trim()||"Sorry, could you say that again?";
-    if(j.correction||j.pronunciation_tip){const f=document.createElement("div");f.className="fix";
-      f.innerHTML=(j.correction?`<div><b>Mais natural:</b> ${esc(j.correction)} <button class="mini">Ouvir</button></div>${j.explain_pt?`<div class="hint">${esc(j.explain_pt)}</div>`:""}`:"")+(j.pronunciation_tip?`<div style="margin-top:4px"><b>Pronúncia:</b> ${esc(j.pronunciation_tip)}</div>`:"");
-      const hb=f.querySelector(".mini");if(hb)hb.onclick=()=>speak(j.correction,true);$("freeChat").append(f)}
+    const ok=j.is_correct===true||(!j.correction&&j.is_correct!==false);
+    renderFeedback({ok,said:text,corrected:j.correction||text,notes:j.explain_pt?[esc(j.explain_pt)]:[],native:j.native||"",nativePt:j.native_pt||"",tip:j.pronunciation_tip||""});
+    await speak(ok?["Great sentence!","Perfect, that's correct!"][Math.floor(Math.random()*2)]:"Almost! A better way is: "+(j.correction||j.native));
     const b=bubble($("freeChat"),"t",esc(reply),j.reply_pt||"",`<div class="row"><button class="mini">Ouvir</button><button class="mini">Devagar</button></div>`);
     const [h,s]=b.querySelectorAll(".mini");h.onclick=()=>speak(reply);s.onclick=()=>speak(reply,true);
     turns.push({role:"assistant",content:reply});addXP(5);setStatus("Sua vez de responder.");await speak(reply)}
