@@ -87,7 +87,7 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 .target .tip{font-size:13px;margin-top:6px;color:var(--teal);font-weight:600}
 .actions{display:flex;gap:8px;align-items:center}
 .mic{flex:1;border:0;border-radius:999px;padding:14px 18px;background:var(--teal);color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;gap:8px}
-.mic.on{background:var(--bad)}
+.mic.on{background:var(--bad)}.mic:disabled{opacity:.5}
 .mic svg{width:22px;height:22px}
 .ghost{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:12px 14px;font-weight:700;font-size:14px;white-space:nowrap}
 .typebox{display:flex;gap:8px}
@@ -184,8 +184,9 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
     <div class="chat" id="freeChat"></div>
     <div class="dock">
       <div class="actions">
-        <button class="mic" id="freeMic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Falar com a Emma</span></button>
+        <button class="mic" id="freeMic" style="flex:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Falar com a Emma</span></button>
       </div>
+      <div id="freeStatus" class="hint" style="text-align:center;font-weight:600;color:var(--teal);min-height:18px"></div>
       <div class="typebox">
         <input id="freeInput" placeholder="Escreva ou dite em inglês…" autocomplete="off" autocapitalize="off" lang="en">
         <button id="freeSend">Enviar</button>
@@ -318,7 +319,7 @@ function save(){LS.set("state",st);renderStats()}
 function today(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
 function addXP(n){st.xp+=n;const t=today();if(st.last!==t){const y=new Date();y.setDate(y.getDate()-1);const ys=y.getFullYear()+"-"+(y.getMonth()+1)+"-"+y.getDate();st.streak=(st.last===ys)?st.streak+1:1;st.last=t}save()}
 function renderStats(){$("xpChip").textContent=st.xp+" XP";$("streakChip").textContent=st.streak+(st.streak===1?" dia":" dias")}
-const setStatus=t=>$("status").textContent=t;
+const setStatus=t=>{$("status").textContent=t;const f=document.getElementById("freeStatus");if(f)f.textContent=t};
 
 /* ---------- voz da Emma ---------- */
 const synth=window.speechSynthesis;let voices=[],voice=null;
@@ -333,7 +334,7 @@ if(synth){loadVoices();synth.onvoiceschanged=loadVoices}
 function speak(text,slow){return new Promise(res=>{if(!synth){res();return}stopListen();synth.cancel();
   const u=new SpeechSynthesisUtterance(text);u.lang="en-US";if(voice)u.voice=voice;u.pitch=1.08;
   u.rate=slow?0.62:parseFloat($("rate").value);const av=$("avatar");
-  u.onstart=()=>av.classList.add("talking");const end=()=>{av.classList.remove("talking");res()};u.onend=end;u.onerror=end;
+  u.onstart=()=>av.classList.add("talking");document.querySelectorAll(".mic").forEach(b=>b.disabled=true);let done=false;const end=()=>{if(done)return;done=true;av.classList.remove("talking");document.querySelectorAll(".mic").forEach(b=>b.disabled=false);setTimeout(res,350)};u.onend=end;u.onerror=end;
   synth.speak(u);const chk=setInterval(()=>{if(!synth.speaking&&!synth.pending){clearInterval(chk);end()}},700);setTimeout(()=>{clearInterval(chk);end()},Math.max(8000,text.length*150))})}
 
 /* ---------- reconhecimento de fala ---------- */
